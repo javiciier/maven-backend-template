@@ -9,7 +9,8 @@
     <version>0.1-SNAPSHOT</version>
     <packaging>maven-archetype</packaging>
 
-    <name>Archetype - backend-archetype</name>
+    <name>backend-archetype</name>
+    <description>Esqueleto de Maven archetype para agilizar la creación de proyectos</description>
 
     <properties>
 

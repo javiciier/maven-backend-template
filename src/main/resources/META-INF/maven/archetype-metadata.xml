@@ -25,11 +25,24 @@ under the License.
                       name="${artifactId}">
 
   <fileSets>
+    <fileSet filtered="true">
+      <directory>src</directory>
+      <includes>
+        <include>lombok.config</include>
+      </includes>
+    </fileSet>
     <fileSet filtered="true" packaged="true">
       <directory>src/main/java</directory>
+      <includes>
+        <include>**/*.java</include>
+        <include>**/*.sql</include>
+      </includes>
     </fileSet>
     <fileSet filtered="true" packaged="true">
       <directory>src/test/java</directory>
+      <includes>
+        <include>**/*.java</include>
+      </includes>
     </fileSet>
   </fileSets>
 </archetype-descriptor>
