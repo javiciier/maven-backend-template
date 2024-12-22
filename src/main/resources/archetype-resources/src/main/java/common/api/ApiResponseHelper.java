@@ -3,8 +3,7 @@ package $package.common.api;
 import $package.common.api.ApiResponse;
 import $package.common.api.error.ApiErrorDetails;
 import $package.common.api.error.ErrorApiResponseBody;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;

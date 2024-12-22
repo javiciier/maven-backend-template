@@ -1,7 +1,6 @@
 package $package.common.security.jwt.application;
 
-
-import $package.common.security.keys.RSAKeyManager;
+import $package.common.security.keys.RsaKeyManager;
 import $package.common.security.jwt.domain.JwtData;
 import $package.common.security.jwt.domain.JwtDataVisitor;
 import io.jsonwebtoken.*;
@@ -35,7 +34,7 @@ public class JwtGeneratorImpl implements JwtGenerator {
     public String generateJWT(JwtData data) {
         Date currentDate = new Date();
         Date tokenExpirationDate = new Date(System.currentTimeMillis() + expirationInMilliseconds);
-        PrivateKey privateKey = RSAKeyManager.loadKeyPair().getPrivate();
+        PrivateKey privateKey = RsaKeyManager.loadKeyPair().getPrivate();
 
         Map<String, Object> customClaims = toClaims(data);
         log.info("Generating JWT for user {}", data.getUserID());
@@ -58,7 +57,7 @@ public class JwtGeneratorImpl implements JwtGenerator {
 
     @Override
     public JwtData extractData(String token) {
-        PublicKey publicKey = RSAKeyManager.loadKeyPair().getPublic();
+        PublicKey publicKey = RsaKeyManager.loadKeyPair().getPublic();
 
         JwtParser jwtParser = Jwts.parser()
                 .requireIssuer(applicationName)

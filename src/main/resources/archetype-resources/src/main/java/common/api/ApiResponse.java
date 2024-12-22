@@ -1,7 +1,6 @@
 package $package.common.api;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 

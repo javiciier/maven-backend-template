@@ -15,7 +15,7 @@
     <artifactId>${artifactId}</artifactId>
     <version>${version}</version>
     <packaging>jar</packaging>
-    <inceptionYear>${da}</inceptionYear>
+    <inceptionYear>${inceptionYear}</inceptionYear>
 
     <properties>
         <!-- Project properties -->
@@ -37,6 +37,7 @@
         <mockito-inline.version>5.2.0</mockito-inline.version>
         <mockito-core.version>5.11.0</mockito-core.version>
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
+        <bcprov-jdk18on.version>1.76</bcprov-jdk18on.version>
     </properties>
 
     <dependencies>
@@ -150,6 +151,19 @@
             <artifactId>maven-failsafe-plugin</artifactId>
             <version>${maven-failsafe-plugin.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Group "org.bouncycastle" -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>${bcprov-jdk18on.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk18on</artifactId>
+            <version>${bcprov-jdk18on.version}</version>
         </dependency>
 
 

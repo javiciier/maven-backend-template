@@ -1,29 +1,23 @@
-package $package.common.config.serialization;
+package $package.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.context.annotation.*;
-
 import $package.common.config.serialization.serializers.*;
 import $package.common.config.serialization.deserializers.*;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.context.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * Configures the object mappers used by the application
- */
 @Configuration
-public class ObjectMapperConfiguration {
+public class JacksonConfiguration {
+    @NotNull
     public static JavaTimeModule configureTimeModules() {
         JavaTimeModule javaTimeModule = new JavaTimeModule();
-        // Serializers
         javaTimeModule.addSerializer(LocalDateTime.class, new JacksonLocalDateTimeSerializer());
         javaTimeModule.addSerializer(LocalDate.class, new JacksonLocalDateSerializer());
-
-        // Deserializers
         javaTimeModule.addDeserializer(LocalDate.class, new JacksonLocalDateDeserializer());
-
         return javaTimeModule;
     }
 

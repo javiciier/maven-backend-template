@@ -7,6 +7,9 @@ target/
 *.env
 *.pem
 logs/
+.run/**.sh
+!.run/script.sh
+!.run/Execute create archetype command.run.xml
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

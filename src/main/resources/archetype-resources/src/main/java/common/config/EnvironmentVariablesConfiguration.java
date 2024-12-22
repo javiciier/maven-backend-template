@@ -14,5 +14,4 @@ public class EnvironmentVariablesConfiguration {
         log.info("Loading environmental configuration...");
     }
 
-
 }
