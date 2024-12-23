@@ -1,11 +1,11 @@
-package $package.users.application.utils;
+package ${package}.users.application.utils;
 
-import $package.common.security.PasswordEncoderBean;
-import $package.common.security.jwt.application.JwtGenerator;
-import $package.common.security.jwt.domain.JwtData;
-import $package.users.domain.*;
-import $package.users.domain.exceptions.UserNotFoundException;
-import $package.users.infrastructure.repositories.*;
+import ${package}.common.security.PasswordEncoderBean;
+import ${package}.common.security.jwt.application.JwtGenerator;
+import ${package}.common.security.jwt.domain.JwtData;
+import ${package}.users.domain.*;
+import ${package}.users.domain.exceptions.UserNotFoundException;
+import ${package}.users.infrastructure.repositories.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

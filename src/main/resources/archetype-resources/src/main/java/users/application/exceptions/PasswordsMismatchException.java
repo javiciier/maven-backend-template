@@ -1,4 +1,4 @@
-package $package.users.domain.exceptions;
+package ${package}.users.domain.exceptions;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

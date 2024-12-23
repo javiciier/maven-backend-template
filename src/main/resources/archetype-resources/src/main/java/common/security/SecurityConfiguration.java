@@ -1,7 +1,7 @@
-package $package.common.security;
+package ${package}.common.security;
 
-import $package.common.security.jwt.application.JwtGenerator;
-import $package.common.security.jwt.infrastructure.JwtAuthenticationFilter;
+import ${package}.common.security.jwt.application.JwtGenerator;
+import ${package}.common.security.jwt.infrastructure.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

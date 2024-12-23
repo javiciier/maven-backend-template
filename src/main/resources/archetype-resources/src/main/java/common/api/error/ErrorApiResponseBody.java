@@ -1,7 +1,7 @@
-package $package.common.api.error;
+package ${package}.common.api.error;
 
-import $package.common.api.ApiResponseBody;
-import $package.common.api.error.ApiErrorDetails;
+import ${package}.common.api.ApiResponseBody;
+import ${package}.common.api.error.ApiErrorDetails;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 

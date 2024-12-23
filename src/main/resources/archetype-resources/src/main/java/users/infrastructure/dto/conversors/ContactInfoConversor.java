@@ -1,7 +1,7 @@
-package $package.users.infrastructure.dto.conversors;
+package ${package}.users.infrastructure.dto.conversors;
 
-import $package.users.domain.ContactInfo;
-import $package.users.infrastructure.dto.output.ContactInfoDTO;
+import ${package}.users.domain.ContactInfo;
+import ${package}.users.infrastructure.dto.output.ContactInfoDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

@@ -1,9 +1,9 @@
-package $package.common.config;
+package ${package}.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import $package.common.config.serialization.serializers.*;
-import $package.common.config.serialization.deserializers.*;
+import ${package}.common.config.serialization.serializers.*;
+import ${package}.common.config.serialization.deserializers.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.*;
 

@@ -1,4 +1,4 @@
-package $package.common.security.jwt.domain;
+package ${package}.common.security.jwt.domain;
 
 import lombok.*;
 import java.util.*;

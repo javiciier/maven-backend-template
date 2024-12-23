@@ -1,4 +1,4 @@
-package $package.common.config;
+package ${package}.common.config;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;

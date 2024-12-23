@@ -1,3 +1,3 @@
-package $package.common.api;
+package ${package}.common.api;
 
 public abstract class ApiResponseBody {}

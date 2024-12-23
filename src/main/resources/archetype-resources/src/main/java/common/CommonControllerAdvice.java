@@ -1,10 +1,10 @@
-package $package.common;
+package ${package}.common;
 
-import $package.common.api.ApiResponse;
-import $package.common.api.error.ErrorApiResponseBody;
-import $package.common.api.error.ApiValidationErrorDetails;
-import $package.common.exception.InvalidArgumentException;
-import $package.common.exception.MissingMandatoryValueException;
+import ${package}.common.api.ApiResponse;
+import ${package}.common.api.error.ErrorApiResponseBody;
+import ${package}.common.api.error.ApiValidationErrorDetails;
+import ${package}.common.exception.InvalidArgumentException;
+import ${package}.common.exception.MissingMandatoryValueException;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Locale;
 
-import static $package.common.api.ApiResponseHelper.buildErrorApiResponse;
+import static ${package}.common.api.ApiResponseHelper.buildErrorApiResponse;
 
 @ControllerAdvice
 @NoArgsConstructor

@@ -1,4 +1,4 @@
-package $package.common.security;
+package ${package}.common.security;
 
 
 import lombok.AccessLevel;

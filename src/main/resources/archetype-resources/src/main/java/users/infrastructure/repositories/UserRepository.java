@@ -1,6 +1,6 @@
-package $package.users.infrastructure.repositories;
+package ${package}.users.infrastructure.repositories;
 
-import $package.users.domain.User;
+import ${package}.users.domain.User;
 import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.UUID;

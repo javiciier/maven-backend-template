@@ -1,7 +1,7 @@
-package $package.users.infrastructure.repositories;
+package ${package}.users.infrastructure.repositories;
 
-import $package.users.domain.Role;
-import $package.users.domain.UserRoles;
+import ${package}.users.domain.Role;
+import ${package}.users.domain.UserRoles;
 import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.Optional;

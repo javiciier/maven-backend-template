@@ -1,4 +1,4 @@
-package $package.users.infrastructure.dto.output;
+package ${package}.users.infrastructure.dto.output;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

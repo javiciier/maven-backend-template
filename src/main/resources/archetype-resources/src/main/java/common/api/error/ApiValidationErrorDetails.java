@@ -1,4 +1,4 @@
-package $package.common.api.error;
+package ${package}.common.api.error;
 
 import lombok.*;
 

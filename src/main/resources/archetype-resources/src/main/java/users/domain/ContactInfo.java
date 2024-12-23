@@ -1,4 +1,4 @@
-package $package.users.domain;
+package ${package}.users.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

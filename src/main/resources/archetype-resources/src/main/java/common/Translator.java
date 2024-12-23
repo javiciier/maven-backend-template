@@ -1,6 +1,6 @@
-package $package.common;
+package ${package}.common;
 
-import $package.common.config.InternationalizationConfiguration;
+import ${package}.common.config.InternationalizationConfiguration;
 import lombok.NoArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;

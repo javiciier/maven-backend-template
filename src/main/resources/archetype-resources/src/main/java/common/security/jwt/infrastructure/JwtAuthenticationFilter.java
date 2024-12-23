@@ -1,7 +1,7 @@
-package $package.common.security.jwt.infrastructure;
+package ${package}.common.security.jwt.infrastructure;
 
-import $package.common.security.jwt.application.JwtGenerator;
-import $package.common.security.jwt.domain.JwtData;
+import ${package}.common.security.jwt.application.JwtGenerator;
+import ${package}.common.security.jwt.domain.JwtData;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static $package.common.security.SecurityConstants.*;
+import static ${package}.common.security.SecurityConstants.*;
 
 @Log4j2
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {

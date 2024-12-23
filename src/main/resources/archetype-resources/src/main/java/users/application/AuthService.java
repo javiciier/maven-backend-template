@@ -1,8 +1,8 @@
-package $package.users.application;
+package ${package}.users.application;
 
-import $package.users.domain.User;
-import $package.users.domain.exceptions.*;
-import $package.users.infrastructure.dto.input.RegisterUserParamsDTO;
+import ${package}.users.domain.User;
+import ${package}.users.domain.exceptions.*;
+import ${package}.users.infrastructure.dto.input.RegisterUserParamsDTO;
 
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
-package $package.users.infrastructure.repositories;
+package ${package}.users.infrastructure.repositories;
 
-import $package.users.domain.Credential;
+import ${package}.users.domain.Credential;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 

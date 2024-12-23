@@ -1,7 +1,7 @@
-package $package.users.domain.exceptions;
+package ${package}.users.domain.exceptions;
 
-import $package.common.exception.EntityAlreadyExistsException;
-import $package.users.domain.User;
+import ${package}.common.exception.EntityAlreadyExistsException;
+import ${package}.users.domain.User;
 import jakarta.validation.constraints.NotNull;
 
 public class UserAlreadyExistsException extends EntityAlreadyExistsException {

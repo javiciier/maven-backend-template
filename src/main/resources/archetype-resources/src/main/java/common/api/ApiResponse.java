@@ -1,4 +1,4 @@
-package $package.common.api;
+package ${package}.common.api;
 
 import lombok.*;
 

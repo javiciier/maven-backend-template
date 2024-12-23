@@ -1,8 +1,8 @@
-package $package.common.security.jwt.application;
+package ${package}.common.security.jwt.application;
 
-import $package.common.security.keys.RsaKeyManager;
-import $package.common.security.jwt.domain.JwtData;
-import $package.common.security.jwt.domain.JwtDataVisitor;
+import ${package}.common.security.keys.RsaKeyManager;
+import ${package}.common.security.jwt.domain.JwtData;
+import ${package}.common.security.jwt.domain.JwtDataVisitor;
 import io.jsonwebtoken.*;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;

@@ -1,10 +1,10 @@
-package $package.users.application;
+package ${package}.users.application;
 
-import $package.users.application.utils.AuthUtils;
-import $package.users.domain.*;
-import $package.users.domain.exceptions.*;
-import $package.users.infrastructure.dto.input.UpdateContactInfoParamsDTO;
-import $package.users.infrastructure.repositories.*;
+import ${package}.users.application.utils.AuthUtils;
+import ${package}.users.domain.*;
+import ${package}.users.domain.exceptions.*;
+import ${package}.users.infrastructure.dto.input.UpdateContactInfoParamsDTO;
+import ${package}.users.infrastructure.repositories.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package $package.common.exception;
+package ${package}.common.exception;
 
 import jakarta.validation.constraints.NotNull;
 

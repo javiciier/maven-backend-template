@@ -1,8 +1,8 @@
-package $package.users.application;
+package ${package}.users.application;
 
-import $package.users.domain.User;
-import $package.users.domain.exceptions.UserNotFoundException;
-import $package.users.infrastructure.dto.input.UpdateContactInfoParamsDTO;
+import ${package}.users.domain.User;
+import ${package}.users.domain.exceptions.UserNotFoundException;
+import ${package}.users.infrastructure.dto.input.UpdateContactInfoParamsDTO;
 
 import java.util.UUID;
 

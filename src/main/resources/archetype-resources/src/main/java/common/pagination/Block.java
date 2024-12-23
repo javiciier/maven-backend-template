@@ -1,4 +1,4 @@
-package $package.common.pagination;
+package ${package}.common.pagination;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
