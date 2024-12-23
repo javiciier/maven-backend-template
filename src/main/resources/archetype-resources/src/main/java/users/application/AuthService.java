@@ -43,6 +43,6 @@ public interface AuthService {
      * @throws PasswordsDoNotMatchException Contraseñas no coinciden
      */
     void changePassword(UUID userID, String oldPassword, String newPassword)
-            throws UserNotFoundException, PasswordsDoNotMatchException;
+            throws UserNotFoundException, PasswordsMismatchException;
 
 }

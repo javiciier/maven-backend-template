@@ -4,7 +4,6 @@ import $package.common.security.PasswordEncoderBean;
 import $package.common.security.jwt.application.JwtGenerator;
 import $package.common.security.jwt.domain.JwtData;
 import $package.users.domain.*;
-import $package.users.domain.exceptions.UserIsDeactivatedException;
 import $package.users.domain.exceptions.UserNotFoundException;
 import $package.users.infrastructure.repositories.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -79,16 +78,11 @@ public class AuthUtils {
         return userRoleRepo.save(userRole);
     }
 
-    public User fetchUserByNickname(String nickname) throws UserNotFoundException, UserIsDeactivatedException {
+    public User fetchUserByNickname(String nickname) throws UserNotFoundException {
         // Comprobar si existen credenciales para el nickname recibido
         User user = credentialRepo.findByNicknameIgnoreCase(nickname)
                 .orElseThrow(() -> new UserNotFoundException(nickname))
                 .getUser();
-
-        // Comprobar si usuario está activo
-        if (!user.getIsActive()) {
-            throw new UserIsDeactivatedException();
-        }
 
         return user;
     }
@@ -99,14 +93,9 @@ public class AuthUtils {
                 .orElseThrow(() -> new UserNotFoundException(userID));
     }
 
-    public User fetchUserByID(UUID userID) throws UserNotFoundException, UserIsDeactivatedException {
+    public User fetchUserByID(UUID userID) throws UserNotFoundException {
         // Comprobar si existe el usuario
         User user = findUserByID(userID);
-
-        // Comprobar si usuario está activo
-        if (!user.getIsActive()) {
-            throw new UserIsDeactivatedException();
-        }
 
         return user;
     }

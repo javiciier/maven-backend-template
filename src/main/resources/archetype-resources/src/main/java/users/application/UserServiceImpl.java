@@ -1,13 +1,10 @@
 package $package.users.application;
 
 import $package.users.application.utils.AuthUtils;
-import $package.users.domain.ContactInfo;
-import $package.users.domain.User;
-import $package.users.domain.exceptions.UserIsDeactivatedException;
-import $package.users.domain.exceptions.UserNotFoundException;
+import $package.users.domain.*;
+import $package.users.domain.exceptions.*;
 import $package.users.infrastructure.dto.input.UpdateContactInfoParamsDTO;
-import $package.users.infrastructure.repositories.ContactInfoRepository;
-import $package.users.infrastructure.repositories.UserRepository;
+import $package.users.infrastructure.repositories.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,12 +30,12 @@ public class UserServiceImpl implements UserService {
 
     /* USE CASES */
     @Override
-    public User findUserByID(UUID userID) throws UserNotFoundException, UserIsDeactivatedException {
+    public User findUserByID(UUID userID) throws UserNotFoundException {
         return authUtils.fetchUserByID(userID);
     }
 
     @Override
-    public User updateContactInfo(UUID userID, UpdateContactInfoParamsDTO paramsDTO) throws UserNotFoundException, UserIsDeactivatedException {
+    public User updateContactInfo(UUID userID, UpdateContactInfoParamsDTO paramsDTO) throws UserNotFoundException {
         // Obtener al usuario y sus datos de contacto
         User user = authUtils.fetchUserByID(userID);
         ContactInfo contactInfo = user.getContactInfo();

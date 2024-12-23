@@ -1,7 +1,6 @@
 package $package.users.application;
 
 import $package.users.domain.User;
-import $package.users.domain.exceptions.UserIsDeactivatedException;
 import $package.users.domain.exceptions.UserNotFoundException;
 import $package.users.infrastructure.dto.input.UpdateContactInfoParamsDTO;
 
@@ -16,7 +15,7 @@ public interface UserService {
      * @throws UserNotFoundException No se encuentra al usuario
      * @throws UserIsDeactivatedException Usuario está desactivado
      */
-    User findUserByID(UUID userID) throws UserNotFoundException, UserIsDeactivatedException;
+    User findUserByID(UUID userID) throws UserNotFoundException;
 
     /**
      * Actualiza la información de contacto del usuario
@@ -27,6 +26,6 @@ public interface UserService {
      * @throws UserNotFoundException No se encuentra al usuario
      * @throws UserIsDeactivatedException Usuario está desactivado
      */
-    User updateContactInfo(UUID userID, UpdateContactInfoParamsDTO updateParams) throws UserNotFoundException, UserIsDeactivatedException;
+    User updateContactInfo(UUID userID, UpdateContactInfoParamsDTO updateParams) throws UserNotFoundException;
 
 }

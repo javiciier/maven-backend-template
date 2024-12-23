@@ -15,7 +15,7 @@ public class JwtDataVisitor {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends Map<String, Object>> JwtData fromMap(T map) {
+    public static JwtData fromMap(Map<String, Object> map) {
         return JwtData.builder()
                 .userID(UUID.fromString((String) map.get(JwtDataFields.USER_ID.getValue())))
                 .nickname((String) map.get(JwtDataFields.NICKNAME.getValue()))

@@ -40,22 +40,21 @@ public class JwtGeneratorImpl implements JwtGenerator {
         log.info("Generating JWT for user {}", data.getUserID());
 
         return Jwts.builder()
-                //.signWith(publicKey)
                 .signWith(privateKey)
                 .issuer(applicationName)
                 .subject(applicationName)
                 .expiration(tokenExpirationDate)
                 .issuedAt(currentDate)
-                .notBefore(currentDate)
                 .header()
                 .empty()
-                .add("typ", "JWT")
                 .and()
                 .claim("claims", customClaims)
                 .compact();
     }
 
+
     @Override
+    @SuppressWarnings("unchecked")
     public JwtData extractData(String token) {
         PublicKey publicKey = RsaKeyManager.loadKeyPair().getPublic();
 
@@ -68,7 +67,7 @@ public class JwtGeneratorImpl implements JwtGenerator {
         Claims claims = jwtParser
                 .parseSignedClaims(token)
                 .getPayload();
-        Map<String, Object> customClaims = (Map<String, Object>) claims.get("claims");
+        Map<String, Object> customClaims = claims.get("claims", Map.class);
 
         return JwtDataVisitor.fromMap(customClaims);
     }

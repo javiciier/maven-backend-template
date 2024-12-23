@@ -65,12 +65,6 @@ public class AuthServiceImpl implements AuthService {
             user = authUtils.fetchUserByNickname(nickname);
         } catch (UserNotFoundException e) {
             throw new IncorrectLoginException();
-        } catch (UserIsDeactivatedException e) {
-            // Si usuario estaba desactivado, lo marca como activo
-            user = credentialRepo.findByNicknameIgnoreCase(nickname)
-                    .get()
-                    .getUser();
-            user = reactivateUser(user);
         }
 
         // Comprobar si credenciales coinciden
@@ -86,30 +80,22 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User loginViaJWT(UUID userID) throws UserNotFoundException {
-        User user = null;
-        try {
-            // Buscar al usuario
-            user = authUtils.fetchUserByID(userID);
-        } catch (UserIsDeactivatedException e) {
-            // Si usuario estaba desactivado, lo marca como activo
-            user = authUtils.findUserByID(userID);
-            user = reactivateUser(user);
-        }
-
+        User user = authUtils.fetchUserByID(userID);
         log.info("User {} authenticated using Json Web Token", userID);
+
         return user;
     }
 
     @Override
     public void changePassword(UUID userID, String oldPassword, String newPassword)
-            throws UserNotFoundException, PasswordsDoNotMatchException {
+            throws UserNotFoundException, PasswordsMismatchException {
         // Obtener al usurio y sus credenciales
         Credential credential = authUtils.findUserCredential(userID);
 
         // Comprobar que contraseñas coinciden
         String currentPassword = credential.getPasswordEncrypted();
         if (!authUtils.doPasswordsMatch(oldPassword, currentPassword)) {
-            throw new PasswordsDoNotMatchException();
+            throw new PasswordsMismatchException();
         }
 
         // Cifrar y actualizar contraseña
@@ -134,10 +120,10 @@ public class AuthServiceImpl implements AuthService {
         return user;
     }
 
-    private User createCredentialForUser(RegisterUserParamsDTO paramsDTO, User user) {
-        String encryptedPassword = authUtils.encryptPassword(paramsDTO.getRawPassword());
+    private User createCredentialForUser(RegisterUserParamsDTO dto, User user) {
+        String encryptedPassword = authUtils.encryptPassword(dto.getRawPassword());
         Credential credentials = Credential.builder()
-                .nickname(paramsDTO.getNickname())
+                .nickname(dto.getNickname())
                 .passwordEncrypted(encryptedPassword)
                 .user(user)
                 .build();
@@ -146,23 +132,12 @@ public class AuthServiceImpl implements AuthService {
 
         return user;
     }
-
-    private User reactivateUser(User user) {
-        if (user.getIsActive()) return user;
-
-        // Si usuario estaba desactivado, lo marca como activo
-        user.markAsActive();
-        log.info("User with ID {} was deactivated, but now is active again after login", user.getUserID());
-
-        return userRepo.save(user);
-    }
-
-    private User fromRegisterParams(RegisteruserParamsDTO dto) {
+    private User fromRegisterParams(RegisterUserParamsDTO dto) {
         return User.builder()
-                .name(paramsDTO.getName())
-                .surname(paramsDTO.getSurname())
-                .gender(paramsDTO.getGender())
-                .birthDate(paramsDTO.getBirthDate())
+                .name(dto.getName())
+                .surname(dto.getSurname())
+                .gender(dto.getGender())
+                .birthDate(dto.getBirthDate())
                 .build();
     }
 }
