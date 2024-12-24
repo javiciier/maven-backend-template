@@ -18,14 +18,15 @@ import static ${package}.common.api.ApiResponseHelper.buildErrorApiResponse;
 @ControllerAdvice
 @NoArgsConstructor
 public class CommonControllerAdvice {
-    /* ******************** TRADUCCIONES DE EXCEPCIONES ******************** */
+    // region EXCEPTION KEYS
     public static final String METHOD_ARGUMENT_NOT_VALID_KEY = "MethodArgumentNotValidException";
     public static final String VALIDATION_KEY = "ValidationException";
     public static final String INVALID_ARGUMENT_KEY = "InvalidArgumentException";
     public static final String MISSING_MANDATORY_VALUE_KEY = "MissingMandatoryValueException";
 
+    // endregion EXCEPTION KEYS
 
-    /* ******************** MANEJADORES DE EXCEPCIONES ******************** */
+    // region EXCEPTION HANDLERS
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -65,5 +66,8 @@ public class CommonControllerAdvice {
 
         return buildErrorApiResponse(HttpStatus.BAD_REQUEST, errorMessage);
     }
+
+    // endregion EXCEPTION HANDLERS
+
 
 }

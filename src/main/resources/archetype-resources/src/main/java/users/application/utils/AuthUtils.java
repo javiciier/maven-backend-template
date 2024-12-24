@@ -65,7 +65,7 @@ public class AuthUtils {
     public UserRole assignRoleToUser(User user, UserRoles roleName) {
         Role role = roleRepo.findByName(roleName).get();
 
-        // Asignar rol a usuario
+        // Assign role to user
         UserRole userRole = UserRole.builder()
                 .id(new UserRoleID(user.getUserID(), role.getRoleID()))
                 .assignedAt(LocalDateTime.now())
@@ -79,7 +79,7 @@ public class AuthUtils {
     }
 
     public User fetchUserByNickname(String nickname) throws UserNotFoundException {
-        // Comprobar si existen credenciales para el nickname recibido
+        // Check credentials exists for the given nickname
         User user = credentialRepo.findByNicknameIgnoreCase(nickname)
                 .orElseThrow(() -> new UserNotFoundException(nickname))
                 .getUser();
@@ -88,13 +88,13 @@ public class AuthUtils {
     }
 
     public User findUserByID(UUID userID) throws UserNotFoundException {
-        // Comprobar si existe el usuario
+        // Check user exists
         return userRepo.findById(userID)
                 .orElseThrow(() -> new UserNotFoundException(userID));
     }
 
     public User fetchUserByID(UUID userID) throws UserNotFoundException {
-        // Comprobar si existe el usuario
+        // Check user exists
         User user = findUserByID(userID);
 
         return user;

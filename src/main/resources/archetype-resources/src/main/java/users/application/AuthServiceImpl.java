@@ -16,7 +16,7 @@ import java.util.UUID;
 @Transactional
 @Service
 public class AuthServiceImpl implements AuthService {
-    /* DEPENDENCIES */
+    // region DEPENDENCIES
     private final UserRepository userRepo;
     private final CredentialRepository credentialRepo;
     private final ContactInfoRepository contactInfoRepo;
@@ -32,22 +32,23 @@ public class AuthServiceImpl implements AuthService {
         this.authUtils = authUtils;
     }
 
+    // endregion DEPENDENCIES
 
-    /* USE CASES */
+    // region USE CASES
     @Override
     public User register(RegisterUserParamsDTO paramsDTO) throws UserAlreadyExistsException {
-        // Comprobar si existe un usuario con el mismo nickname
+        // Check if another user with same nickname already exists
         if (credentialRepo.existsByNicknameIgnoreCase(paramsDTO.getNickname())) {
             throw new UserAlreadyExistsException(paramsDTO.getNickname());
         }
 
-        // Crear usuario
+        // Register user
         User user = fromRegisterParams(paramsDTO);
         user = userRepo.save(user);
         createCredentialForUser(paramsDTO, user);
         createContactInfoForUser(paramsDTO, user);
 
-        // Asignar datos por defecto
+        // Set default user data
         user.setRegisteredAt(LocalDateTime.now());
         authUtils.assignRoleToUser(user, UserRoles.BASIC);
         user = userRepo.save(user);
@@ -59,7 +60,7 @@ public class AuthServiceImpl implements AuthService {
     @Transactional(readOnly = true)
     @Override
     public User login(String nickname, String rawPassword) throws IncorrectLoginException {
-        // Comprobar si existe el usuario
+        // Check if user exists
         User user;
         try {
             user = authUtils.fetchUserByNickname(nickname);
@@ -67,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
             throw new IncorrectLoginException();
         }
 
-        // Comprobar si credenciales coinciden
+        // Check if credentials match
         Credential userCredentials = user.getCredential();
         if (!authUtils.doPasswordsMatch(rawPassword, userCredentials.getPasswordEncrypted())) {
             throw new IncorrectLoginException();
@@ -89,16 +90,16 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void changePassword(UUID userID, String oldPassword, String newPassword)
             throws UserNotFoundException, PasswordsMismatchException {
-        // Obtener al usurio y sus credenciales
+        // Find user and credentials
         Credential credential = authUtils.findUserCredential(userID);
 
-        // Comprobar que contraseñas coinciden
+        // Check passwords match
         String currentPassword = credential.getPasswordEncrypted();
         if (!authUtils.doPasswordsMatch(oldPassword, currentPassword)) {
             throw new PasswordsMismatchException();
         }
 
-        // Cifrar y actualizar contraseña
+        // Encrypt and update password
         String encodedNewPassword = authUtils.encryptPassword(newPassword);
         credential.setPasswordEncrypted(encodedNewPassword);
 
@@ -106,8 +107,10 @@ public class AuthServiceImpl implements AuthService {
         credentialRepo.save(credential);
     }
 
+    // endregion USE CASES
 
-    /* HELPER FUNCTIONS */
+
+    // region AUXILIAR METHODS
     private User createContactInfoForUser(RegisterUserParamsDTO paramsDTO, User user) {
         ContactInfo contactInfo = ContactInfo.builder()
                 .email(paramsDTO.getEmail().toLowerCase())
@@ -140,4 +143,7 @@ public class AuthServiceImpl implements AuthService {
                 .birthDate(dto.getBirthDate())
                 .build();
     }
+
+    // endregion AUXILIAR METHODS
+
 }

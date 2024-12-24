@@ -12,7 +12,7 @@ import lombok.*;
 @Entity
 @Table(name = "Credential", schema = "users")
 public class Credential {
-    /* Atributes */
+    // region Atributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "credential_id", nullable = false)
@@ -24,14 +24,18 @@ public class Credential {
     @Column(name = "passwordEncrypted", nullable = false)
     private String passwordEncrypted;
 
+    // endregion Atributes
 
-    /* Relationships */
+
+    // region Relationships
     @ToString.Exclude
     @OneToOne(optional = false, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
+    // endregion Relationships
 
-    /* Domain-Model */
 
+    // region Domain-Model methods
+    // endregion Domain-Model methods
 }

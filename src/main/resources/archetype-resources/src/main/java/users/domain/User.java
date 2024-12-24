@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "userTable", schema = "users")
 public class User {
-    /* Atributes */
+    // region Atributes
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id", nullable = false)
@@ -39,8 +39,10 @@ public class User {
     @Column(name = "registeredat", nullable = false)
     private LocalDateTime registeredAt = LocalDateTime.now();
 
+    // endregion Atributes
 
-    /* Relationships */
+
+    // region Relationships
     @ToString.Exclude
     @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private Credential credential;
@@ -53,8 +55,10 @@ public class User {
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<UserRole> userRoles = new ArrayList<>();
 
+    // endregion Relationships
 
-    /* Domain-Model */
+
+    // region Domain-Model methods
     @Transient
     public void attachCredential(Credential other) {
         other.setUser(this);
@@ -75,5 +79,7 @@ public class User {
                 .map(userRole -> userRole.getRole().getName())
                 .collect(Collectors.toList());
     }
+
+    // endregion Domain-Model methods
 
 }

@@ -12,7 +12,7 @@ import lombok.*;
 @Entity
 @Table(name = "contactinfo", schema = "users")
 public class ContactInfo {
-    /* Atributes */
+    // region Atributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contactinfo_id", nullable = false)
@@ -32,14 +32,18 @@ public class ContactInfo {
     @Column(name = "isphonenumberverified", nullable = false)
     private Boolean isPhoneNumberVerified = false;
 
+    // endregion Atributes
 
-    /* Relationships */
+
+    // region Relationships
     @ToString.Exclude
     @OneToOne(optional = false, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
+    // endregion Relationships
 
-    /* Domain-Model */
 
+    // region Domain-Model methods
+    // endregion Domain-Model methods
 }

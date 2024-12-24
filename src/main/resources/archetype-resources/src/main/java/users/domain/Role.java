@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "role", schema = "users")
 public class Role {
-    /* Atributes */
+    // region Atributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id", nullable = false)
@@ -24,13 +24,17 @@ public class Role {
     @Column(name = "role", nullable = false)
     private UserRoles name;
 
+    // endregion Atributes
 
-    /* Relationships */
+
+    // region Relationships
     @ToString.Exclude
     @OneToMany(mappedBy = "role")
     private Set<UserRole> userRoles = new LinkedHashSet<>();
 
+    // endregion Relationships
 
-    /* Domain-Model */
 
+    // region Domain-Model methods
+    // endregion Domain-Model methods
 }

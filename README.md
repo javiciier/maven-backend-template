@@ -28,7 +28,6 @@ Checklists
 - [x] Done
 -->
 
-- Cambiar los comentarios que separan secciones dentro del códdigo por comentarios /* region */
 - Mover toda la parte de autenticación a un nuevo paquete base 'auth'
 - Pulir scripts para automatizar tareas de creación del proyecto, mover todo a carpeta /scripts (actualizar .gitignore)
 - Crear un script que genere un banner que lea el nombre del proyecto

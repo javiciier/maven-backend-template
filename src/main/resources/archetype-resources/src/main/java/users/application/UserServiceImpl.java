@@ -15,7 +15,7 @@ import java.util.UUID;
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
-    /* DEPENDENCIES */
+    // region DEPENDENCIES
     private final ContactInfoRepository contactInfoRepo;
     private final AuthUtils authUtils;
     private final UserRepository userRepo;
@@ -28,7 +28,9 @@ public class UserServiceImpl implements UserService {
         this.userRepo = userRepo;
     }
 
-    /* USE CASES */
+    // endregion DEPENDENCIES
+
+    // region USE CASES
     @Override
     public User findUserByID(UUID userID) throws UserNotFoundException {
         return authUtils.fetchUserByID(userID);
@@ -36,19 +38,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateContactInfo(UUID userID, UpdateContactInfoParamsDTO paramsDTO) throws UserNotFoundException {
-        // Obtener al usuario y sus datos de contacto
+        // Check user exists and get its credentials
         User user = authUtils.fetchUserByID(userID);
         ContactInfo contactInfo = user.getContactInfo();
 
         boolean hasChangedContact = false;
-        // Comprobar si los campos han cambiado para actualizarlos
+        // Check fields that have changed
         if (hasChanged(contactInfo.getEmail(), paramsDTO.getNewEmail())) {
-            // TODO Validar y confirmar email
+            // TODO Validate and confirm email
             contactInfo.setEmail(paramsDTO.getNewEmail());
             hasChangedContact = true;
         }
         if (hasChanged(contactInfo.getPhoneNumber(), paramsDTO.getNewMobilePhone())) {
-            // TODO validar y confirmar teléfono
+            // TODO Validate and confirm phone
             contactInfo.setPhoneNumber(paramsDTO.getNewMobilePhone());
             hasChangedContact = true;
         }
@@ -61,8 +63,14 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    /* HELPER FUNCTIONS */
+    // endregion USE CASES
+
+
+    // region AUXILIAR METHODS
     private <T extends Object> boolean hasChanged(T expected, T received) {
         return !expected.equals(received);
     }
+
+    // endregion AUXILIAR METHODS
+
 }

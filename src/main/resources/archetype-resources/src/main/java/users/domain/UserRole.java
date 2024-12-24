@@ -16,12 +16,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "userrole", schema = "users")
 public class UserRole {
-    /* Atributes */
+    // region Atributes
     @EmbeddedId
     private UserRoleID id;
 
+    // endregion Atributes
 
-    /* Relationships */
+    // region Relationships
     @ToString.Exclude
     @MapsId("userID")
     @ManyToOne(optional = false)
@@ -40,6 +41,9 @@ public class UserRole {
     private LocalDateTime assignedAt = LocalDateTime.now();
 
 
-    /* Domain-Model */
+    // endregion Relationships
 
+
+    // region Domain-Model methods
+    // endregion Domain-Model methods
 }
