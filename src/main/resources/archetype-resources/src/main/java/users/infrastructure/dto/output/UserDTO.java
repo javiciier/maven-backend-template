@@ -42,10 +42,5 @@ public class UserDTO {
 
     private ContactInfoDTO contactInfo;
 
-    private Boolean isActive;
-
-    @PastOrPresent
-    private LocalDateTime unactiveSince;
-
 }
 
