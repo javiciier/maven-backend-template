@@ -23,14 +23,14 @@ public class UserRole {
 
     /* Relationships */
     @ToString.Exclude
-    @MapsId("userId")
+    @MapsId("userID")
     @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ToString.Exclude
-    @MapsId("roleId")
+    @MapsId("roleID")
     @ManyToOne(optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;

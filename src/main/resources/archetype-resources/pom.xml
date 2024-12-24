@@ -10,7 +10,6 @@
         <version>3.3.4</version>
     </parent>
 
-
     <groupId>${groupId}</groupId>
     <artifactId>${artifactId}</artifactId>
     <version>${version}</version>
@@ -38,6 +37,7 @@
         <mockito-core.version>5.11.0</mockito-core.version>
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
         <bcprov-jdk18on.version>1.76</bcprov-jdk18on.version>
+        <dependencies.version.postgresqldriver>42.7.4</dependencies.version.postgresqldriver>
     </properties>
 
     <dependencies>
@@ -189,6 +189,15 @@
             <artifactId>mockito-inline</artifactId>
             <version>${mockito-inline.version}</version>
             <scope>test</scope>
+        </dependency>
+
+
+        <!-- Group "org.postgresql" -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${dependencies.version.postgresqldriver}</version>
+            <scope>runtime</scope>
         </dependency>
 
 

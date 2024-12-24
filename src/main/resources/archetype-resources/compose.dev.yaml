@@ -1,12 +1,14 @@
+name: ${appName}-stack
+
 services:
-  db-test:
+  db-dev:
     image: 'postgres:17-alpine'
-    container_name: 'Test-container'
+    container_name: 'Dev-container'
     environment:
-      - 'POSTGRES_DB=testing'
+      - 'POSTGRES_DB=development'
       - 'POSTGRES_USER=myuser'
       - 'POSTGRES_PASSWORD=mypassword'
     ports:
-      - '5431:5432'
+      - '5432:5432'
     volumes:
       - ./src/main/sql/user-schema.sql:/docker-entrypoint-initdb.d/1-user-schema.sql

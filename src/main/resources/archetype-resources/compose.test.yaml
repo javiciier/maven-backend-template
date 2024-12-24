@@ -1,3 +1,5 @@
+name: ${appName}-stack
+
 services:
   db-test:
     image: 'postgres:17-alpine'

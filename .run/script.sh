@@ -1,16 +1,16 @@
 #!/bin/sh
 REPO_PATH=$(git rev-parse --show-toplevel)
-echo $0
-properties_path="${1:-${REPO_PATH}/src/test/resources/projects/it-basic/archetype.properties}"
+ARCHETYPE_PROPERTIES_PATH=${REPO_PATH}/src/test/resources/projects/it-basic/archetype.properties
+PROPERTIES_PATH="${1:-$ARCHETYPE_PROPERTIES_PATH}"
 
 # Verificar si el archivo de propiedades existe
-if [ ! -f "$properties_path" ]; then
-  echo "El archivo $properties_path no existe."
+if [ ! -f "$PROPERTIES_PATH" ]; then
+  echo "El archivo $PROPERTIES_PATH no existe."
   exit 1
 fi
 
 # Leer las propiedades desde el archivo archetype.properties
-source "$properties_path"
+source $PROPERTIES_PATH
 
 # Propiedades obligatorias para crear el proyecto
 mandatory_properties="groupId artifactId version package appName inceptionYear"
@@ -20,7 +20,7 @@ inceptionYear="${inceptionYear:-$(date +%Y)}"
 for property in $mandatory_properties; do
   value=$(eval echo \$$property)
   if [ -z "$value" ]; then
-    echo "La propiedad '$property' es obligatoria pero no está definida en '${properties_path}'."
+    echo "La propiedad '$property' es obligatoria pero no está definida en '${PROPERTIES_PATH}'."
     exit 1
   fi
 done
@@ -28,7 +28,8 @@ done
 # Construir el comando Maven con las propiedades reemplazadas
 mvn_command="#!/bin/sh
 
-mvn install archetype:update-local-catalog
+mvn install -U
+mvn archetype:update-local-catalog
 cd ${REPO_PATH}/..
 rm -rf $artifactId
 mvn archetype:generate -B                             \\
@@ -49,5 +50,6 @@ echo "$mvn_command" > $create_archetype_command
 
 # Informar al usuario sobre la ubicación del archivo generado
 echo "Comando maven para generar archetype guardado en '$create_archetype_command'"
+printf "\n"
 
 sh $create_archetype_command

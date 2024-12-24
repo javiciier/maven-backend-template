@@ -28,10 +28,8 @@ Checklists
 - [x] Done
 -->
 
-- [WIP] Implementar paquete users (y script sql) y directorio resources (con su i18n)
 - Cambiar los comentarios que separan secciones dentro del códdigo por comentarios /* region */
 - Mover toda la parte de autenticación a un nuevo paquete base 'auth'
-- Configurar autoarranque de docker compose, crear los docker-compose, etc.
 - Pulir scripts para automatizar tareas de creación del proyecto, mover todo a carpeta /scripts (actualizar .gitignore)
 - Crear un script que genere un banner que lea el nombre del proyecto
 - Configurar un Linter de java y adjuntarlo a un nuevo perfil de Maven. Ejecutarlo antes de compilar código.

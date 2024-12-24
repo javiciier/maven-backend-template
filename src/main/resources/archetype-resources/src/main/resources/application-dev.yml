@@ -1,7 +1,7 @@
 spring:
   docker:
     compose:
-      enabled: false
+      enabled: true
       file: 'compose.@activatedProperties@.yaml'
       lifecycle-management: start_and_stop
   datasource:
