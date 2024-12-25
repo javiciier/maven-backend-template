@@ -336,6 +336,11 @@
                     <version>${log4j2.elasticsearch.version}</version>
                     <scope>runtime</scope>
                 </dependency>
+                <dependency>
+                    <groupId>org.appenders.log4j</groupId>
+                    <artifactId>log4j2-elasticsearch-hc</artifactId>
+                    <version>${log4j2.elasticsearch.version}</version>
+                </dependency>
             </dependencies>
         </profile>
 
