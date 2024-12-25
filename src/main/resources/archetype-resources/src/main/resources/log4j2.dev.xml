@@ -2,24 +2,36 @@
 <Configuration status="WARN">
     <Properties>
         <Property name="date">%d{dd-MM-yyyy HH:mm:ss.SSS}</Property>
+        <Property name="iso-date">%d{ISO8601}</Property>
         <Property name="thread">[%t]</Property>
         <Property name="level">%-5level</Property>
         <Property name="logger">%logger</Property>
         <Property name="message">%msg</Property>
-        <Property name="logFormat">${date} ${thread} ${level} ${logger} -- ${message} %n</Property>
+        <Property name="logFormat">${iso-date} ${thread} ${level} ${logger} -- ${message} %n</Property>
+        <Property name="applicationName">${appName}</Property>
     </Properties>
+
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${logFormat}"/>
         </Console>
+
         <File name="File" fileName="logs/dev/dev-logs.log">
             <PatternLayout pattern="${logFormat}"/>
         </File>
+
+        <Elasticsearch name="Elasticsearch" serverUris="http://localhost:9200">
+            <IndexName>${applicationName}</IndexName>
+            <JacksonJsonLayout compact="true"/>
+        </Elasticsearch>
     </Appenders>
+
     <Loggers>
         <Root level="info">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
+            <AppenderRef ref="Elasticsearch"/>
         </Root>
     </Loggers>
+
 </Configuration>

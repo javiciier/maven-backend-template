@@ -37,7 +37,7 @@
         <mockito-core.version>5.11.0</mockito-core.version>
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
         <bcprov-jdk18on.version>1.76</bcprov-jdk18on.version>
-        <dependencies.version.postgresqldriver>42.7.4</dependencies.version.postgresqldriver>
+        <postgresql.driver.version>42.7.4</postgresql.driver.version>
     </properties>
 
     <dependencies>
@@ -196,7 +196,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${dependencies.version.postgresqldriver}</version>
+            <version>${postgresql.driver.version}</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -326,7 +326,17 @@
                 <activatedProperties>dev</activatedProperties>
                 <!-- Skip tests -->
                 <maven.test.skip>true</maven.test.skip>
+                <!-- Project dependencies versions for current profile -->
+                <log4j2.elasticsearch.version>1.6.1</log4j2.elasticsearch.version>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.appenders.log4j</groupId>
+                    <artifactId>log4j2-elasticsearch-core</artifactId>
+                    <version>${log4j2.elasticsearch.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
         </profile>
 
         <!-- Testing profile -->
