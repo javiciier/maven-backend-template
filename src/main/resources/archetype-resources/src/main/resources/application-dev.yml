@@ -9,5 +9,5 @@ spring:
     username: myuser
     password: mypassword
 logging:
-  config: 'classpath:log4j2.dev.xml'
+  config: 'classpath:log4j2.@activatedProperties@.xml'
 

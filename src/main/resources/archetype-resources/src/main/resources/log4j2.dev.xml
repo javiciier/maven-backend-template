@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Properties>
-        <Property name="date">%d{dd-MM-yyyy HH:mm:ss.SSS}</Property>
-        <Property name="iso-date">%d{ISO8601}</Property>
+        <Property name="iso-date">%date{yyyy-MM-dd'T'HH:mm:ss.SSSZ}{GMT+1}</Property>
         <Property name="thread">[%t]</Property>
         <Property name="level">%-5level</Property>
         <Property name="logger">%logger</Property>
@@ -21,8 +20,8 @@
         </File>
 
         <Elasticsearch name="Elasticsearch" serverUris="http://localhost:9200">
-            <IndexName>${applicationName}</IndexName>
-            <JacksonJsonLayout compact="true"/>
+            <IndexName indexName="${applicationName}-index"/>
+            <JacksonJsonLayout/>
         </Elasticsearch>
     </Appenders>
 

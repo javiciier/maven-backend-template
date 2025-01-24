@@ -20,14 +20,19 @@ services:
       - discovery.type=single-node
     ports:
       - "9200:9200"
-      - "9300:9300"
     volumes:
       - esdata:/usr/share/elasticsearch/data
+      - ./src/main/resorces/${appName}-elasticsearch-index-template.json:/usr/share/elasticsearch/config/templates
     networks:
       - elastic
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9200" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:8.10.0
+    image: docker.elastic.co/kibana/kibana:8.17.0
     container_name: kibana
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
@@ -37,6 +42,11 @@ services:
       - elastic
     depends_on:
       - dev-elasticsearch
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5601" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 networks:
   elastic:
