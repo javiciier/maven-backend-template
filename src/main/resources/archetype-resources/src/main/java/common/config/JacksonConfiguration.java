@@ -2,6 +2,7 @@ package ${package}.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import ${package}.common.config.serialization.serializers.*;
 import ${package}.common.config.serialization.deserializers.*;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +29,7 @@ public class JacksonConfiguration {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(javaTimeModule);
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         return objectMapper;
     }
