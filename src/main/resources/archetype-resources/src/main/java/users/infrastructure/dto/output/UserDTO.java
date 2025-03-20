@@ -1,7 +1,7 @@
 package ${package}.users.infrastructure.dto.output;
 
-import ${package}.users.domain.Gender;
-import ${package}.users.domain.UserRoles;
+import ${package}.users.domain.entities.*;
+import ${package}.users.domain.entities.roles.*;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
@@ -38,7 +38,7 @@ public class UserDTO {
     @PastOrPresent
     private LocalDateTime registeredAt;
 
-    private List<UserRoles> roles;
+    private List<Role> roles;
 
     private ContactInfoDTO contactInfo;
 

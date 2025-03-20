@@ -26,7 +26,7 @@ for property in $mandatory_properties; do
 done
 
 # Construir el comando Maven con las propiedades reemplazadas
-mvn_command="#!/bin/sh
+mvn_command="#!/usr/bin/env bash
 
 mvn install -U
 mvn archetype:update-local-catalog
@@ -41,7 +41,8 @@ mvn archetype:generate -B                             \\
   -DartifactId=$artifactId                            \\
   -Dversion=$version                                  \\
   -DappName=$appName                                  \\
-  -DinceptionYear=$inceptionYear
+  -DinceptionYear=$inceptionYear                      \\
+  -Dgoals=compile
 "
 
 # Escribir el comando generado en el archivo de salida
@@ -52,4 +53,4 @@ echo "$mvn_command" > $create_archetype_command
 echo "Comando maven para generar archetype guardado en '$create_archetype_command'"
 printf "\n"
 
-sh $create_archetype_command
+/usr/bin/env bash $create_archetype_command

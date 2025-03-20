@@ -1,12 +1,17 @@
-package ${package}.users.domain;
+package ${package}.users.domain.entities;
+
+import ${package}.users.domain.entities.roles.Role;
+import ${package}.users.domain.entities.roles.RoleAssignment;
+import ${package}.users.domain.entities.roles.RoleAssignmentID;
+import ${package}.users.domain.entities.roles.RoleNames;
 
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.beans.Transient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -53,10 +58,16 @@ public class User {
     @ToString.Exclude
     @Builder.Default
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<UserRole> userRoles = new ArrayList<>();
+    private List<RoleAssignment> roleAssignments = new ArrayList<>();
 
     // endregion Relationships
 
+    // region Getters
+    public String getNickname() {
+        return getCredential().getNickname();
+    }
+
+    // endregion Getters
 
     // region Domain-Model methods
     @Transient
@@ -73,11 +84,22 @@ public class User {
 
 
     @Transient
-    public List<UserRoles> getAttachedRoles() {
-        return getUserRoles()
-                .stream()
-                .map(userRole -> userRole.getRole().getName())
-                .collect(Collectors.toList());
+    public List<Role> getRoles() {
+        return roleAssignments.stream()
+                .map(RoleAssignment::getRole)
+                .toList();
+    }
+
+    @Transient
+    public void assignRole(Role role) {
+        RoleAssignmentID roleAssignmentID = new RoleAssignmentID(this.userID, role.getRoleID());
+        RoleAssignment roleAssignment = RoleAssignment.builder()
+                .id(roleAssignmentID)
+                .user(this)
+                .role(role)
+                .assignedAt(LocalDateTime.now())
+                .build();
+        this.roleAssignments.add(roleAssignment);
     }
 
     // endregion Domain-Model methods

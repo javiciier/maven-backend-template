@@ -1,11 +1,14 @@
-package ${package}.users.application.utils;
+package ${package}.auth.application.utils;
 
 import ${package}.common.security.PasswordEncoderBean;
-import ${package}.common.security.jwt.application.JwtGenerator;
-import ${package}.common.security.jwt.domain.JwtData;
-import ${package}.users.domain.*;
-import ${package}.users.domain.exceptions.UserNotFoundException;
-import ${package}.users.infrastructure.repositories.*;
+import ${package}.common.security.jwt.domain.*;
+import ${package}.common.security.jwt.application.*;
+import ${package}.users.domain.entities.*;
+import ${package}.users.domain.entities.roles.*;
+import ${package}.users.domain.exceptions.*;
+import ${package}.users.domain.repositories.*;
+import ${package}.users.domain.repositories.roles.*;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +23,13 @@ public class AuthUtils {
     private final BCryptPasswordEncoder passwordEncoder = PasswordEncoderBean.passwordEncoder();
     private final JwtGenerator jwtGenerator;
     private final RoleRepository roleRepo;
-    private final UserRoleRepository userRoleRepo;
+    private final RoleAssignmentRepository userRoleRepo;
     private final CredentialRepository credentialRepo;
     private final UserRepository userRepo;
 
 
     public AuthUtils(RoleRepository roleRepo,
-                     UserRoleRepository userRoleRepo,
+                     RoleAssignmentRepository userRoleRepo,
                      JwtGenerator jwtGenerator,
                      CredentialRepository credentialRepo,
                      UserRepository userRepo) {
@@ -39,8 +42,8 @@ public class AuthUtils {
 
     public String generateJWTFromUser(User user) {
         String nickname = user.getCredential().getNickname();
-        List<String> roles = user.getAttachedRoles()
-                .stream()
+        List<String> roles = user.getRoles().stream()
+                .map(Role::getName)
                 .map(Enum::name)
                 .toList();
 
@@ -59,23 +62,6 @@ public class AuthUtils {
 
     public boolean doPasswordsMatch(String rawPassword, String expectedPassword) {
         return passwordEncoder.matches(rawPassword, expectedPassword);
-    }
-
-
-    public UserRole assignRoleToUser(User user, UserRoles roleName) {
-        Role role = roleRepo.findByName(roleName).get();
-
-        // Assign role to user
-        UserRole userRole = UserRole.builder()
-                .id(new UserRoleID(user.getUserID(), role.getRoleID()))
-                .assignedAt(LocalDateTime.now())
-                .build();
-        userRole.setUser(user);
-        user.getUserRoles().add(userRole);
-        userRole.setRole(role);
-        role.getUserRoles().add(userRole);
-
-        return userRoleRepo.save(userRole);
     }
 
     public User fetchUserByNickname(String nickname) throws UserNotFoundException {

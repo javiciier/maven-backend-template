@@ -1,10 +1,14 @@
-package ${package}.users.application;
+package ${package}.auth.infrastructure.services;
 
-import ${package}.users.application.utils.AuthUtils;
-import ${package}.users.domain.*;
+import ${package}.auth.application.utils.AuthUtils;
+import ${package}.auth.application.AuthService;
+import ${package}.auth.domain.exceptions.*;
+import ${package}.users.domain.entities.*;
+import ${package}.users.domain.entities.roles.*;
 import ${package}.users.domain.exceptions.*;
+import ${package}.users.domain.repositories.*;
+import ${package}.users.domain.repositories.roles.*;
 import ${package}.users.infrastructure.dto.input.RegisterUserParamsDTO;
-import ${package}.users.infrastructure.repositories.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,15 +24,18 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepo;
     private final CredentialRepository credentialRepo;
     private final ContactInfoRepository contactInfoRepo;
+    private final RoleRepository roleRepo;
     private final AuthUtils authUtils;
 
     public AuthServiceImpl(UserRepository userRepo,
-                           CredentialRepository credentialRepo,
-                           ContactInfoRepository contactInfoRepo,
+                           CredentialRepository credentialRepository,
+                           ContactInfoRepository contactInfoRepository,
+                           RoleRepository roleRepository,
                            AuthUtils authUtils) {
         this.userRepo = userRepo;
-        this.credentialRepo = credentialRepo;
-        this.contactInfoRepo = contactInfoRepo;
+        this.credentialRepo = credentialRepository;
+        this.contactInfoRepo = contactInfoRepository;
+        this.roleRepo = roleRepository;
         this.authUtils = authUtils;
     }
 
@@ -42,6 +49,8 @@ public class AuthServiceImpl implements AuthService {
             throw new UserAlreadyExistsException(paramsDTO.getNickname());
         }
 
+        final Role DEFAULT_NEW_USER_ROLE = roleRepo.findByName(RoleNames.BASIC).get();
+
         // Register user
         User user = fromRegisterParams(paramsDTO);
         user = userRepo.save(user);
@@ -50,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Set default user data
         user.setRegisteredAt(LocalDateTime.now());
-        authUtils.assignRoleToUser(user, UserRoles.BASIC);
+        user.assignRole(DEFAULT_NEW_USER_ROLE);
         user = userRepo.save(user);
 
         log.info("Registered new user {}", paramsDTO.getNickname());

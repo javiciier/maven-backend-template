@@ -1,6 +1,6 @@
 package ${package}.users.application;
 
-import ${package}.users.domain.User;
+import ${package}.users.domain.entities.User;
 import ${package}.users.domain.exceptions.UserNotFoundException;
 import ${package}.users.infrastructure.dto.input.UpdateContactInfoParamsDTO;
 

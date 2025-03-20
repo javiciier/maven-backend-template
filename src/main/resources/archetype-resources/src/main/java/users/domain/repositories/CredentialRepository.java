@@ -1,6 +1,6 @@
-package ${package}.users.infrastructure.repositories;
+package ${package}.users.domain.repositories;
 
-import ${package}.users.domain.Credential;
+import ${package}.users.domain.entities.Credential;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 
@@ -20,6 +20,5 @@ public interface CredentialRepository extends ListCrudRepository<Credential, Lon
 
     @Query("SELECT c FROM Credential c WHERE c.user.userID = ?1")
     Optional<Credential> findCredentialByUserID(UUID userID);
-
 
 }

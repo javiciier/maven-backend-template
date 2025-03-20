@@ -1,7 +1,7 @@
 package ${package}.users.infrastructure.dto.input;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import ${package}.users.domain.Gender;
+import ${package}.users.domain.entities.Gender;
 import jakarta.validation.constraints.*;
 import lombok.*;
 

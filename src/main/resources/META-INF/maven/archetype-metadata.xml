@@ -37,8 +37,10 @@ under the License.
 
     <fileSets>
         <fileSet filtered="true">
+            <directory/>
             <includes>
                 <include>compose.*.yaml</include>
+                <include>.dev.env</include>
             </includes>
         </fileSet>
 

@@ -1,4 +1,7 @@
-package ${package}.users.domain;
+package ${package}.users.domain.entities.roles;
+
+import ${package}.users.domain.entities.roles.RoleNames;
+import ${package}.users.domain.entities.roles.RoleAssignment;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +25,7 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private UserRoles name;
+    private RoleNames name;
 
     // endregion Atributes
 
@@ -30,11 +33,12 @@ public class Role {
     // region Relationships
     @ToString.Exclude
     @OneToMany(mappedBy = "role")
-    private Set<UserRole> userRoles = new LinkedHashSet<>();
+    private Set<RoleAssignment> assignations = new LinkedHashSet<>();
 
     // endregion Relationships
 
 
     // region Domain-Model methods
+
     // endregion Domain-Model methods
 }

@@ -1,4 +1,4 @@
-package ${package}.users.domain;
+package ${package}.users.domain.entities.roles;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @Embeddable
-public class UserRoleID implements Serializable {
+public class RoleAssignmentID implements Serializable {
     private static final long serialVersionUID = -8317904110740562813L;
 
     @Column(name = "user_id", nullable = false)

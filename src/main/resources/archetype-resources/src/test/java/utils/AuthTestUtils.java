@@ -98,7 +98,7 @@ public class AuthTestUtils {
         ContactInfo contactInfo = generateValidContactInfoForUser(user);
         user.attachContactInfo(contactInfo);
         userRepo.save(user);
-        authUtils.assignRoleToUser(user, UserRoles.BASIC);
+        user.assignrole(RoleNames.BASIC)
 
         registeredUsers.add(user);
         return userRepo.save(user);

@@ -1,4 +1,4 @@
-package ${package}.users.domain;
+package ${package}.users.domain.entities;
 
 public enum Gender {
     MALE, FEMALE, OTHER

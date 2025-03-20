@@ -1,10 +1,11 @@
 package ${package}.users.application;
 
-import ${package}.users.application.utils.AuthUtils;
-import ${package}.users.domain.*;
+import ${package}.auth.application.utils.AuthUtils;
+import ${package}.users.domain.entities.*;
 import ${package}.users.domain.exceptions.*;
+import ${package}.users.domain.repositories.*;
+import ${package}.users.application.UserService;
 import ${package}.users.infrastructure.dto.input.UpdateContactInfoParamsDTO;
-import ${package}.users.infrastructure.repositories.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,31 +43,40 @@ public class UserServiceImpl implements UserService {
         User user = authUtils.fetchUserByID(userID);
         ContactInfo contactInfo = user.getContactInfo();
 
-        boolean hasChangedContact = false;
-        // Check fields that have changed
-        if (hasChanged(contactInfo.getEmail(), paramsDTO.getNewEmail())) {
-            // TODO Validate and confirm email
-            contactInfo.setEmail(paramsDTO.getNewEmail());
-            hasChangedContact = true;
-        }
-        if (hasChanged(contactInfo.getPhoneNumber(), paramsDTO.getNewMobilePhone())) {
-            // TODO Validate and confirm phone
-            contactInfo.setPhoneNumber(paramsDTO.getNewMobilePhone());
-            hasChangedContact = true;
+        boolean hasContactInfoChanged = shouldUpdateContactInfo(contactInfo, paramsDTO);
+        if (!hasContactInfoChanged) {
+            return user;
         }
 
-        if (hasChangedContact) {
-            log.info("User {} has updated his contact info", userID);
-            contactInfoRepo.save(contactInfo);
-        }
+        log.info("User {} has updated his contact info", userID);
+        contactInfoRepo.save(contactInfo);
 
         return user;
     }
 
     // endregion USE CASES
 
-
     // region AUXILIAR METHODS
+
+
+    private boolean shouldUpdateContactInfo(ContactInfo currentInfo, UpdateContactInfoParamsDTO newInfoDto) {
+        boolean shouldUpdate = false;
+
+        if (hasChanged(currentInfo.getEmail(), newInfoDto.getNewEmail())) {
+            // TODO Validate and confirm email
+            currentInfo.setEmail(newInfoDto.getNewEmail());
+            shouldUpdate = true;
+        }
+
+        if (hasChanged(currentInfo.getPhoneNumber(), newInfoDto.getNewMobilePhone())) {
+            // TODO Validate and confirm phone
+            currentInfo.setPhoneNumber(newInfoDto.getNewMobilePhone());
+            shouldUpdate = true;
+        }
+
+        return shouldUpdate;
+    }
+
     private <T extends Object> boolean hasChanged(T expected, T received) {
         return !expected.equals(received);
     }

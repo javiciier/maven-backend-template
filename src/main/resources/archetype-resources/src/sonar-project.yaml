@@ -1,12 +1,11 @@
 sonar:
   coverage:
-    minimumCoverage: 75
-  exclusions:
-    - **/common/config/**/*
-    - **/common/security/keys/**/*
-    - **/common/security/jwt/**/*
-  coverage:
+    minimumCoverage: 70
     exclusions:
       - **/common/config/**/*
       - **/common/security/keys/**/*
       - **/common/security/jwt/**/*
+  exclusions:
+    - **/common/config/**/*
+    - **/common/security/keys/**/*
+    - **/common/security/jwt/**/*

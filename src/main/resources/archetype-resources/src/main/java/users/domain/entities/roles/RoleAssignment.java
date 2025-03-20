@@ -1,4 +1,4 @@
-package ${package}.users.domain;
+package ${package}.users.domain.entities.roles;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,6 +7,9 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
+import ${package}.users.domain.entities.roles.Role;
+import ${package}.users.domain.entities.User;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,11 +17,11 @@ import java.time.LocalDateTime;
 @ToString
 @Builder
 @Entity
-@Table(name = "userrole", schema = "users")
-public class UserRole {
+@Table(name = "roleasiggnment", schema = "users")
+public class RoleAssignment {
     // region Atributes
     @EmbeddedId
-    private UserRoleID id;
+    private RoleAssignmentID id;
 
     // endregion Atributes
 

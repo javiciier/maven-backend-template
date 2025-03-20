@@ -1,6 +1,6 @@
 package ${package}.users.infrastructure.dto.conversors;
 
-import ${package}.users.domain.User;
+import ${package}.users.domain.entities.User;
 import ${package}.users.infrastructure.dto.output.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -22,7 +22,7 @@ public class UserConversor {
                 .birthDate(entity.getBirthDate())
                 .registeredAt(entity.getRegisteredAt())
                 // Other attributes
-                .roles(entity.getAttachedRoles())
+                .roles(entity.getRoles())
                 .contactInfo(contactInfoDTO)
                 .build();
     }
