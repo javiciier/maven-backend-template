@@ -44,7 +44,6 @@ under the License.
             </includes>
         </fileSet>
 
-
         <fileSet filtered="true">
             <directory>src</directory>
             <includes>

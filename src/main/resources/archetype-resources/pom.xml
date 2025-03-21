@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -26,7 +27,8 @@
         <!-- CI/CD configuration -->
 
         <!-- Path configuration -->
-        <paths.docker-compose.test>${project.basedir}/src/test/docker-compose.test.yml</paths.docker-compose.test>
+        <paths.docker-compose.test>${project.basedir}/src/test/docker-compose.test.yml
+        </paths.docker-compose.test>
 
         <!-- Project plugins versions -->
         <maven-failsafe-plugin.version>3.2.2</maven-failsafe-plugin.version>
@@ -208,13 +210,17 @@
         </dependency>
 
 
-
     </dependencies>
 
     <build>
         <finalName>${project.artifactId}_${project.version}</finalName>
 
         <resources>
+            <resource>
+                <directory>src/..</directory>
+                <filtering>true</filtering>
+            </resource>
+
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
