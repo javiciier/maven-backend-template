@@ -28,7 +28,7 @@ Checklists
 - [x] Done
 -->
 
-- Configurar claves GPG
+- Configurar un githook para solo aceptar mensajes de commit válidos (Conventional Commits, Husky)
 - Dentro de las /application, crear los casos de uso como clases, y que estas llamen a las interfaces de los servicios.
 - Pulir scripts para automatizar tareas de creación del proyecto, mover todo a carpeta /scripts (actualizar .gitignore)
 - Crear un script que genere un banner que lea el nombre del proyecto
@@ -41,7 +41,7 @@ Checklists
 - Automatizar poder pasar más propiedades en el properties sin tener que modificar el array de propiedades
   obligatorias: "-D{nombreVariable}={valorVariable}"
 - Crear script que genere las claves rsa públicas y privadas cuando se genere el proyecto
-- Redactar todo este documento, commitear y pushear 
+- Redactar todo este documento, commitear y pushear
 - Crear las Run Configuration básicas para IntelliJ (estilo ejecutar tests de user, arrancar aplicación, arrancar
   contenedor docker, etc)
 - Poder configurar qué backend se va a usar en función de la property que se base al crear el proyecto: si un
