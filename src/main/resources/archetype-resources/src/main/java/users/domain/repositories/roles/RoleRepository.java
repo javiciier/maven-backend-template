@@ -9,5 +9,6 @@ import java.util.Optional;
 
 @Lazy
 public interface RoleRepository extends ListCrudRepository<Role, Long> {
-    Optional<Role> findByName(RoleNames name);
+
+  Optional<Role> findByName(RoleNames name);
 }

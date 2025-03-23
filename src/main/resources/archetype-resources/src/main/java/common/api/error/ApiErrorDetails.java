@@ -7,10 +7,10 @@ import lombok.*;
 @NoArgsConstructor
 public abstract class ApiErrorDetails extends Exception {
 
-    private String reason;
+  private String reason;
 
-    public ApiErrorDetails(String reason) {
-        super(reason);
-        this.reason = reason;
-    }
+  public ApiErrorDetails(String reason) {
+    super(reason);
+    this.reason = reason;
+  }
 }

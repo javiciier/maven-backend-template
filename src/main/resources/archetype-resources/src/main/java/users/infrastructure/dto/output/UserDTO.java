@@ -15,32 +15,32 @@ import java.util.UUID;
 @Builder
 public class UserDTO {
 
-    private UUID userID;
+  private UUID userID;
 
-    @NotBlank()
-    @Size(min = 1, max = 50)
-    private String name;
+  @NotBlank()
+  @Size(min = 1, max = 50)
+  private String name;
 
-    @NotNull
-    @Size(min = 1, max = 50)
-    private String surname;
+  @NotNull
+  @Size(min = 1, max = 50)
+  private String surname;
 
-    @NotNull
-    private Gender gender;
+  @NotNull
+  private Gender gender;
 
-    @NotBlank
-    @Size(min = 1, max = 30)
-    private String nickname;
+  @NotBlank
+  @Size(min = 1, max = 30)
+  private String nickname;
 
-    @PastOrPresent
-    private LocalDate birthDate;
+  @PastOrPresent
+  private LocalDate birthDate;
 
-    @PastOrPresent
-    private LocalDateTime registeredAt;
+  @PastOrPresent
+  private LocalDateTime registeredAt;
 
-    private List<Role> roles;
+  private List<Role> roles;
 
-    private ContactInfoDTO contactInfo;
+  private ContactInfoDTO contactInfo;
 
 }
 

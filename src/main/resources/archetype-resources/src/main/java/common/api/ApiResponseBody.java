@@ -1,3 +1,5 @@
 package ${package}.common.api;
 
-public abstract class ApiResponseBody {}
+public abstract class ApiResponseBody {
+
+}

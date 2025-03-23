@@ -6,4 +6,5 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PasswordsMismatchException extends Exception {
+
 }

@@ -8,16 +8,17 @@ import java.util.List;
 
 @Data
 @Builder
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 public class ErrorApiResponseBody extends ApiResponseBody {
-    private final int statusCode;
 
-    private final String status;
+  private final int statusCode;
 
-    private final String message;
+  private final String status;
 
-    private final String debugMessage;
+  private final String message;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<? extends ApiErrorDetails> errors;
+  private final String debugMessage;
+
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private List<? extends ApiErrorDetails> errors;
 }

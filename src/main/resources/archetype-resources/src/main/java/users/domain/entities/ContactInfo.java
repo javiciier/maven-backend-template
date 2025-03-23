@@ -13,35 +13,36 @@ import lombok.*;
 @Entity
 @Table(name = "contactinfo", schema = "users")
 public class ContactInfo {
-    // region Atributes
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "contactinfo_id", nullable = false)
-    private Long contactInfoID;
+
+  // region Atributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "contactinfo_id", nullable = false)
+  private Long contactInfoID;
 
   @Email
-    @Column(name = "email", nullable = false, length = 100, unique = true)
-    private String email;
+  @Column(name = "email", nullable = false, length = 100, unique = true)
+  private String email;
 
-    @Column(name = "isemailverified", nullable = false)
-    private Boolean isEmailVerified;
+  @Column(name = "isemailverified", nullable = false)
+  private Boolean isEmailVerified;
 
-    @Column(name = "phonenumber", nullable = false, length = 20)
-    private String phoneNumber;
+  @Column(name = "phonenumber", nullable = false, length = 20)
+  private String phoneNumber;
 
-    @Column(name = "isphonenumberverified", nullable = false)
-    private Boolean isPhoneNumberVerified;
+  @Column(name = "isphonenumberverified", nullable = false)
+  private Boolean isPhoneNumberVerified;
 
-    // endregion Atributes
+  // endregion Atributes
 
 
-    // region Relationships
-    @ToString.Exclude
-    @OneToOne(optional = false, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private User user;
+  // region Relationships
+  @ToString.Exclude
+  @OneToOne(optional = false, orphanRemoval = true, fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false, unique = true)
+  private User user;
 
-    // endregion Relationships
+  // endregion Relationships
 
   @PrePersist
   protected void onCreate() {
@@ -53,6 +54,6 @@ public class ContactInfo {
     }
   }
 
-    // region Domain-Model methods
-    // endregion Domain-Model methods
+  // region Domain-Model methods
+  // endregion Domain-Model methods
 }

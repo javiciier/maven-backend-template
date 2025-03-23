@@ -8,8 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UpdateContactInfoParamsDTO {
-    @Email
-    private String newEmail;
 
-    private String newMobilePhone;
+  @Email
+  private String newEmail;
+
+  private String newMobilePhone;
 }

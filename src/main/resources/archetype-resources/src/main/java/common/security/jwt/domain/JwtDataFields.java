@@ -6,9 +6,9 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum JwtDataFields {
-    USER_ID("userID"),
-    NICKNAME("nickname"),
-    ROLES("roles");
+  USER_ID("userID"),
+  NICKNAME("nickname"),
+  ROLES("roles");
 
-    private String value;
+  private String value;
 }

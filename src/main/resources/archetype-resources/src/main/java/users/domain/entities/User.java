@@ -18,90 +18,91 @@ import java.util.*;
 @Entity
 @Table(name = "userTable", schema = "users")
 public class User {
-    // region Atributes
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "user_id", nullable = false)
-    private UUID userID;
 
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
+  // region Atributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(name = "user_id", nullable = false)
+  private UUID userID;
 
-    @Column(name = "surname", length = 50)
-    private String surname;
+  @Column(name = "name", nullable = false, length = 50)
+  private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender", nullable = false)
-    private Gender gender;
+  @Column(name = "surname", length = 50)
+  private String surname;
 
-    @Column(name = "birthdate", nullable = false)
-    private LocalDate birthDate;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "gender", nullable = false)
+  private Gender gender;
 
-    @Column(name = "registeredat", nullable = false)
-    private LocalDateTime registeredAt;
+  @Column(name = "birthdate", nullable = false)
+  private LocalDate birthDate;
 
-    // endregion Atributes
+  @Column(name = "registeredat", nullable = false)
+  private LocalDateTime registeredAt;
 
-    // region Relationships
-    @ToString.Exclude
-    @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Credential credential;
+  // endregion Atributes
+
+  // region Relationships
+  @ToString.Exclude
+  @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Credential credential;
 
   @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private ContactInfo contactInfo;
+  private ContactInfo contactInfo;
 
   @Builder.Default
-    @ToString.Exclude
+  @ToString.Exclude
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
   private Set<RoleAssignment> roleAssignments = new HashSet<>();
 
-    // endregion Relationships
+  // endregion Relationships
 
   @PrePersist
   protected void onCreate() {
     this.registeredAt = LocalDateTime.now();
   }
 
-    // region Getters
-    public String getNickname() {
-        return getCredential().getNickname();
-    }
+  // region Getters
+  public String getNickname() {
+    return getCredential().getNickname();
+  }
 
-    // endregion Getters
+  // endregion Getters
 
-    // region Domain-Model methods
-    @Transient
-    public void attachCredential(Credential other) {
-        other.setUser(this);
-        this.credential = other;
-    }
+  // region Domain-Model methods
+  @Transient
+  public void attachCredential(Credential other) {
+    other.setUser(this);
+    this.credential = other;
+  }
 
-    @Transient
-    public void attachContactInfo(ContactInfo other) {
-        other.setUser(this);
-        this.contactInfo = other;
-    }
+  @Transient
+  public void attachContactInfo(ContactInfo other) {
+    other.setUser(this);
+    this.contactInfo = other;
+  }
 
 
-    @Transient
-    public List<Role> getRoles() {
-        return roleAssignments.stream()
-                .map(RoleAssignment::getRole)
-                .toList();
-    }
+  @Transient
+  public List<Role> getRoles() {
+    return roleAssignments.stream()
+        .map(RoleAssignment::getRole)
+        .toList();
+  }
 
-    @Transient
-    public void assignRole(Role role) {
-        RoleAssignmentID roleAssignmentID = new RoleAssignmentID(this.userID, role.getRoleID());
-        RoleAssignment roleAssignment = RoleAssignment.builder()
-                .id(roleAssignmentID)
-                .user(this)
-                .role(role)
-                .assignedAt(LocalDateTime.now())
-                .build();
-        this.roleAssignments.add(roleAssignment);
-    }
+  @Transient
+  public void assignRole(Role role) {
+    RoleAssignmentID roleAssignmentID = new RoleAssignmentID(this.userID, role.getRoleID());
+    RoleAssignment roleAssignment = RoleAssignment.builder()
+        .id(roleAssignmentID)
+        .user(this)
+        .role(role)
+        .assignedAt(LocalDateTime.now())
+        .build();
+    this.roleAssignments.add(roleAssignment);
+  }
 
-    // endregion Domain-Model methods
+  // endregion Domain-Model methods
 
 }

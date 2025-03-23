@@ -16,52 +16,53 @@ import java.util.*;
  */
 @Configuration
 public class InternationalizationConfiguration {
-    private static final Locale DEFAULT_LOCALE = new Locale("es");
-    private static final String[] supportedLanguages = {"en", "es"};
-    private static final String[] supportedElements = {"exceptions", "fields", "validations"};
-    private static final String CLASSPATH = "classpath:i18n";
 
-    @Bean
-    public static MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
+  private static final Locale DEFAULT_LOCALE = new Locale("es");
+  private static final String[] supportedLanguages = {"en", "es"};
+  private static final String[] supportedElements = {"exceptions", "fields", "validations"};
+  private static final String CLASSPATH = "classpath:i18n";
 
-        for (String basename: createBasenames()) {
-            messageSource.addBasenames(basename);
-        }
+  @Bean
+  public static MessageSource messageSource() {
+    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+    messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
 
-        return messageSource;
+    for (String basename : createBasenames()) {
+      messageSource.addBasenames(basename);
     }
 
-    // INFO: https://lokalise.com/blog/spring-boot-internationalization
-    @Bean
-    public static LocaleResolver localeResolver() {
-        List<Locale> supportedLocales = getSupportedLocales();
+    return messageSource;
+  }
 
-        AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-        localeResolver.setSupportedLocales(supportedLocales);
-        localeResolver.setDefaultLocale(DEFAULT_LOCALE);
+  // INFO: https://lokalise.com/blog/spring-boot-internationalization
+  @Bean
+  public static LocaleResolver localeResolver() {
+    List<Locale> supportedLocales = getSupportedLocales();
 
-        return localeResolver;
+    AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+    localeResolver.setSupportedLocales(supportedLocales);
+    localeResolver.setDefaultLocale(DEFAULT_LOCALE);
+
+    return localeResolver;
+  }
+
+
+  private static List<String> createBasenames() {
+    List<String> baseNamePaths = new ArrayList<>();
+
+    for (String lang : supportedLanguages) {
+      for (String item : supportedElements) {
+        String path = CLASSPATH + File.separator + lang + File.separator + item;
+        baseNamePaths.add(path);
+      }
     }
 
+    return baseNamePaths;
+  }
 
-    private static List<String> createBasenames() {
-        List<String> baseNamePaths = new ArrayList<>();
-
-        for (String lang : supportedLanguages) {
-            for (String item : supportedElements) {
-                String path = CLASSPATH + File.separator + lang + File.separator + item;
-                baseNamePaths.add(path);
-            }
-        }
-
-        return baseNamePaths;
-    }
-
-    private static List<Locale> getSupportedLocales() {
-        return Arrays.stream(supportedLanguages)
-                .map(Locale::new)
-                .toList();
-    }
+  private static List<Locale> getSupportedLocales() {
+    return Arrays.stream(supportedLanguages)
+        .map(Locale::new)
+        .toList();
+  }
 }

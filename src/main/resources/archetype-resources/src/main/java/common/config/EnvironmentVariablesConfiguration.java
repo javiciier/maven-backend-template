@@ -13,36 +13,40 @@ import java.nio.file.Paths;
 @Getter
 @Configuration
 @PropertySource(
-        value = "file:${user.dir}/.${spring.profiles.active}.env",
-        ignoreResourceNotFound = true
+    value = "file:${user.dir}/.${spring.profiles.active}.env",
+    ignoreResourceNotFound = true
 )
 public class EnvironmentVariablesConfiguration {
-    private static final String FILE_EXTENSION = ".env";
 
-    @Value("${user.dir}")
-    private String userDir;
+  private static final String FILE_EXTENSION = ".env";
 
-    @Value("${spring.profiles.active}")
-    private String activeProfile;
+  @Value("${user.dir}")
+  private String userDir;
 
-    // region Properties from file
+  @Value("${spring.profiles.active}")
+  private String activeProfile;
+
+  // region Properties from file
     /* Example of reading property from .env file
     @Value("${PROPERTY_NAME}")
     private String propertyName;
      */
 
-    // endregion
+  // endregion
 
-    @PostConstruct
-    public void init() {
-        final String ENV_FILE_PATH = Paths.get(userDir, "." + activeProfile + FILE_EXTENSION).toString();
+  @PostConstruct
+  public void init() {
+    final String ENV_FILE_PATH = Paths.get(userDir, "." + activeProfile + FILE_EXTENSION)
+        .toString();
 
-        File envFile = new File(ENV_FILE_PATH);
-        if (!envFile.exists()) {
-            log.warn("The configuration file '{}' was not found. Environmental variables will be loaded from default settings.", envFile.getPath());
-            return;
-        }
-
-        log.info("Environmental configuration loaded from '{}'.", ENV_FILE_PATH);
+    File envFile = new File(ENV_FILE_PATH);
+    if (!envFile.exists()) {
+      log.warn(
+          "The configuration file '{}' was not found. Environmental variables will be loaded from default settings.",
+          envFile.getPath());
+      return;
     }
+
+    log.info("Environmental configuration loaded from '{}'.", ENV_FILE_PATH);
+  }
 }

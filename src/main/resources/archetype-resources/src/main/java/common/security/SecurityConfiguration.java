@@ -17,49 +17,53 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        return authenticationManagerBuilder.build();
-    }
 
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtGenerator jwtGenerator) throws Exception {
-        return new JwtAuthenticationFilter(authenticationManager, jwtGenerator);
-    }
+  @Bean
+  public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(
+        AuthenticationManagerBuilder.class);
+    return authenticationManagerBuilder.build();
+  }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtGenerator jwtGenerator, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+  @Bean
+  public JwtAuthenticationFilter jwtAuthenticationFilter(
+      AuthenticationManager authenticationManager, JwtGenerator jwtGenerator) throws Exception {
+    return new JwtAuthenticationFilter(authenticationManager, jwtGenerator);
+  }
 
-        http
-                // Desactivar CSRF porque no usamos
-                .csrf(csrf -> csrf.disable())
-                // No guardar datos de la sesión del usuario
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // Aplicar filtro creado para poder usar JWT
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtGenerator jwtGenerator,
+      JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
 
-        secureEndpoints(http);
+    http
+        // Desactivar CSRF porque no usamos
+        .csrf(csrf -> csrf.disable())
+        // No guardar datos de la sesión del usuario
+        .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        // Aplicar filtro creado para poder usar JWT
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+    secureEndpoints(http);
 
-    private static void secureEndpoints(HttpSecurity http) throws Exception {
-        secureAuthRequests(http);
+    return http.build();
+  }
 
-        // Denegar peticiones no autorizadas
-        http.authorizeHttpRequests(
-            requests -> requests.anyRequest().denyAll()
-        );
-    }
+  private static void secureEndpoints(HttpSecurity http) throws Exception {
+    secureAuthRequests(http);
 
-    private static void secureAuthRequests(HttpSecurity http) throws Exception {
-        // Permitir las peticiones que indiquemos
-        http.authorizeHttpRequests(requests -> requests
-                .requestMatchers(HttpMethod.POST, "/v1/auth/signup").permitAll()
-                .requestMatchers(HttpMethod.POST, "/v1/auth/login", "/v1/auth/login/jwt").permitAll()
-        );
-    }
+    // Denegar peticiones no autorizadas
+    http.authorizeHttpRequests(
+        requests -> requests.anyRequest().denyAll()
+    );
+  }
+
+  private static void secureAuthRequests(HttpSecurity http) throws Exception {
+    // Permitir las peticiones que indiquemos
+    http.authorizeHttpRequests(requests -> requests
+        .requestMatchers(HttpMethod.POST, "/v1/auth/signup").permitAll()
+        .requestMatchers(HttpMethod.POST, "/v1/auth/login", "/v1/auth/login/jwt").permitAll()
+    );
+  }
 
 }
 

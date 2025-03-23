@@ -12,24 +12,25 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class BlockDto<T> {
-    @NotNull
-    private List<T> items;
 
-    @Accessors(fluent = true)
-    @JsonProperty("hasMoreItems")
-    @NotNull
-    private boolean hasMoreItems;
+  @NotNull
+  private List<T> items;
 
-    @NotNull
-    @PositiveOrZero
-    private int itemsCount;
+  @Accessors(fluent = true)
+  @JsonProperty("hasMoreItems")
+  @NotNull
+  private boolean hasMoreItems;
 
-    private String nextPageToken;
+  @NotNull
+  @PositiveOrZero
+  private int itemsCount;
 
-    public BlockDto(List<T> items, String nextPageToken) {
-        this.items = items;
-        this.nextPageToken = nextPageToken;
-        this.hasMoreItems = nextPageToken != null;
-        this.itemsCount = items.size();
-    }
+  private String nextPageToken;
+
+  public BlockDto(List<T> items, String nextPageToken) {
+    this.items = items;
+    this.nextPageToken = nextPageToken;
+    this.hasMoreItems = nextPageToken != null;
+    this.itemsCount = items.size();
+  }
 }

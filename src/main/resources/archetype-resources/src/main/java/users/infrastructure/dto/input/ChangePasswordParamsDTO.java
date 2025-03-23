@@ -8,11 +8,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChangePasswordParamsDTO {
-    @NotBlank
-    @Size(min = 1)
-    private String oldPassword;
 
-    @NotBlank
-    @Size(min = 1)
-    private String newPassword;
+  @NotBlank
+  @Size(min = 1)
+  private String oldPassword;
+
+  @NotBlank
+  @Size(min = 1)
+  private String newPassword;
 }

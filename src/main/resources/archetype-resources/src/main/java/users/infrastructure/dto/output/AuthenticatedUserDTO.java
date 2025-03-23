@@ -7,9 +7,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AuthenticatedUserDTO {
-    @JsonProperty(value = "serviceToken")
-    private String serviceToken;
 
-    @JsonProperty(value = "user")
-    private UserDTO userDTO;
+  @JsonProperty(value = "serviceToken")
+  private String serviceToken;
+
+  @JsonProperty(value = "user")
+  private UserDTO userDTO;
 }

@@ -14,41 +14,42 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class RegisterUserParamsDTO implements EntityConversor<User> {
-    // User
-    @NotBlank
-    @Size(min = 1, max = 50)
-    private String name;
 
-    @NotBlank
-    @Size(min = 1, max = 50)
-    private String surname;
+  // User
+  @NotBlank
+  @Size(min = 1, max = 50)
+  private String name;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private Gender gender;
+  @NotBlank
+  @Size(min = 1, max = 50)
+  private String surname;
 
-    @NotNull
-    @PastOrPresent
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private LocalDate birthDate;
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  private Gender gender;
 
-    // Credentials
-    @NotBlank
-    @Size(min = 1, max = 50)
-    private String nickname;
+  @NotNull
+  @PastOrPresent
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  private LocalDate birthDate;
 
-    @NotBlank
-    @Size(min = 1)
-    private String rawPassword;
+  // Credentials
+  @NotBlank
+  @Size(min = 1, max = 50)
+  private String nickname;
 
-    // ContactInfo
-    @NotBlank
-    @Email
-    @Size(min = 1, max = 100)
-    private String email;
+  @NotBlank
+  @Size(min = 1)
+  private String rawPassword;
 
-    @NotBlank
-    @Size(min = 1, max = 20)
-    private String phoneNumber;
+  // ContactInfo
+  @NotBlank
+  @Email
+  @Size(min = 1, max = 100)
+  private String email;
+
+  @NotBlank
+  @Size(min = 1, max = 20)
+  private String phoneNumber;
 
   @Override
   public User toEntity() {

@@ -9,21 +9,22 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class JacksonLocalDateSerializer extends StdSerializer<LocalDate> {
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+
+  private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
 
-    public JacksonLocalDateSerializer() {
-        this(null);
-    }
+  public JacksonLocalDateSerializer() {
+    this(null);
+  }
 
 
-    protected JacksonLocalDateSerializer(Class<LocalDate> type) {
-        super(type);
-    }
+  protected JacksonLocalDateSerializer(Class<LocalDate> type) {
+    super(type);
+  }
 
-    @Override
-    public void serialize(LocalDate value, JsonGenerator jsonGenerator,
-                          SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeString(formatter.format(value));
-    }
+  @Override
+  public void serialize(LocalDate value, JsonGenerator jsonGenerator,
+      SerializerProvider serializerProvider) throws IOException {
+    jsonGenerator.writeString(formatter.format(value));
+  }
 }

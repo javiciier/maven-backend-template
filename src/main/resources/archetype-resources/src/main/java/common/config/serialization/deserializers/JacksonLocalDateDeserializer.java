@@ -9,16 +9,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class JacksonLocalDateDeserializer extends StdDeserializer<LocalDate> {
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
-    public JacksonLocalDateDeserializer() {
-        super(LocalDate.class);
-    }
+  private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
-    @Override
-    public LocalDate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        String dateString = jsonParser.getValueAsString();
+  public JacksonLocalDateDeserializer() {
+    super(LocalDate.class);
+  }
 
-        return LocalDate.parse(dateString, formatter);
-    }
+  @Override
+  public LocalDate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+      throws IOException {
+    String dateString = jsonParser.getValueAsString();
+
+    return LocalDate.parse(dateString, formatter);
+  }
 }

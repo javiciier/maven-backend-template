@@ -11,33 +11,34 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Block<T> {
-    /**
-     * Elementos almacenados
-     */
-    private List<T> items;
 
-    /**
-     * Indica si hay más elementos
-     */
-    @Accessors(fluent = true)
-    @JsonProperty("hasMoreItems")
-    private boolean hasMoreItems;
+  /**
+   * Elementos almacenados
+   */
+  private List<T> items;
 
-    private String nextPageToken;
+  /**
+   * Indica si hay más elementos
+   */
+  @Accessors(fluent = true)
+  @JsonProperty("hasMoreItems")
+  private boolean hasMoreItems;
 
-    /**
-     * Cantidad de elementos contenidos
-     */
-    private int itemsCount;
+  private String nextPageToken;
 
-    public Block(List<T> items, String nextPageToken) {
-        this.items = items;
-        this.itemsCount = items.size();
-        this.hasMoreItems = nextPageToken != null;
-        this.nextPageToken = nextPageToken;
-    }
+  /**
+   * Cantidad de elementos contenidos
+   */
+  private int itemsCount;
 
-    public static <T> Block<T> emptyBlock() {
-        return new Block<>(new ArrayList<>(0), null);
-    }
+  public Block(List<T> items, String nextPageToken) {
+    this.items = items;
+    this.itemsCount = items.size();
+    this.hasMoreItems = nextPageToken != null;
+    this.nextPageToken = nextPageToken;
+  }
+
+  public static <T> Block<T> emptyBlock() {
+    return new Block<>(new ArrayList<>(0), null);
+  }
 }

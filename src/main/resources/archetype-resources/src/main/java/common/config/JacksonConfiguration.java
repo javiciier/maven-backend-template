@@ -15,25 +15,26 @@ import java.time.LocalDateTime;
 
 @Configuration
 public class JacksonConfiguration {
-    @NotNull
-    public static JavaTimeModule configureTimeModules() {
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(LocalDateTime.class, new JacksonLocalDateTimeSerializer());
-        javaTimeModule.addSerializer(LocalDate.class, new JacksonLocalDateSerializer());
-        javaTimeModule.addDeserializer(LocalDate.class, new JacksonLocalDateDeserializer());
-        return javaTimeModule;
-    }
 
-    @Bean
-    @Primary
-    public static ObjectMapper configureObjectMapper() {
-        JavaTimeModule javaTimeModule = configureTimeModules();
+  @NotNull
+  public static JavaTimeModule configureTimeModules() {
+    JavaTimeModule javaTimeModule = new JavaTimeModule();
+    javaTimeModule.addSerializer(LocalDateTime.class, new JacksonLocalDateTimeSerializer());
+    javaTimeModule.addSerializer(LocalDate.class, new JacksonLocalDateSerializer());
+    javaTimeModule.addDeserializer(LocalDate.class, new JacksonLocalDateDeserializer());
+    return javaTimeModule;
+  }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(javaTimeModule);
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+  @Bean
+  @Primary
+  public static ObjectMapper configureObjectMapper() {
+    JavaTimeModule javaTimeModule = configureTimeModules();
 
-        return objectMapper;
-    }
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.registerModule(javaTimeModule);
+    objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+    return objectMapper;
+  }
 
 }

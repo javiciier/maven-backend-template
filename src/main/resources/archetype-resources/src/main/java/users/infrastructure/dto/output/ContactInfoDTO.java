@@ -8,20 +8,21 @@ import lombok.Data;
 @Data
 @Builder
 public class ContactInfoDTO {
-    private Long contactInfoID;
 
-    @NotBlank
-    @Email
-    private String email;
+  private Long contactInfoID;
 
-    @NotNull
-    @JsonProperty(value = "isEmailVerified")
-    private Boolean isEmailVerified;
+  @NotBlank
+  @Email
+  private String email;
 
-    private String phoneNumber;
+  @NotNull
+  @JsonProperty(value = "isEmailVerified")
+  private Boolean isEmailVerified;
 
-    @NotNull
-    @JsonProperty(value = "isPhoneNumberVerified")
-    private Boolean isPhoneNumberVerified;
+  private String phoneNumber;
+
+  @NotNull
+  @JsonProperty(value = "isPhoneNumberVerified")
+  private Boolean isPhoneNumberVerified;
 
 }

@@ -6,5 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MissingMandatoryValueException extends Exception {
-    private final String field;
+
+  private final String field;
 }

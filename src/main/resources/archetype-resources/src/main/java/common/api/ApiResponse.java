@@ -8,9 +8,10 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class ApiResponse<T> {
-    private final boolean success;
 
-    private final LocalDateTime timestamp;
+  private final boolean success;
 
-    private final T data;
+  private final LocalDateTime timestamp;
+
+  private final T data;
 }

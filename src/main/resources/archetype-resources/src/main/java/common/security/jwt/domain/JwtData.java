@@ -9,7 +9,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class JwtData {
-    private UUID userID;
-    private String nickname;
-    private List<String> roles;
+
+  private UUID userID;
+  private String nickname;
+  private List<String> roles;
 }

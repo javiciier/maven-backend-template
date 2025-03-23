@@ -10,38 +10,39 @@ import static ${package}.users.infrastructure.dto.conversors.ContactInfoConverso
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserConversor {
-    /* ******************** Convertir a DTO ******************** */
-    public static UserDTO toUserDTO(User entity) {
-        ContactInfoDTO contactInfoDTO = toContactInfoDTO(entity.getContactInfo());
 
-        return UserDTO.builder()
-                .userID(entity.getUserID())
-                .name(entity.getName())
-                .surname(entity.getSurname())
-                .gender(entity.getGender())
-                .nickname(entity.getCredential().getNickname())
-                .birthDate(entity.getBirthDate())
-                .registeredAt(entity.getRegisteredAt())
-                // Other attributes
-                .roles(entity.getRoles())
-                .contactInfo(contactInfoDTO)
-                .build();
-    }
+  /* ******************** Convertir a DTO ******************** */
+  public static UserDTO toUserDTO(User entity) {
+    ContactInfoDTO contactInfoDTO = toContactInfoDTO(entity.getContactInfo());
 
-    public static AuthenticatedUserDTO toAuthenticatedUserDTO(String token, User entity) {
-        UserDTO userDTO = toUserDTO(entity);
+    return UserDTO.builder()
+        .userID(entity.getUserID())
+        .name(entity.getName())
+        .surname(entity.getSurname())
+        .gender(entity.getGender())
+        .nickname(entity.getCredential().getNickname())
+        .birthDate(entity.getBirthDate())
+        .registeredAt(entity.getRegisteredAt())
+        // Other attributes
+        .roles(entity.getRoles())
+        .contactInfo(contactInfoDTO)
+        .build();
+  }
 
-        return new AuthenticatedUserDTO(token, userDTO);
-    }
+  public static AuthenticatedUserDTO toAuthenticatedUserDTO(String token, User entity) {
+    UserDTO userDTO = toUserDTO(entity);
 
-    /* ******************** Convertir a conjunto de DTO ******************** */
+    return new AuthenticatedUserDTO(token, userDTO);
+  }
+
+  /* ******************** Convertir a conjunto de DTO ******************** */
 
 
-    /* ******************** Convertir a Entidad ******************** */
-    public static User fromRegisterUserParamsDTO(RegisterUserParamsDTO dto) {
-      return dto.toEntity();
-    }
+  /* ******************** Convertir a Entidad ******************** */
+  public static User fromRegisterUserParamsDTO(RegisterUserParamsDTO dto) {
+    return dto.toEntity();
+  }
 
-    /* ******************** Convertir a conjunto de Entidad ******************** */
+  /* ******************** Convertir a conjunto de Entidad ******************** */
 
 }

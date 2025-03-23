@@ -16,12 +16,13 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Embeddable
 public class RoleAssignmentID implements Serializable {
-    private static final long serialVersionUID = -8317904110740562813L;
 
-    @Column(name = "user_id", nullable = false)
-    private UUID userID;
+  private static final long serialVersionUID = -8317904110740562813L;
 
-    @Column(name = "role_id", nullable = false)
-    private Long roleID;
+  @Column(name = "user_id", nullable = false)
+  private UUID userID;
+
+  @Column(name = "role_id", nullable = false)
+  private Long roleID;
 
 }

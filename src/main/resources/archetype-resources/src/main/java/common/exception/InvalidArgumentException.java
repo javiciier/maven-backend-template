@@ -6,17 +6,18 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class InvalidArgumentException extends Exception {
-    private String objectName;
 
-    private String field;
+  private String objectName;
 
-    private Object value;
+  private String field;
 
-    public InvalidArgumentException(String objectName, String field, Object value) {
-        super();
-        this.objectName = objectName;
-        this.field = field;
-        this.value = value;
-    }
+  private Object value;
+
+  public InvalidArgumentException(String objectName, String field, Object value) {
+    super();
+    this.objectName = objectName;
+    this.field = field;
+    this.value = value;
+  }
 
 }

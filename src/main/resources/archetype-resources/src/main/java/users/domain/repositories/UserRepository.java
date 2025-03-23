@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Lazy
 public interface UserRepository extends ListCrudRepository<User, UUID> {
+
 }

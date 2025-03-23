@@ -7,8 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 public class ServiceException extends ApiErrorDetails {
 
-    public ServiceException(String reason) {
-        super(reason);
-    }
+  public ServiceException(String reason) {
+    super(reason);
+  }
 
 }

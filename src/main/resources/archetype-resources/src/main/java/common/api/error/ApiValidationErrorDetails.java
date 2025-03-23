@@ -7,16 +7,17 @@ import lombok.*;
 @NoArgsConstructor
 public class ApiValidationErrorDetails extends ApiErrorDetails {
 
-    private String objectName;
+  private String objectName;
 
-    private String fieldName;
+  private String fieldName;
 
-    private Object rejectedValue;
+  private Object rejectedValue;
 
-    public ApiValidationErrorDetails(String objectName, String fieldName, Object rejectedValue, String reason) {
-        super(reason);
-        this.objectName = objectName;
-        this.fieldName = fieldName;
-        this.rejectedValue = rejectedValue;
-    }
+  public ApiValidationErrorDetails(String objectName, String fieldName, Object rejectedValue,
+      String reason) {
+    super(reason);
+    this.objectName = objectName;
+    this.fieldName = fieldName;
+    this.rejectedValue = rejectedValue;
+  }
 }

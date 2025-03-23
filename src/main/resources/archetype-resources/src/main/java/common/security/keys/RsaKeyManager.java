@@ -24,94 +24,96 @@ import java.security.*;
 @Log4j2
 @Component
 public class RsaKeyManager {
-    private static String rawPrivateKey;
-    private static String rawPrivateKeyPassword;
-    private static String rawPublicKey;
-    private static KeyPair keyPairInstance = null;
 
-    static {
-        Security.addProvider(new BouncyCastleProvider());
+  private static String rawPrivateKey;
+  private static String rawPrivateKeyPassword;
+  private static String rawPublicKey;
+  private static KeyPair keyPairInstance = null;
+
+  static {
+    Security.addProvider(new BouncyCastleProvider());
+  }
+
+  private final EnvironmentVariablesConfiguration envConfig;
+
+  public RsaKeyManager(EnvironmentVariablesConfiguration envConfig) {
+    this.envConfig = envConfig;
+  }
+
+  public static KeyPair loadKeyPair() {
+    if (keyPairInstance == null) {
+      keyPairInstance = parseKeyPair();
     }
 
-    private final EnvironmentVariablesConfiguration envConfig;
+    return keyPairInstance;
+  }
 
-    public RsaKeyManager(EnvironmentVariablesConfiguration envConfig) {
-        this.envConfig = envConfig;
+  private static KeyPair parseKeyPair() {
+    PrivateKey privateKey = parsePrivateKey(rawPrivateKey, rawPrivateKeyPassword);
+    PublicKey publicKey = parsePublicKey(rawPublicKey);
+
+    return new KeyPair(publicKey, privateKey);
+  }
+
+  private static PrivateKey parsePrivateKey(String rawPrivateKey, String privateKeyPassword) {
+    PrivateKey privateKey = null;
+
+    try (StringReader reader = new StringReader(rawPrivateKey)) {
+      PEMParser pemParser = new PEMParser(reader);
+      Object pemObject = pemParser.readObject();
+
+      // If key is encrypted, decrypt using its password
+      if (pemObject instanceof PKCS8EncryptedPrivateKeyInfo encryptedKeyInfo) {
+        log.debug("Private key is encrypted with password. Decrypting using password.");
+        char[] privateKeyPasswordBytes = privateKeyPassword.toCharArray();
+        privateKey = decryptPrivateKey(encryptedKeyInfo, privateKeyPasswordBytes);
+      }
+    } catch (IOException e) {
+      log.error("Error parsing PEM private key:: {}", e.getMessage());
     }
 
-    public static KeyPair loadKeyPair() {
-        if (keyPairInstance == null) {
-            keyPairInstance = parseKeyPair();
-        }
+    return privateKey;
+  }
 
-        return keyPairInstance;
+  private static PublicKey parsePublicKey(String rawPublicKey) {
+    PublicKey publicKey = null;
+    try (StringReader reader = new StringReader(rawPublicKey)) {
+      PEMParser pemParser = new PEMParser(reader);
+      Object pemObject = pemParser.readObject();
+
+      if (pemObject instanceof SubjectPublicKeyInfo publicKeyObject) {
+        publicKey = new JcaPEMKeyConverter()
+            .setProvider("BC")
+            .getPublicKey(publicKeyObject);
+      }
+    } catch (IOException e) {
+      log.error("Error parsing PEM public key:: {}", e.getMessage());
     }
 
-    private static KeyPair parseKeyPair() {
-        PrivateKey privateKey = parsePrivateKey(rawPrivateKey, rawPrivateKeyPassword);
-        PublicKey publicKey = parsePublicKey(rawPublicKey);
+    return publicKey;
+  }
 
-        return new KeyPair(publicKey, privateKey);
+  private static PrivateKey decryptPrivateKey(PKCS8EncryptedPrivateKeyInfo keyInfo,
+      char[] password) {
+    PrivateKey privateKey = null;
+
+    try {
+      InputDecryptorProvider decryptorProvider = new JceOpenSSLPKCS8DecryptorProviderBuilder()
+          .build(password);
+      JcaPEMKeyConverter pemKeyConverter = new JcaPEMKeyConverter().setProvider("BC");
+      PrivateKeyInfo privateKeyInfo = keyInfo.decryptPrivateKeyInfo(decryptorProvider);
+
+      privateKey = pemKeyConverter.getPrivateKey(privateKeyInfo);
+    } catch (OperatorCreationException | PKCSException | PEMException e) {
+      log.error("Error decrypting private key:: {}", e.getMessage());
     }
 
-    private static PrivateKey parsePrivateKey(String rawPrivateKey, String privateKeyPassword) {
-        PrivateKey privateKey = null;
+    return privateKey;
+  }
 
-        try (StringReader reader = new StringReader(rawPrivateKey)) {
-            PEMParser pemParser = new PEMParser(reader);
-            Object pemObject = pemParser.readObject();
-
-            // If key is encrypted, decrypt using its password
-            if (pemObject instanceof PKCS8EncryptedPrivateKeyInfo encryptedKeyInfo) {
-                log.debug("Private key is encrypted with password. Decrypting using password.");
-                char[] privateKeyPasswordBytes = privateKeyPassword.toCharArray();
-                privateKey = decryptPrivateKey(encryptedKeyInfo, privateKeyPasswordBytes);
-            }
-        } catch (IOException e) {
-            log.error("Error parsing PEM private key:: {}", e.getMessage());
-        }
-
-        return privateKey;
-    }
-
-    private static PublicKey parsePublicKey(String rawPublicKey) {
-        PublicKey publicKey = null;
-        try (StringReader reader = new StringReader(rawPublicKey)) {
-            PEMParser pemParser = new PEMParser(reader);
-            Object pemObject = pemParser.readObject();
-
-            if (pemObject instanceof SubjectPublicKeyInfo publicKeyObject) {
-                publicKey = new JcaPEMKeyConverter()
-                        .setProvider("BC")
-                        .getPublicKey(publicKeyObject);
-            }
-        } catch (IOException e) {
-            log.error("Error parsing PEM public key:: {}", e.getMessage());
-        }
-
-        return publicKey;
-    }
-
-    private static PrivateKey decryptPrivateKey(PKCS8EncryptedPrivateKeyInfo keyInfo, char[] password) {
-        PrivateKey privateKey = null;
-
-        try {
-            InputDecryptorProvider decryptorProvider = new JceOpenSSLPKCS8DecryptorProviderBuilder()
-                    .build(password);
-            JcaPEMKeyConverter pemKeyConverter = new JcaPEMKeyConverter().setProvider("BC");
-            PrivateKeyInfo privateKeyInfo = keyInfo.decryptPrivateKeyInfo(decryptorProvider);
-
-            privateKey = pemKeyConverter.getPrivateKey(privateKeyInfo);
-        } catch (OperatorCreationException | PKCSException | PEMException e) {
-            log.error("Error decrypting private key:: {}", e.getMessage());
-        }
-
-        return privateKey;
-    }
-
-    @PostConstruct
-    private void loadEnvironmentValues() {
-        log.debug("No environment variables found to be loaded");
-    }
+  @PostConstruct
+  private void loadEnvironmentValues() {
+    log.debug("No environment variables found to be loaded");
+  }
 
 }

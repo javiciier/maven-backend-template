@@ -14,28 +14,28 @@ import java.util.Set;
 @Entity
 @Table(name = "role", schema = "users")
 public class Role {
-    // region Atributes
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id", nullable = false)
-    private Long roleID;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private RoleNames name;
+  // region Atributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "role_id", nullable = false)
+  private Long roleID;
 
-    // endregion Atributes
+  @Enumerated(EnumType.STRING)
+  @Column(name = "role", nullable = false)
+  private RoleNames name;
 
-
-    // region Relationships
-    @ToString.Exclude
-    @OneToMany(mappedBy = "role")
-    private Set<RoleAssignment> assignations = new HashSet<>();
-
-    // endregion Relationships
+  // endregion Atributes
 
 
-    // region Domain-Model methods
+  // region Relationships
+  @ToString.Exclude
+  @OneToMany(mappedBy = "role")
+  private Set<RoleAssignment> assignations = new HashSet<>();
 
-    // endregion Domain-Model methods
+  // endregion Relationships
+
+  // region Domain-Model methods
+
+  // endregion Domain-Model methods
 }

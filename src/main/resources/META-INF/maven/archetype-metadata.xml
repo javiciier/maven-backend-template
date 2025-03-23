@@ -20,82 +20,82 @@ under the License.
 -->
 
 <archetype-descriptor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                      xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
-                      xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
-                      name="backend-maven-archetype">
+  xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+  name="backend-maven-archetype">
 
-    <!--  Variables "XXX" must be named "__XXX__" in filenames  -->
-    <requiredProperties>
-        <requiredProperty key="appName">
-            <defaultValue>Backend</defaultValue>
-        </requiredProperty>
+  <!--  Variables "XXX" must be named "__XXX__" in filenames  -->
+  <requiredProperties>
+    <requiredProperty key="appName">
+      <defaultValue>Backend</defaultValue>
+    </requiredProperty>
 
-        <requiredProperty key="inceptionYear">
-            <defaultValue>${maven.build.timestamp}</defaultValue>
-        </requiredProperty>
-    </requiredProperties>
+    <requiredProperty key="inceptionYear">
+      <defaultValue>${maven.build.timestamp}</defaultValue>
+    </requiredProperty>
+  </requiredProperties>
 
-    <fileSets>
-        <fileSet filtered="true">
-            <directory/>
-            <includes>
-                <include>compose.*.yaml</include>
-                <include>.dev.env</include>
-            </includes>
-          <excludes>
-            <exclude>target/**</exclude>
-          </excludes>
-        </fileSet>
+  <fileSets>
+    <fileSet filtered="true">
+      <directory/>
+      <includes>
+        <include>compose.*.yaml</include>
+        <include>.dev.env</include>
+      </includes>
+      <excludes>
+        <exclude>target/**</exclude>
+      </excludes>
+    </fileSet>
 
-        <fileSet filtered="true">
-            <directory>src</directory>
-            <includes>
-                <include>lombok.config</include>
-                <include>sonar-project.yaml</include>
-            </includes>
-        </fileSet>
+    <fileSet filtered="true">
+      <directory>src</directory>
+      <includes>
+        <include>lombok.config</include>
+        <include>sonar-project.yaml</include>
+      </includes>
+    </fileSet>
 
-        <!--  main  -->
-        <fileSet filtered="true" packaged="true">
-            <directory>src/main/java</directory>
-            <includes>
-                <include>**/*.java</include>
-            </includes>
-        </fileSet>
+    <!--  main  -->
+    <fileSet filtered="true" packaged="true">
+      <directory>src/main/java</directory>
+      <includes>
+        <include>**/*.java</include>
+      </includes>
+    </fileSet>
 
-        <fileSet filtered="true">
-            <directory>src/main/resources</directory>
-            <includes>
-              <include>i18n/**</include>
-                <include>**/*.yml</include>
-                <include>**/*.xml</include>
-                <include>**/*.json</include>
-            </includes>
-        </fileSet>
+    <fileSet filtered="true">
+      <directory>src/main/resources</directory>
+      <includes>
+        <include>i18n/**</include>
+        <include>**/*.yml</include>
+        <include>**/*.xml</include>
+        <include>**/*.json</include>
+      </includes>
+    </fileSet>
 
-        <fileSet filtered="true">
-            <directory>src/main/sql</directory>
-            <includes>
-                <include>**/*.sql</include>
-            </includes>
-        </fileSet>
+    <fileSet filtered="true">
+      <directory>src/main/sql</directory>
+      <includes>
+        <include>**/*.sql</include>
+      </includes>
+    </fileSet>
 
-        <!--  test  -->
-        <fileSet filtered="true" packaged="true">
-            <directory>src/test/java</directory>
-            <includes>
-                <include>**/*.java</include>
-            </includes>
-        </fileSet>
+    <!--  test  -->
+    <fileSet filtered="true" packaged="true">
+      <directory>src/test/java</directory>
+      <includes>
+        <include>**/*.java</include>
+      </includes>
+    </fileSet>
 
-        <fileSet filtered="true">
-            <directory>src/test/resources</directory>
-            <includes>
-                <include>**/*.yml</include>
-                <include>**/*.xml</include>
-            </includes>
-        </fileSet>
+    <fileSet filtered="true">
+      <directory>src/test/resources</directory>
+      <includes>
+        <include>**/*.yml</include>
+        <include>**/*.xml</include>
+      </includes>
+    </fileSet>
 
-    </fileSets>
+  </fileSets>
 
 </archetype-descriptor>

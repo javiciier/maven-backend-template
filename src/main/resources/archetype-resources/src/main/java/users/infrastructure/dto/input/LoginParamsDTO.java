@@ -8,11 +8,12 @@ import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBl
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginParamsDTO {
-    @NotBlank
-    @Size(min = 1, max = 50)
-    private String nickname;
 
-    @NotBlank
-    @Size(min = 1)
-    private String password;
+  @NotBlank
+  @Size(min = 1, max = 50)
+  private String nickname;
+
+  @NotBlank
+  @Size(min = 1)
+  private String password;
 }

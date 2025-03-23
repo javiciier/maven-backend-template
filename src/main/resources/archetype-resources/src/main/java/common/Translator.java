@@ -10,19 +10,20 @@ import java.util.Locale;
 @Component
 @NoArgsConstructor
 public class Translator {
-    private static final MessageSource messageSource = InternationalizationConfiguration.messageSource();
+
+  private static final MessageSource messageSource = InternationalizationConfiguration.messageSource();
 
 
-    public static String generateMessage(String exceptionKey, Locale locale) {
-        return generateMessage(exceptionKey, null, locale);
-    }
+  public static String generateMessage(String exceptionKey, Locale locale) {
+    return generateMessage(exceptionKey, null, locale);
+  }
 
-    public static String generateMessage(String exceptionKey, Object[] args, Locale locale) {
-        return messageSource.getMessage(
-                exceptionKey,
-                args,
-                exceptionKey,
-                locale
-        );
-    }
+  public static String generateMessage(String exceptionKey, Object[] args, Locale locale) {
+    return messageSource.getMessage(
+        exceptionKey,
+        args,
+        exceptionKey,
+        locale
+    );
+  }
 }
