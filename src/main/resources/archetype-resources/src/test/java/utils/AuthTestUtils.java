@@ -1,7 +1,7 @@
 package ${package}.utils;
 
-import ${package}.common.security.PasswordEncoderBean;
 import ${package}.users.application.utils.AuthUtils;
+import ${package}.users.infrastructure.dto.conversors.UserConversor;
 import ${package}.users.infrastructure.dto.input.RegisterUserParamsDTO;
 import ${package}.users.infrastructure.dto.output.AuthenticatedUserDTO;
 import ${package}.users.infrastructure.repositories.UserRepository;
@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-import static group.TestConstants.*;
-import static group.users.infrastructure.dto.conversors.UserConversor.toAuthenticatedUserDTO;
+import static ${package}.TestConstants.*;
 
 @RequiredArgsConstructor
 @Component
@@ -111,7 +110,7 @@ public class AuthTestUtils {
     public AuthenticatedUserDTO generateAuthenticatedUser(User user) {
         String serviceToken = authUtils.generateJWTFromUser(user);
 
-        return toAuthenticatedUserDTO(serviceToken, user);
+        return UserConversor.toAuthenticatedUserDTO(serviceToken, user);
     }
 
     public RegisterUserParamsDTO generateRegisterParamsDtoFromUser(User user) {

@@ -1,4 +1,4 @@
-package ${package}.application.usecases.update;
+package ${package}.auth.application.utils;
 
 import ${package}.users.domain.entities.Credential;
 import ${package}.users.domain.entities.User;

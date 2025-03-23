@@ -1,5 +1,7 @@
 package ${package}.users.domain.entities;
 
+import ${package}.users.domain.entities.*;
+import ${package}.users.domain.entities.roles.*;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,10 +1,13 @@
-package $
+package ${package}.users.domain.repositories;
 
-import java.util.Optional;
-import java.util.UUID;
+import ${package}.users.domain.entities.Credential;
+
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Lazy
 public interface CredentialRepository extends ListCrudRepository<Credential, Long> {
