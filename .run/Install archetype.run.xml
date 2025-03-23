@@ -1,0 +1,75 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" factoryName="Maven" name="Install archetype"
+    type="MavenRunConfiguration">
+    <MavenSettings>
+      <option name="myGeneralSettings">
+        <MavenGeneralSettings>
+          <option name="alwaysUpdateSnapshots" value="true"/>
+          <option name="checksumPolicy" value="NOT_SET"/>
+          <option name="customMavenHome" value="$PROJECT_DIR$/../../../software/maven3"/>
+          <option name="emulateTerminal" value="false"/>
+          <option name="failureBehavior" value="NOT_SET"/>
+          <option name="localRepository" value="$MAVEN_REPOSITORY$"/>
+          <option name="mavenHome" value="$PROJECT_DIR$/../../../software/maven3"/>
+          <option name="mavenHomeTypeForPersistence" value="CUSTOM"/>
+          <option name="nonRecursive" value="false"/>
+          <option name="outputLevel" value="INFO"/>
+          <option name="printErrorStackTraces" value="false"/>
+          <option name="showDialogWithAdvancedSettings" value="true"/>
+          <option name="threads" value="6"/>
+          <option name="useMavenConfig" value="true"/>
+          <option name="userSettingsFile"
+            value="$PROJECT_DIR$/../../../software/maven3/settings.xml"/>
+          <option name="workOffline" value="false"/>
+        </MavenGeneralSettings>
+      </option>
+      <option name="myRunnerSettings">
+        <MavenRunnerSettings>
+          <option name="delegateBuildToMaven" value="false"/>
+          <option name="environmentProperties">
+            <map>
+              <entry key="artifactId" value="my-project"/>
+              <entry key="groupId" value="my.project"/>
+              <entry key="inceptionYear" value="2025"/>
+              <entry key="version" value="0.1-SNAPSHOT"/>
+            </map>
+          </option>
+          <option name="jreName" value="#USE_PROJECT_JDK"/>
+          <option name="mavenProperties">
+            <map/>
+          </option>
+          <option name="passParentEnv" value="true"/>
+          <option name="runMavenInBackground" value="true"/>
+          <option name="skipTests" value="true"/>
+          <option name="vmOptions" value=""/>
+        </MavenRunnerSettings>
+      </option>
+      <option name="myRunnerParameters">
+        <MavenRunnerParameters>
+          <option name="cmdOptions"/>
+          <option name="profiles">
+            <set/>
+          </option>
+          <option name="goals">
+            <list>
+              <option value="clean"/>
+              <option value="install"/>
+              <option value="-U"/>
+            </list>
+          </option>
+          <option name="multimoduleDir"/>
+          <option name="pomFileName"/>
+          <option name="profilesMap">
+            <map/>
+          </option>
+          <option name="projectsCmdOptionValues">
+            <list/>
+          </option>
+          <option name="resolveToWorkspace" value="false"/>
+          <option name="workingDirPath" value="$PROJECT_DIR$"/>
+        </MavenRunnerParameters>
+      </option>
+    </MavenSettings>
+    <method v="2"/>
+  </configuration>
+</component>
