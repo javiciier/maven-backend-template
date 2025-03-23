@@ -1,6 +1,7 @@
 package ${package}.common.security.jwt.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
 @Getter

@@ -32,7 +32,8 @@ Checklists
 - Cambiar los log.info() por log.debug(), log.error(), etc según el nivel de severidad necesario
   para su uso actual.
 - Reformatear todas las plantillas para aplicar el CheckStyle de google (cuidado con las variables
-  en los imports)
+  en los imports). Comprobar los tabulados con 2 espacios, linea en blanco entre la descripción y
+  los parámetros en los javadoc, etc.
 - Usar @EntityGraph en los métodos de repositorio para evitar problemas de N+1 QUERIES
 - Pulir scripts para automatizar tareas de creación del proyecto, mover todo a carpeta /scripts (actualizar .gitignore)
 - Crear un script que genere un banner que lea el nombre del proyecto

@@ -1,22 +1,12 @@
-package $
+package ${package}.users.domain.entities.roles;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
-import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import ${package}.users.domain.entities.User;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;{package}.users.domain.entities.User;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter

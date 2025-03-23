@@ -1,11 +1,17 @@
-package $
+package ${package}.auth.application.usecases.login;
 
-import java.util.UUID;
+import ${package}.auth.application.utils.AuthUtils;
+import ${package}.auth.domain.exceptions.IncorrectLoginException;
+import ${package}.users.domain.entities.Credential;
+import ${package}.users.domain.entities.User;
+import ${package}.users.domain.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;{package}.users.domain.exceptions .*;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Log4j2
 @RequiredArgsConstructor

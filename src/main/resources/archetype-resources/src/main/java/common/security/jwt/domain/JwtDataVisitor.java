@@ -1,6 +1,7 @@
 package ${package}.common.security.jwt.domain;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

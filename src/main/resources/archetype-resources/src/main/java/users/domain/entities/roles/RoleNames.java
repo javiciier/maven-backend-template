@@ -1,7 +1,5 @@
 package ${package}.users.domain.entities.roles;
 
-import lombok.Data;
-
 public enum RoleNames {
     ADMIN("admin"),
     BASIC("basic"),

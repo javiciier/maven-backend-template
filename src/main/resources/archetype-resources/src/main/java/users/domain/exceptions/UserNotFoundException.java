@@ -1,6 +1,5 @@
 package ${package}.users.domain.exceptions;
 
-import ${package}.users.domain.entities.User;
 import java.util.UUID;
 
 public class UserNotFoundException extends Exception {

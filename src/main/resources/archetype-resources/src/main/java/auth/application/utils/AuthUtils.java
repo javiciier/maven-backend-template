@@ -1,12 +1,17 @@
-package $
+package ${package}.application.usecases.update;
 
-import java.util.UUID;
+import ${package}.users.domain.entities.Credential;
+import ${package}.users.domain.entities.User;
+import ${package}.users.domain.exceptions.UserNotFoundException;
+import ${package}.users.domain.repositories.CredentialRepository;
+import ${package}.users.domain.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;{package}.users.domain.exceptions.*;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component

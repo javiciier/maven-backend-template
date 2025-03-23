@@ -1,8 +1,8 @@
 package ${package}.common;
 
 import ${package}.common.api.ApiResponse;
-import ${package}.common.api.error.ErrorApiResponseBody;
 import ${package}.common.api.error.ApiValidationErrorDetails;
+import ${package}.common.api.error.ErrorApiResponseBody;
 import ${package}.common.exception.InvalidArgumentException;
 import ${package}.common.exception.MissingMandatoryValueException;
 import lombok.NoArgsConstructor;

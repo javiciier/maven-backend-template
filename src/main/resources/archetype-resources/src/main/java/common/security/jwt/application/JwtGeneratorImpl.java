@@ -1,12 +1,13 @@
 package ${package}.common.security.jwt.application;
 
-import ${package}.common.security.keys.RsaKeyManager;
 import ${package}.common.security.jwt.domain.JwtData;
 import ${package}.common.security.jwt.domain.JwtDataVisitor;
+import ${package}.common.security.keys.RsaKeyManager;
 import io.jsonwebtoken.*;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import java.util.Map;
 @Log4j2
 @NoArgsConstructor
 @Component
+@Lazy
 @Primary
 public class JwtGeneratorImpl implements JwtGenerator {
     @Value("${project.security.jwt.expirationInMilliseconds}")

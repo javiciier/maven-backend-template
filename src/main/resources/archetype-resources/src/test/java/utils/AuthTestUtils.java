@@ -2,38 +2,34 @@ package ${package}.utils;
 
 import ${package}.common.security.PasswordEncoderBean;
 import ${package}.users.application.utils.AuthUtils;
-import ${package}.users.domain.*;
 import ${package}.users.infrastructure.dto.input.RegisterUserParamsDTO;
 import ${package}.users.infrastructure.dto.output.AuthenticatedUserDTO;
 import ${package}.users.infrastructure.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
-import static ${package}.TestConstants.*;
-import static ${package}.users.infrastructure.dto.conversors.UserConversor.toAuthenticatedUserDTO;
+import static group.TestConstants.*;
+import static group.users.infrastructure.dto.conversors.UserConversor.toAuthenticatedUserDTO;
 
+@RequiredArgsConstructor
 @Component
 public class AuthTestUtils {
-    private List<User> registeredUsers = new ArrayList<>();
+    private Map<String, User> registeredUsersMap = new HashMap<>();
 
-    /* ************************* DEPENDENCIAS ************************* */
-    @Autowired
-    private UserRepository userRepo;
-    @Autowired
-    private AuthUtils authUtils;
-    private final BCryptPasswordEncoder passwordEncoder = PasswordEncoderBean.passwordEncoder();
+    // region DEPENDENCIES
+    private final UserRepository userRepo;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final AuthUtils authUtils;
+
+    // endregion DEPENDENCIES
 
 
-    public AuthTestUtils(UserRepository userRepo) {
-        this.userRepo = userRepo;
-    }
+    // region AUXILIAR METHODS
 
-    /* ************************* MÉTODOS AUXILIARES ************************* */
     public User generateValidUser() {
         return this.generateValidUser(DEFAULT_NAME);
     }
@@ -100,7 +96,7 @@ public class AuthTestUtils {
         userRepo.save(user);
         user.assignrole(RoleNames.BASIC)
 
-        registeredUsers.add(user);
+        registeredUsersMap.add(nickname, user);
         return userRepo.save(user);
     }
 
@@ -109,7 +105,7 @@ public class AuthTestUtils {
     }
 
     public void removeAllRegisteredUsers() {
-        userRepo.deleteAll(registeredUsers);
+        userRepo.deleteAll(registeredUsersMap);
     }
 
     public AuthenticatedUserDTO generateAuthenticatedUser(User user) {
@@ -135,4 +131,7 @@ public class AuthTestUtils {
 
         return dto;
     }
+
+    // endregion AUXILIAR METHODS
+
 }

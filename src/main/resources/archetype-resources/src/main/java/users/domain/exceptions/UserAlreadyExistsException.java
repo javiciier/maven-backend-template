@@ -1,7 +1,6 @@
 package ${package}.users.domain.exceptions;
 
 import ${package}.users.domain.entities.User;
-import jakarta.validation.constraints.NotNull;
 
 public class UserAlreadyExistsException extends Exception {
     public static final String ERROR_MESSAGE = "A user with nickname '%s' already exists";

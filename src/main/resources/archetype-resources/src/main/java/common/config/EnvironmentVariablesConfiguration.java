@@ -1,11 +1,11 @@
 package ${package}.common.config;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.beans.factory.annotation.Value;
-import jakarta.annotation.PostConstruct;
 import java.io.File;
 import java.nio.file.Paths;
 

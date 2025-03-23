@@ -1,7 +1,8 @@
 package ${package}.common.security.keys;
 
 import ${package}.common.config.EnvironmentVariablesConfiguration;
-import lombok.*;
+import jakarta.annotation.PostConstruct;
+
 import lombok.extern.log4j.Log4j2;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
@@ -16,7 +17,6 @@ import org.bouncycastle.pkcs.PKCS8EncryptedPrivateKeyInfo;
 import org.bouncycastle.pkcs.PKCSException;
 import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.StringReader;
 import java.security.*;

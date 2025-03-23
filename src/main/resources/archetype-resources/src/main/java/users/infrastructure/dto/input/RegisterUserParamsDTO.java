@@ -1,16 +1,13 @@
-package $
+package ${package}.users.infrastructure.dto.input;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
+import ${package}.common.interfaces.EntityConversor;
+import ${package}.users.domain.entities.Gender;
+import ${package}.users.domain.entities.User;
+import jakarta.validation.constraints.*;
+import lombok.*;
+
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor

@@ -1,10 +1,12 @@
 package ${package}.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import com.fasterxml.jackson.databind.SerializationFeature;
-import ${package}.common.config.serialization.serializers.*;
-import ${package}.common.config.serialization.deserializers.*;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import ${package}.common.config.serialization.deserializers.JacksonLocalDateDeserializer;
+import ${package}.common.config.serialization.serializers.JacksonLocalDateSerializer;
+import ${package}.common.config.serialization.serializers.JacksonLocalDateTimeSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.*;
 

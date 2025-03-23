@@ -1,12 +1,22 @@
-package $
+package ${package}.auth.application.usecases.register;
 
+import ${package}.auth.application.utils.AuthUtils;
+import ${package}.users.domain.entities.*;
+import ${package}.users.domain.entities.roles.Role;
+import ${package}.users.domain.entities.roles.RoleNames;
+import ${package}.users.domain.exceptions.UserAlreadyExistsException;
+import ${package}.users.domain.repositories.*;
+import ${package}.users.domain.repositories.roles.RoleRepository;
+import ${package}.users.infrastructure.dto.conversors.UserConversor;
+import ${package}.users.infrastructure.dto.input.RegisterUserParamsDTO;
 import jakarta.annotation.PostConstruct;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Log4j2
 @RequiredArgsConstructor

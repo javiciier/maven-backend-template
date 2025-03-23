@@ -1,6 +1,7 @@
 package ${package}.common.exception;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
