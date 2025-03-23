@@ -29,7 +29,11 @@ Checklists
 -->
 
 - Configurar un githook para solo aceptar mensajes de commit válidos (Conventional Commits, Husky)
-- Dentro de las /application, crear los casos de uso como clases, y que estas llamen a las interfaces de los servicios.
+- Cambiar los log.info() por log.debug(), log.error(), etc según el nivel de severidad necesario
+  para su uso actual.
+- Reformatear todas las plantillas para aplicar el CheckStyle de google (cuidado con las variables
+  en los imports)
+- Usar @EntityGraph en los métodos de repositorio para evitar problemas de N+1 QUERIES
 - Pulir scripts para automatizar tareas de creación del proyecto, mover todo a carpeta /scripts (actualizar .gitignore)
 - Crear un script que genere un banner que lea el nombre del proyecto
 - Implementar los tests básicos de usuario en una clase BasicUserTest. Luego el resto de tests cuando se añadan nuevas
@@ -46,4 +50,6 @@ Checklists
   contenedor docker, etc)
 - Poder configurar qué backend se va a usar en función de la property que se base al crear el proyecto: si un
   repositorio JDBC o si un backend contra Google Firebase, Firestore, etc.
-- 
+- Comprobar que hay documentación escrita solo para las clases y métodos (ambos public).
+- Configurar alguna libreria como OpenAPI o similar para automatizar la generación de documentación
+  del proyecto.

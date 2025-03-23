@@ -1,10 +1,8 @@
-package ${package}.users.domain.repositories;
+package $
 
-import ${package}.users.domain.entities.ContactInfo;
-import ${package}.users.domain.repositories.ContactInfoRepository;
-
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.repository.CrudRepository;
 
-
+@Lazy
 public interface ContactInfoRepository extends CrudRepository<ContactInfo, Long> {
 }

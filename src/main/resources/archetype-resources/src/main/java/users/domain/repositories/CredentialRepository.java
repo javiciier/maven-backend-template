@@ -1,12 +1,12 @@
-package ${package}.users.domain.repositories;
-
-import ${package}.users.domain.entities.Credential;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.ListCrudRepository;
+package $
 
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.ListCrudRepository;
 
+@Lazy
 public interface CredentialRepository extends ListCrudRepository<Credential, Long> {
     /**
      * Comprueba si existe un usuario por su nombre de usuario, ignorando maýusculas o minúsculas.

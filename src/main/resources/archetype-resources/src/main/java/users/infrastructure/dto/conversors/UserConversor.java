@@ -1,11 +1,7 @@
-package ${package}.users.infrastructure.dto.conversors;
+package $
 
-import ${package}.users.domain.entities.User;
-import ${package}.users.infrastructure.dto.output.*;
 import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
-import static ${package}.users.infrastructure.dto.conversors.ContactInfoConversor.toContactInfoDTO;
+import lombok.NoArgsConstructor;{package}.users.infrastructure.dto.conversors.ContactInfoConversor.toContactInfoDTO;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserConversor {
@@ -37,7 +33,9 @@ public class UserConversor {
 
 
     /* ******************** Convertir a Entidad ******************** */
-
+    public static User fromRegisterUserParamsDTO(RegisterUserParamsDTO dto) {
+      return dto.toEntity();
+    }
 
     /* ******************** Convertir a conjunto de Entidad ******************** */
 

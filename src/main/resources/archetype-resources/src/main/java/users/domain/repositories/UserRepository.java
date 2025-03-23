@@ -1,9 +1,9 @@
-package ${package}.users.domain.repositories;
-
-import ${package}.users.domain.entities.User;
-import org.springframework.data.repository.ListCrudRepository;
+package $
 
 import java.util.UUID;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.repository.ListCrudRepository;
 
+@Lazy
 public interface UserRepository extends ListCrudRepository<User, UUID> {
 }

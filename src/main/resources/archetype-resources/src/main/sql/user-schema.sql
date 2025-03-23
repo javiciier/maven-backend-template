@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS users.UserTable (
 CREATE TABLE IF NOT EXISTS users.Credential (
     credential_id       SERIAL,
     nickname            VARCHAR(50) NOT NULL,
-    passwordEncrypted   VARCHAR     NOT NULL,
+    passwordHash        VARCHAR     NOT NULL,
     user_id             UUID        NOT NULL,
 
     CONSTRAINT PK_Credential PRIMARY KEY (credential_id),

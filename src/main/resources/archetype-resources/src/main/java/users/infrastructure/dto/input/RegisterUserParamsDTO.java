@@ -1,17 +1,22 @@
-package ${package}.users.infrastructure.dto.input;
+package $
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import ${package}.users.domain.entities.Gender;
-import jakarta.validation.constraints.*;
-import lombok.*;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegisterUserParamsDTO {
+public class RegisterUserParamsDTO implements EntityConversor<User> {
     // User
     @NotBlank
     @Size(min = 1, max = 50)
@@ -47,4 +52,14 @@ public class RegisterUserParamsDTO {
     @NotBlank
     @Size(min = 1, max = 20)
     private String phoneNumber;
+
+  @Override
+  public User toEntity() {
+    return User.builder()
+        .name(this.getName())
+        .surname(this.getSurname())
+        .gender(this.getGender())
+        .birthDate(this.getBirthDate())
+        .build();
+  }
 }

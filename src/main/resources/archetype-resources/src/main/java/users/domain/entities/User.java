@@ -1,17 +1,31 @@
-package ${package}.users.domain.entities;
+package $
 
-import ${package}.users.domain.entities.roles.Role;
-import ${package}.users.domain.entities.roles.RoleAssignment;
-import ${package}.users.domain.entities.roles.RoleAssignmentID;
-import ${package}.users.domain.entities.roles.RoleNames;
-
-import jakarta.persistence.*;
-import lombok.*;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import java.beans.Transient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -40,27 +54,30 @@ public class User {
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthDate;
 
-    @Builder.Default
     @Column(name = "registeredat", nullable = false)
-    private LocalDateTime registeredAt = LocalDateTime.now();
+    private LocalDateTime registeredAt;
 
     // endregion Atributes
 
-
     // region Relationships
     @ToString.Exclude
-    @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Credential credential;
 
-    @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ContactInfo contactInfo;
 
+  @Builder.Default
     @ToString.Exclude
-    @Builder.Default
-    @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<RoleAssignment> roleAssignments = new ArrayList<>();
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+  private Set<RoleAssignment> roleAssignments = new HashSet<>();
 
     // endregion Relationships
+
+  @PrePersist
+  protected void onCreate() {
+    this.registeredAt = LocalDateTime.now();
+  }
 
     // region Getters
     public String getNickname() {

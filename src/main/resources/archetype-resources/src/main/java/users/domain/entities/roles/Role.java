@@ -1,13 +1,22 @@
-package ${package}.users.domain.entities.roles;
+package $
 
-import ${package}.users.domain.entities.roles.RoleNames;
-import ${package}.users.domain.entities.roles.RoleAssignment;
-
-import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.LinkedHashSet;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 
 @Getter
 @Setter
@@ -33,7 +42,7 @@ public class Role {
     // region Relationships
     @ToString.Exclude
     @OneToMany(mappedBy = "role")
-    private Set<RoleAssignment> assignations = new LinkedHashSet<>();
+    private Set<RoleAssignment> assignations = new HashSet<>();
 
     // endregion Relationships
 

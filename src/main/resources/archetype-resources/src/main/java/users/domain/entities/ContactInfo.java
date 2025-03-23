@@ -1,7 +1,22 @@
-package ${package}.users.domain.entities;
+package $
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -18,19 +33,18 @@ public class ContactInfo {
     @Column(name = "contactinfo_id", nullable = false)
     private Long contactInfoID;
 
+  @Email
     @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
 
-    @Builder.Default
     @Column(name = "isemailverified", nullable = false)
-    private Boolean isEmailVerified = false;
+    private Boolean isEmailVerified;
 
     @Column(name = "phonenumber", nullable = false, length = 20)
     private String phoneNumber;
 
-    @Builder.Default
     @Column(name = "isphonenumberverified", nullable = false)
-    private Boolean isPhoneNumberVerified = false;
+    private Boolean isPhoneNumberVerified;
 
     // endregion Atributes
 
@@ -43,6 +57,15 @@ public class ContactInfo {
 
     // endregion Relationships
 
+  @PrePersist
+  protected void onCreate() {
+    if (isEmailVerified == null) {
+      isEmailVerified = false;
+    }
+    if (isPhoneNumberVerified == null) {
+      isPhoneNumberVerified = false;
+    }
+  }
 
     // region Domain-Model methods
     // endregion Domain-Model methods
