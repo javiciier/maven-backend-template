@@ -2,6 +2,7 @@ package ${package}.common.security.jwt.infrastructure;
 
 import ${package}.common.security.jwt.application.JwtGenerator;
 import ${package}.common.security.jwt.domain.JwtData;
+import ${package}.users.domain.entities.roles.RoleNames;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -75,6 +76,8 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
   }
 
   private Set<GrantedAuthority> createAuthorities(JwtData token) {
+    log.debug("Registering granted authorities for user with ID '{}'", token.getUserID());
+
     boolean hasRoles = (token.getRoles() != null) && (!token.getRoles().isEmpty());
     Set<GrantedAuthority> authorities = new HashSet<>(token.getRoles().size());
 
@@ -82,13 +85,13 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
       return authorities;
     }
 
-    for (String role : token.getRoles()) {
-      role = role.replace("\"", "");
-      SimpleGrantedAuthority authority = new SimpleGrantedAuthority(ROLE_ATTRIBUTE_NAME + role);
+    for (RoleNames role: token.getRoles()) {
+      String roleName = role.getName().replace("\"", "");
+      SimpleGrantedAuthority authority = new SimpleGrantedAuthority(ROLE_ATTRIBUTE_NAME + roleName);
       authorities.add(authority);
     }
 
-    log.debug("Registering granted authorities for user {}", token.getUserID());
+    log.debug("Registered granted authorities succesfuly for user with ID '{}': {}", token.getUserID(), authorities);
     return authorities;
   }
 }

@@ -1,4 +1,4 @@
-package ${package}.users.infrastructure.dto.input;
+package ${package}.auth.infrastructure.dto.inbound;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

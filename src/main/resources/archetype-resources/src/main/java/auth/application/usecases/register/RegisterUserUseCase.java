@@ -1,14 +1,14 @@
 package ${package}.auth.application.usecases.register;
 
 import ${package}.auth.application.utils.AuthUtils;
+import ${package}.auth.infrastructure.dto.conversors.AuthConversor;
+import ${package}.auth.infrastructure.dto.inbound.RegisterUserParamsDTO;
 import ${package}.users.domain.entities.*;
 import ${package}.users.domain.entities.roles.Role;
 import ${package}.users.domain.entities.roles.RoleNames;
 import ${package}.users.domain.exceptions.UserAlreadyExistsException;
 import ${package}.users.domain.repositories.*;
 import ${package}.users.domain.repositories.roles.RoleRepository;
-import ${package}.users.infrastructure.dto.conversors.UserConversor;
-import ${package}.users.infrastructure.dto.input.RegisterUserParamsDTO;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -61,7 +61,7 @@ public class RegisterUserUseCase {
 
     // Create user data
     log.info("Registering new user with nickname '{}'", nickname);
-    User user = UserConversor.fromRegisterUserParamsDTO(paramsDTO);
+    User user = AuthConversor.fromRegisterUserParamsDTO(paramsDTO);
     createCredentialForUser(paramsDTO, user);
     createContactInfoForUser(paramsDTO, user);
 

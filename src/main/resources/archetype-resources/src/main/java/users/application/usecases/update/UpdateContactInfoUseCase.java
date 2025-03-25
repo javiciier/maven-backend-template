@@ -5,7 +5,7 @@ import ${package}.users.domain.entities.ContactInfo;
 import ${package}.users.domain.entities.User;
 import ${package}.users.domain.exceptions.UserNotFoundException;
 import ${package}.users.domain.repositories.ContactInfoRepository;
-import ${package}.users.infrastructure.dto.input.UpdateContactInfoParamsDTO;
+import ${package}.users.infrastructure.dto.inbound.UpdateContactInfoParamsDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;

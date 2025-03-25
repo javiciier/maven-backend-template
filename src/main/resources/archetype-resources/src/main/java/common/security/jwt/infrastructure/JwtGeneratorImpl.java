@@ -1,5 +1,6 @@
 package ${package}.common.security.jwt.application;
 
+import ${package}.common.security.jwt.application.JwtGenerator;
 import ${package}.common.security.jwt.domain.JwtData;
 import ${package}.common.security.jwt.domain.JwtDataVisitor;
 import ${package}.common.security.keys.RsaKeyManager;

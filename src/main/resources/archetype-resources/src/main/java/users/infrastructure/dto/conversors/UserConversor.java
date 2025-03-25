@@ -1,17 +1,16 @@
 package ${package}.users.infrastructure.dto.conversors;
 
 import ${package}.users.domain.entities.User;
-import ${package}.users.infrastructure.dto.input.RegisterUserParamsDTO;
-import ${package}.users.infrastructure.dto.output.*;
+import ${package}.users.infrastructure.dto.outbound.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import static ${package}.users.infrastructure.dto.conversors.ContactInfoConversor.toContactInfoDTO;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserConversor {
+public final class UserConversor {
 
-  /* ******************** Convertir a DTO ******************** */
+  // region to DTO
   public static UserDTO toUserDTO(User entity) {
     ContactInfoDTO contactInfoDTO = toContactInfoDTO(entity.getContactInfo());
 
@@ -29,20 +28,15 @@ public class UserConversor {
         .build();
   }
 
-  public static AuthenticatedUserDTO toAuthenticatedUserDTO(String token, User entity) {
-    UserDTO userDTO = toUserDTO(entity);
+  // endregion to
 
-    return new AuthenticatedUserDTO(token, userDTO);
-  }
+  // region to DTO collection
+  // endregion to DTO collection
 
-  /* ******************** Convertir a conjunto de DTO ******************** */
+  // region to entity
+  // endregion to entity
 
-
-  /* ******************** Convertir a Entidad ******************** */
-  public static User fromRegisterUserParamsDTO(RegisterUserParamsDTO dto) {
-    return dto.toEntity();
-  }
-
-  /* ******************** Convertir a conjunto de Entidad ******************** */
+  // region to entity collection
+  // endregion to entity collection
 
 }

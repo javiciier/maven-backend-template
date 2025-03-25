@@ -1,14 +1,14 @@
 package ${package}.users.infrastructure.dto.conversors;
 
 import ${package}.users.domain.entities.ContactInfo;
-import ${package}.users.infrastructure.dto.output.ContactInfoDTO;
+import ${package}.users.infrastructure.dto.outbound.ContactInfoDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ContactInfoConversor {
+public final class ContactInfoConversor {
 
-  /* ******************** Convertir a DTO ******************** */
+  // region to DTO
   public static ContactInfoDTO toContactInfoDTO(ContactInfo entity) {
     return ContactInfoDTO.builder()
         .contactInfoID(entity.getContactInfoID())
@@ -18,5 +18,8 @@ public class ContactInfoConversor {
         .isPhoneNumberVerified(entity.getIsPhoneNumberVerified())
         .build();
   }
+
+  // endregion to DTO
+
 
 }

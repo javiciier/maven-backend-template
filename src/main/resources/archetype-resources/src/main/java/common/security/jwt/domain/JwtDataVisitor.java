@@ -1,5 +1,7 @@
 package ${package}.common.security.jwt.domain;
 
+import ${package}.users.domain.entities.roles.RoleNames;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import java.util.*;
@@ -21,7 +23,7 @@ public class JwtDataVisitor {
     return JwtData.builder()
         .userID(UUID.fromString((String) map.get(JwtDataFields.USER_ID.getValue())))
         .nickname((String) map.get(JwtDataFields.NICKNAME.getValue()))
-        .roles((List<String>) map.get(JwtDataFields.ROLES.getValue()))
+        .roles((List<RoleNames>) map.get(JwtDataFields.ROLES.getValue()))
         .build();
   }
 }

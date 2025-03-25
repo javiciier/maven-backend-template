@@ -33,7 +33,7 @@
     </Root>
 
     <!-- Display Hibernate query statistics -->
-    <Logger level="DEBUG" name="org.hibernate.stat"/>
+    <Logger level="DEBUG" name="org.hibernate.sql"/>
   </Loggers>
 
 </Configuration>

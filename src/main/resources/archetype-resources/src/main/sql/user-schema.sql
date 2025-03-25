@@ -1,10 +1,8 @@
--- Evitar duplicados
-DROP SCHEMA IF EXISTS users CASCADE;
-
 -- Extensión para crear identificadores UUID
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Esquema del usuario
+DROP SCHEMA IF EXISTS users CASCADE;
 CREATE SCHEMA users;
 
 CREATE TABLE IF NOT EXISTS users.UserTable (
@@ -53,9 +51,9 @@ CREATE TABLE IF NOT EXISTS users.RoleAssignment (
             ON UPDATE CASCADE
 );
 
-INSERT INTO users.Role(role) VALUES ('ADMIN');
-INSERT INTO users.Role(role) VALUES ('BASIC');
-INSERT INTO users.Role(role) VALUES ('PREMIUM');
+INSERT INTO users.Role(name) VALUES ('ADMIN');
+INSERT INTO users.Role(name) VALUES ('BASIC');
+INSERT INTO users.Role(name) VALUES ('PREMIUM');
 
 CREATE TABLE IF NOT EXISTS users.ContactInfo (
     contactInfo_id          SERIAL,

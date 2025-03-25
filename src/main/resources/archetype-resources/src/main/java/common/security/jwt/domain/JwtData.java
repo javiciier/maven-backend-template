@@ -1,5 +1,6 @@
 package ${package}.common.security.jwt.domain;
 
+import ${package}.users.domain.entities.roles.RoleNames;
 import lombok.*;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public class JwtData {
 
   private UUID userID;
   private String nickname;
-  private List<String> roles;
+  private List<RoleNames> roles;
 }

@@ -1,4 +1,4 @@
-package ${package}.users.infrastructure.dto.output;
+package ${package}.users.infrastructure.dto.outbound;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
@@ -7,9 +7,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ContactInfoDTO {
+public final class ContactInfoDTO {
 
-  private Long contactInfoID;
+  private final Long contactInfoID;
 
   @NotBlank
   @Email

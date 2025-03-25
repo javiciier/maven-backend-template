@@ -1,9 +1,9 @@
-package ${package}.users.infrastructure.dto.input;
+package ${package}.auth.infrastructure.dto.inbound;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import ${package}.common.interfaces.EntityConversor;
 import ${package}.users.domain.entities.Gender;
 import ${package}.users.domain.entities.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 import lombok.*;
 

@@ -4,7 +4,6 @@
 !**/src/main/**/target/
 !**/src/test/**/target/
 .idea/
-*.env
 *.pem
 logs/
 .run/**.sh

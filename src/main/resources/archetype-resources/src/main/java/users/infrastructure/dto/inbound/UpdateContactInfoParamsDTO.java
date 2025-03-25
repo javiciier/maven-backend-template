@@ -1,4 +1,4 @@
-package ${package}.users.infrastructure.dto.input;
+package ${package}.users.infrastructure.dto.inbound;
 
 import jakarta.validation.constraints.Email;
 import lombok.*;

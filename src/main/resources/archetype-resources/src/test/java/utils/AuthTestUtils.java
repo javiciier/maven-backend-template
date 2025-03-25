@@ -2,8 +2,8 @@ package ${package}.utils;
 
 import ${package}.users.application.utils.AuthUtils;
 import ${package}.users.infrastructure.dto.conversors.UserConversor;
-import ${package}.users.infrastructure.dto.input.RegisterUserParamsDTO;
-import ${package}.users.infrastructure.dto.output.AuthenticatedUserDTO;
+import ${package}.users.infrastructure.dto.inbound.RegisterUserParamsDTO;
+import ${package}.users.infrastructure.dto.outbound.AuthenticatedUserDTO;
 import ${package}.users.infrastructure.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -1,4 +1,4 @@
-package ${package}.users.infrastructure.dto.output;
+package ${package}.users.infrastructure.dto.outbound;
 
 import ${package}.users.domain.entities.Gender;
 import ${package}.users.domain.entities.roles.Role;
