@@ -1,57 +1,25 @@
 name: ${appName}-stack
 
-services:
-  dev-db:
-    image: 'postgres:17-alpine'
-    container_name: 'Development-database'
-    environment:
-      - 'POSTGRES_DB=development'
-      - 'POSTGRES_USER=myuser'
-      - 'POSTGRES_PASSWORD=mypassword'
-    ports:
-      - '5432:5432'
-    volumes:
-      - ./src/main/sql/user-schema.sql:/docker-entrypoint-initdb.d/1-user-schema.sql
-
-  dev-elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
-    container_name: 'Development-elasticsearch'
-    environment:
-      - discovery.type=single-node
-    ports:
-      - "9200:9200"
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
-      - ./src/main/resorces/${appName}-elasticsearch-index-template.json:/usr/share/elasticsearch/config/templates
-    networks:
-      - elastic
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:9200" ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.17.0
-    container_name: kibana
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-    ports:
-      - "5601:5601"
-    networks:
-      - elastic
-    depends_on:
-      - dev-elasticsearch
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:5601" ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-
 networks:
-  elastic:
+  ${appName}-postgres-network:
     driver: bridge
 
 volumes:
-  esdata:
+  ${appName}-postgres-volume:
     driver: local
+
+services:
+  development-database:
+    image: 'postgres:17-alpine'
+    container_name: 'Development-database'
+    env_file:
+      - path: .docker.dev.env
+        required: true
+    environment:
+      - POSTGRES_DB: ${POSTGRES_DB}
+      - POSTGRES_USER: ${POSTGRES_USER}
+      - POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./src/main/sql/user-schema.sql:/docker-entrypoint-initdb.d/1-user-schema.sql

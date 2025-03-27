@@ -28,7 +28,8 @@
     <!-- CI/CD configuration -->
 
     <!-- Path configuration -->
-    <paths.docker-compose.test>${project.basedir}/src/test/docker-compose.test.yml
+    <paths.docker-compose.test>
+      ${project.basedir}/src/test/docker-compose.test.yml
     </paths.docker-compose.test>
 
     <!-- Project plugins versions -->
@@ -218,8 +219,12 @@
 
     <resources>
       <resource>
-        <directory>src/..</directory>
+        <directory/>
         <filtering>true</filtering>
+        <includes>
+          <include>*.env</include>
+          <include>compose.*.yaml</include>
+        </includes>
       </resource>
 
       <resource>
@@ -334,21 +339,9 @@
         <!-- Skip tests -->
         <maven.test.skip>true</maven.test.skip>
         <!-- Project dependencies versions for current profile -->
-        <log4j2.elasticsearch.version>1.6.1</log4j2.elasticsearch.version>
+
       </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.appenders.log4j</groupId>
-          <artifactId>log4j2-elasticsearch-core</artifactId>
-          <version>${log4j2.elasticsearch.version}</version>
-          <scope>runtime</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.appenders.log4j</groupId>
-          <artifactId>log4j2-elasticsearch-hc</artifactId>
-          <version>${log4j2.elasticsearch.version}</version>
-        </dependency>
-      </dependencies>
+
     </profile>
 
     <!-- Testing profile -->

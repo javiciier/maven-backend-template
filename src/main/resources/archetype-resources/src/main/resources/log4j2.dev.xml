@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
   <Properties>
+    <!-- Properties to be logged -->
     <Property name="iso-date">%date{yyyy-MM-dd'T'HH:mm:ss.SSSZ}{GMT+1}</Property>
     <Property name="thread">[%t]</Property>
     <Property name="level">%-5level</Property>
     <Property name="logger">%logger</Property>
     <Property name="message">%msg</Property>
     <Property name="logFormat">${iso-date} ${thread} ${level} ${logger} -- ${message} %n</Property>
-    <Property name="applicationName">${appName}</Property>
+
+    <!-- Variables -->
+    <Property name="applicationName">myapp</Property>
   </Properties>
 
   <Appenders>
@@ -19,17 +22,12 @@
       <PatternLayout pattern="${logFormat}"/>
     </File>
 
-    <Elasticsearch name="Elasticsearch" serverUris="http://localhost:9200">
-      <IndexName indexName="${applicationName}-index"/>
-      <JacksonJsonLayout/>
-    </Elasticsearch>
   </Appenders>
 
   <Loggers>
     <Root level="info">
       <AppenderRef ref="Console"/>
       <AppenderRef ref="File"/>
-      <AppenderRef ref="Elasticsearch"/>
     </Root>
 
     <!-- Display Hibernate query statistics -->
