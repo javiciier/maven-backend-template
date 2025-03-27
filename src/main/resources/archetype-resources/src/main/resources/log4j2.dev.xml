@@ -11,6 +11,9 @@
 
     <!-- Variables -->
     <Property name="applicationName">myapp</Property>
+    <Property name="elasticIndexTemplatePath">
+      classpath:${applicationName}-elastic-index-template.json
+    </Property>
   </Properties>
 
   <Appenders>
@@ -22,16 +25,55 @@
       <PatternLayout pattern="${logFormat}"/>
     </File>
 
+    <Elasticsearch name="ElasticsearchAppender">
+      <IndexName indexName="${applicationName}-logs"/>
+
+      <AsyncBatchDelivery>
+        <!-- Elastic client writting the logs -->
+        <HCHttp
+          serverUris="http://localhost:9200"
+          connTimeout="2000"
+          readTimeout="20000"
+          maxTotalConnections="4"
+        >
+          <PooledItemSourceFactory
+            poolName="es-batch-pool"
+            initialPoolSize="4"
+            itemSizeInBytes="2048000"
+          >
+          </PooledItemSourceFactory>
+        </HCHttp>
+
+        <!-- Logging template with the data to be logged -->
+        <IndexTemplate name="${applicationName}-logs">
+          <Path>${elasticIndexTemplatePath}</Path>
+        </IndexTemplate>
+
+      </AsyncBatchDelivery>
+      <JsonLayout complete="true" compact="true">
+        <KeyValuePair key="@timestamp" value="${iso-date}"/>
+        <KeyValuePair key="process.thread.name" value="${thread}"/>
+        <KeyValuePair key="log.level" value="${level}"/>
+        <KeyValuePair key="log.logger" value="${logger}"/>
+        <KeyValuePair key="log.format" value="${logFormat}"/>
+        <KeyValuePair key="message" value="${message}"/>
+        <KeyValuePair key="service.name" value="${applicationName}"/>
+      </JsonLayout>
+
+    </Elasticsearch>
   </Appenders>
 
   <Loggers>
     <Root level="info">
       <AppenderRef ref="Console"/>
       <AppenderRef ref="File"/>
+      <AppenderRef ref="ElasticsearchAppender"/>
     </Root>
 
-    <!-- Display Hibernate query statistics -->
-    <Logger level="DEBUG" name="org.hibernate.sql"/>
+    <AsyncLogger name="Elasticsearch">
+      <AppenderRef ref="ElasticsearchAppender"/>
+    </AsyncLogger>
+
   </Loggers>
 
 </Configuration>

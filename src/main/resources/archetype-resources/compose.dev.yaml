@@ -4,9 +4,16 @@ networks:
   ${appName}-postgres-network:
     driver: bridge
 
+  ${appName}-elastic-network:
+    driver: bridge
+
 volumes:
   ${appName}-postgres-volume:
     driver: local
+
+  ${appName}-elastic-volume:
+    driver: local
+
 
 services:
   development-database:
@@ -22,4 +29,62 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./src/main/sql/user-schema.sql:/docker-entrypoint-initdb.d/1-user-schema.sql
+      - ./src/main/sql:/docker-entrypoint-initdb.d
+
+  dev-${appName}-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    container_name: 'Development-elasticsearch'
+    env_file:
+      - .docker.dev.env
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - 9200:9200
+    volumes:
+      - ${appName}-elastic-volume:/usr/share/elasticsearch/data
+    networks:
+      - ${appName}-elastic-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9200/_cluster/health" ]
+      start_period: 30s       # Container time to initialize
+      interval: 5s            # Interval between checks
+      timeout: 5s             # Time to consider check failed if no response
+      retries: 4
+      start_interval: 5s
+
+  dev-${appName}-kibana:
+    image: docker.elastic.co/kibana/kibana:8.17.0
+    container_name: 'Development-kibana'
+    depends_on:
+      - dev-${appName}-elasticsearch
+    env_file:
+      - .docker.dev.env
+    environment:
+      - ELASTICSEARCH_HOSTS=http://dev-${appName}-elasticsearch:9200
+      - XPACK_SECURITY_ENABLED=false
+    ports:
+      - 5601:5601
+    networks:
+      - ${appName}-elastic-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5601" ]
+      start_period: 15s       # Container time to initialize
+      interval: 5s            # Interval between checks
+      timeout: 5s             # Time to consider check failed if no response
+      retries: 4
+      start_interval: 5s
+
+  dev-${appName}-elasticsearch-configuration:
+    image: curlimages/curl:8.12.1
+    depends_on:
+      dev-${appName}-kibana:
+        condition: service_healthy
+    volumes:
+      - ./src/main/resources/${appName}-elastic-index-template.json:/${appName}-index-template.json    # Template for logging
+    networks:
+      - ${appName}-elastic-network
+    command: >
+      sh -c "curl -T /${appName}-index-template.json -H 'Content-Type: application/json' http://dev-${appName}-elasticsearch:9200/_index_template/appname-template --silent || exit 1"
+
+

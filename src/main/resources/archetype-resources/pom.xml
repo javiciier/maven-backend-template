@@ -42,6 +42,7 @@
     <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
     <bcprov-jdk18on.version>1.76</bcprov-jdk18on.version>
     <postgresql.driver.version>42.7.4</postgresql.driver.version>
+    <apache.log4j.json-layout.version>2.24.3</apache.log4j.json-layout.version>
   </properties>
 
   <dependencies>
@@ -151,6 +152,13 @@
 
     <!-- Group "org.apache" -->
     <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-layout-template-json</artifactId>
+      <version>${apache.log4j.json-layout.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-failsafe-plugin</artifactId>
       <version>${maven-failsafe-plugin.version}</version>
@@ -230,6 +238,9 @@
       <resource>
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
+        <includes>
+          <include>*.xml</include>
+        </includes>
       </resource>
     </resources>
 
@@ -333,15 +344,49 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
+
       <properties>
         <!-- Use application-dev.yml -->
         <activatedProperties>dev</activatedProperties>
         <!-- Skip tests -->
         <maven.test.skip>true</maven.test.skip>
         <!-- Project dependencies versions for current profile -->
+        <log4j2.elasticsearch.version>1.6.1</log4j2.elasticsearch.version>
+        <netty.buffer>4.1.112.Final</netty.buffer>
+        <disruptor>4.0.0</disruptor>
 
       </properties>
 
+      <dependencies>
+        <dependency>
+          <groupId>org.appenders.log4j</groupId>
+          <artifactId>log4j2-elasticsearch-core</artifactId>
+          <version>${log4j2.elasticsearch.version}</version>
+          <scope>runtime</scope>
+        </dependency>
+
+        <!-- Elasticsearch logging -->
+        <dependency>
+          <groupId>org.appenders.log4j</groupId>
+          <artifactId>log4j2-elasticsearch-hc</artifactId>
+          <version>${log4j2.elasticsearch.version}</version>
+          <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+          <groupId>io.netty</groupId>
+          <artifactId>netty-buffer</artifactId>
+          <version>${netty.buffer}</version>
+          <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+          <groupId>com.lmax</groupId>
+          <artifactId>disruptor</artifactId>
+          <version>${disruptor}</version>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
     </profile>
 
     <!-- Testing profile -->
@@ -404,6 +449,7 @@
         <!-- Skip tests -->
         <maven.test.skip>true</maven.test.skip>
       </properties>
+
     </profile>
 
   </profiles>

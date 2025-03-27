@@ -41,6 +41,7 @@ under the License.
       <includes>
         <include>compose.*.yaml</include>
         <include>.dev.env</include>
+        <include>.docker.dev.env</include>
       </includes>
       <excludes>
         <exclude>target/**</exclude>

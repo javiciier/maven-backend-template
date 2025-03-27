@@ -1,0 +1,42 @@
+{
+  "index_patterns": [
+    "${appName}-logs"
+  ],
+  "template": {
+    "settings": {
+      "number_of_shards": 1
+    },
+    "mappings": {
+      "properties": {
+        "@timestamp": {
+          "type": "date",
+          "format": "date_optional_time"
+        },
+        "process.thread.name": {
+          "type": "keyword"
+        },
+        "log.level": {
+          "type": "keyword"
+        },
+        "log.logger": {
+          "type": "keyword"
+        },
+        "log.format": {
+          "type": "text"
+        },
+        "message": {
+          "type": "text"
+        },
+        "service.name": {
+          "type": "text"
+        },
+        "host.name": {
+          "type": "text"
+        },
+        "application.name": {
+          "type": "text"
+        }
+      }
+    }
+  }
+}
