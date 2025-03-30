@@ -1,7 +1,11 @@
 package ${package}.common.security;
 
+import ${package}.common.config.EndpointSecurityConfigurer;
 import ${package}.common.security.jwt.application.JwtGenerator;
 import ${package}.common.security.jwt.infrastructure.JwtAuthenticationFilter;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,10 +17,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+  /**
+   * List that holds the endpoint access configurations for each Rest controller
+   */
+  private final List<EndpointSecurityConfigurer> endpointSecurityConfigurersList;
 
   @Bean
   public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -36,11 +44,11 @@ public class SecurityConfiguration {
       JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
 
     http
-        // Desactivar CSRF porque no usamos
+        // Disable CSRF as it not being used (CSRF only affects Sessions and Cookies, not JWT)
         .csrf(csrf -> csrf.disable())
-        // No guardar datos de la sesión del usuario
+        // Do not store user Sessions (Stateless API)
         .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        // Aplicar filtro creado para poder usar JWT
+        // Apply JWT custom filtering
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     secureEndpoints(http);
@@ -48,20 +56,14 @@ public class SecurityConfiguration {
     return http.build();
   }
 
-  private static void secureEndpoints(HttpSecurity http) throws Exception {
-    secureAuthRequests(http);
+  private void secureEndpoints(HttpSecurity http) throws Exception {
+    for (EndpointSecurityConfigurer configurer: endpointSecurityConfigurersList) {
+      configurer.secureEndpoints(http);
+    }
 
-    // Denegar peticiones no autorizadas
+    // Only allow registered requests by the controllers
     http.authorizeHttpRequests(
         requests -> requests.anyRequest().denyAll()
-    );
-  }
-
-  private static void secureAuthRequests(HttpSecurity http) throws Exception {
-    // Permitir las peticiones que indiquemos
-    http.authorizeHttpRequests(requests -> requests
-        .requestMatchers(HttpMethod.POST, "/v1/auth/signup").permitAll()
-        .requestMatchers(HttpMethod.POST, "/v1/auth/login", "/v1/auth/login/jwt").permitAll()
     );
   }
 

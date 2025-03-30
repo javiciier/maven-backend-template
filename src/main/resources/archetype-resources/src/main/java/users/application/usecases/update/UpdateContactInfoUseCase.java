@@ -1,4 +1,4 @@
-package ${package}.application.usecases.update;
+package ${package}.users.application.usecases.update;
 
 import ${package}.auth.application.utils.AuthUtils;
 import ${package}.users.domain.entities.ContactInfo;

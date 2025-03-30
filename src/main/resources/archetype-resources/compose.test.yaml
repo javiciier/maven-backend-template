@@ -1,14 +1,27 @@
-name: ${appName}-stack
+name: ${appName}-test-stack
+
+networks:
+  ${appName}-postgres-test-network:
+    driver: bridge
+
+volumes:
+  ${appName}-postgres-test-volume:
+    driver: local
 
 services:
-  db-test:
+  ${appName}-test-db:
     image: 'postgres:17-alpine'
-    container_name: 'Test-container'
+    container_name: '${appName}-test-database'
+    env_file:
+      - path: .docker.test.env
+        required: false
     environment:
-      - 'POSTGRES_DB=testing'
-      - 'POSTGRES_USER=myuser'
-      - 'POSTGRES_PASSWORD=mypassword'
+      - POSTGRES_DB='testing'
+      - POSTGRES_USER='myuser'
+      - POSTGRES_PASSWORD='mypassword'
+    networks:
+      - ${appName}-postgres-test-network
     ports:
-      - '5431:5432'
+      - 5431:5432
     volumes:
       - ./src/main/sql/user-schema.sql:/docker-entrypoint-initdb.d/1-user-schema.sql

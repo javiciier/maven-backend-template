@@ -40,7 +40,7 @@ under the License.
       <directory/>
       <includes>
         <include>compose.*.yaml</include>
-        <include>.dev.env</include>
+        <include>*.dev.env</include>
       </includes>
       <excludes>
         <exclude>target/**</exclude>

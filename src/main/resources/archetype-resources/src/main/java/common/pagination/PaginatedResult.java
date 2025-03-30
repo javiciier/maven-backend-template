@@ -7,18 +7,22 @@ import lombok.experimental.Accessors;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Container class to store a list of elements
+ * @param <T> Type of the elements being stored
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Block<T> {
+public class PaginatedResult<T> {
 
   /**
-   * Elementos almacenados
+   * Stored elements
    */
   private List<T> items;
 
   /**
-   * Indica si hay más elementos
+   * Indicates if there are more items to be handled
    */
   @Accessors(fluent = true)
   @JsonProperty("hasMoreItems")
@@ -27,18 +31,18 @@ public class Block<T> {
   private String nextPageToken;
 
   /**
-   * Cantidad de elementos contenidos
+   * Ammount of elements contained
    */
   private int itemsCount;
 
-  public Block(List<T> items, String nextPageToken) {
+  public PaginatedResult(List<T> items, String nextPageToken) {
     this.items = items;
     this.itemsCount = items.size();
     this.hasMoreItems = nextPageToken != null;
     this.nextPageToken = nextPageToken;
   }
 
-  public static <T> Block<T> emptyBlock() {
-    return new Block<>(new ArrayList<>(0), null);
+  public static <T> PaginatedResult<T> empty() {
+    return new PaginatedResult<>(new ArrayList<>(0), null);
   }
 }

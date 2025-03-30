@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class BlockDto<T> {
+public class PaginatedResultDTO<T> {
 
   @NotNull
   private List<T> items;
@@ -27,7 +27,7 @@ public class BlockDto<T> {
 
   private String nextPageToken;
 
-  public BlockDto(List<T> items, String nextPageToken) {
+  public PaginatedResultDTO(List<T> items, String nextPageToken) {
     this.items = items;
     this.nextPageToken = nextPageToken;
     this.hasMoreItems = nextPageToken != null;

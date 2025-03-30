@@ -30,8 +30,6 @@
       <AppenderRef ref="File"/>
     </Root>
 
-    <!-- Display Hibernate query statistics -->
-    <Logger level="DEBUG" name="org.hibernate.sql"/>
   </Loggers>
 
 </Configuration>

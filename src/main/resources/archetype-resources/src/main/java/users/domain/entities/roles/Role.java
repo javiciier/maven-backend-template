@@ -22,7 +22,7 @@ public class Role {
   private Long roleID;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "role", nullable = false)
+  @Column(name = "name", nullable = false)
   private RoleNames name;
 
   // endregion Atributes

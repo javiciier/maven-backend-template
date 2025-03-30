@@ -3,8 +3,7 @@ package ${package}.common;
 import ${package}.common.api.ApiResponse;
 import ${package}.common.api.error.ApiValidationErrorDetails;
 import ${package}.common.api.error.ErrorApiResponseBody;
-import ${package}.common.exception.InvalidArgumentException;
-import ${package}.common.exception.MissingMandatoryValueException;
+import ${package}.common.exception.*;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -24,6 +23,7 @@ public class CommonControllerAdvice {
   public static final String VALIDATION_KEY = "ValidationException";
   public static final String INVALID_ARGUMENT_KEY = "InvalidArgumentException";
   public static final String MISSING_MANDATORY_VALUE_KEY = "MissingMandatoryValueException";
+  public static final String PERMISSION_EXCEPTION_KEY = "PermissionException";
 
   // endregion EXCEPTION KEYS
 
@@ -64,11 +64,19 @@ public class CommonControllerAdvice {
   @ResponseBody
   public ApiResponse<ErrorApiResponseBody> handleMissingMandatoryValueException(
       MissingMandatoryValueException exception, Locale locale) {
-    //String translatedMessage = Translator.generateMessage(MISSING_MANDATORY_VALUE_KEY, locale);
     Object[] args = {exception.getField()};
     String errorMessage = Translator.generateMessage(MISSING_MANDATORY_VALUE_KEY, args, locale);
 
     return buildErrorApiResponse(HttpStatus.BAD_REQUEST, errorMessage);
+  }
+
+  @ExceptionHandler(PermissionException.class)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  @ResponseBody
+  public ApiResponse<ErrorApiResponseBody> handlePermissionException(PermissionException exception, Locale locale) {
+    String errorMessage = Translator.generateMessage(PERMISSION_EXCEPTION_KEY, locale);
+
+    return buildErrorApiResponse(HttpStatus.FORBIDDEN, errorMessage);
   }
 
   // endregion EXCEPTION HANDLERS

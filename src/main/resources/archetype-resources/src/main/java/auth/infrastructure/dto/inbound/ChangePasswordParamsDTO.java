@@ -5,15 +5,14 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ChangePasswordParamsDTO {
 
   @NotBlank
   @Size(min = 1)
-  private String oldPassword;
+  private final String oldPassword;
 
   @NotBlank
   @Size(min = 1)
-  private String newPassword;
+  private final String newPassword;
 }

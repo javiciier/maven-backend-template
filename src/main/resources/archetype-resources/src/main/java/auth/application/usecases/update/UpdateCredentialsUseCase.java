@@ -1,4 +1,4 @@
-package ${package}.application.usecases.update;
+package ${package}.auth.application.usecases.update;
 
 import ${package}.auth.application.utils.AuthUtils;
 import ${package}.auth.domain.exceptions.PasswordsMismatchException;
@@ -37,6 +37,15 @@ public class UpdateCredentialsUseCase {
    * @throws UserNotFoundException        User with the given ID does not exist
    * @throws PasswordsDoNotMatchException Old password does not match with the current user
    *                                      password
+   */
+  /**
+   * Update the password for the user with the given {@code userID}
+   *
+   * @param userID User ID
+   * @param oldPassword Old password in plain text
+   * @param newPassword New password in plain text
+   * @throws UserNotFoundException User with the given ID does not exist
+   * @throws PasswordsMismatchException Old password does not match with the current user password
    */
   public void updatePassword(UUID userID, String plainOldPassword, String plainNewPassword)
       throws UserNotFoundException, PasswordsMismatchException {

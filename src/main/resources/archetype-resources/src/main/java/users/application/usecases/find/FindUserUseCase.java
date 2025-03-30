@@ -1,4 +1,4 @@
-package ${package}.application.usecases.find;
+package ${package}.users.application.usecases.find;
 
 import ${package}.auth.application.utils.AuthUtils;
 import ${package}.users.domain.entities.User;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 @Lazy
-@Transactional
+@Transactional(readOnly = true)
 public class FindUserUseCase {
 
   // region DEPENDENCIES
@@ -26,11 +26,10 @@ public class FindUserUseCase {
   // region USE CASES
 
   /**
-   * Find a user with the given {@code userID}.
-   *
-   * @param userID User ID
-   * @return Found user, if existent
-   * @throws UserNotFoundException No user was found
+   * Finds a {@link User} with the given {@code userID}
+   * @param userID ID of the user to find
+   * @return User found
+   * @throws UserNotFoundException User was not found
    */
   public User findUserByID(UUID userID) throws UserNotFoundException {
     return authUtils.fetchUserByUserId(userID);

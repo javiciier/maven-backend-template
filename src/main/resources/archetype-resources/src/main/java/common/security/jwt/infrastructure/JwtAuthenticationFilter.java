@@ -27,49 +27,61 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
   private final JwtGenerator jwtGenerator;
 
-  public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
-      JwtGenerator jwtGenerator) {
+  public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtGenerator jwtGenerator) {
     super(authenticationManager);
     this.jwtGenerator = jwtGenerator;
   }
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-      FilterChain chain)
-      throws IOException, ServletException {
-    // Comprueba si se ha recibido el JWT en la cabecera de la petición
-    String authHeaderValue = request.getHeader(HttpHeaders.AUTHORIZATION);
-    if (authHeaderValue == null || !authHeaderValue.startsWith(PREFIX_BEARER_TOKEN)) {
-      log.warn("Received request without JWT in the Authorization header");
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    if (!canApplyFilter(request)) {
       chain.doFilter(request, response);
       return;
     }
 
-    // Al obtener el JWT, extrae sus atributos y se los comunica a Spring
-    UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(
-        request);       // Obtiene los datos de acceso
+    // Extract JWT content and inject its claims into the Spring Security context
+    UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-    // Filtra la petición según la configuración recién establecida
+    // Continue filtering requests
     chain.doFilter(request, response);
   }
 
+  // region AUXILIAR METHODS
+  private boolean canApplyFilter(HttpServletRequest request) {
+    // Check if request has a Authorization header
+    String authHeaderValue = request.getHeader(HttpHeaders.AUTHORIZATION);
+    if (authHeaderValue == null) {
+      log.warn("Received request without JWT in the Authorization header");
+      return false;
+    }
+
+    // Check if the value of the header is a Bearer token
+    boolean containsBearerToken = authHeaderValue.startsWith(PREFIX_BEARER_TOKEN);
+    if (!containsBearerToken) {
+      log.warn("Received invalid Bearer token: {}", authHeaderValue);
+      return false;
+    }
+
+    return true;
+  }
+
   private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-    // Elimina el "Bearer " de la cabecera
+    // Remove "Bearer " from header
     String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
     String token = authHeader.replace(PREFIX_BEARER_TOKEN, "");
 
-    // Extraer los datos del token
+    // Parse JWT content
     JwtData data = jwtGenerator.extractData(token);
     if (data == null) {
       return null;
     }
 
-    // Agregar información del usuario al contexto solo si existen datos
+    // Add user data to the security context
     request.setAttribute(TOKEN_ATTRIBUTE_NAME, token);
     request.setAttribute(USER_ID_ATTRIBUTE_NAME, data.getUserID());
 
-    // Asigna roles al usuario (si tiene)
+    // Set user roles
     Set<GrantedAuthority> authorities = createAuthorities(data);
 
     return new UsernamePasswordAuthenticationToken(data, null, authorities);
@@ -94,4 +106,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     log.debug("Registered granted authorities succesfuly for user with ID '{}': {}", token.getUserID(), authorities);
     return authorities;
   }
+
+  // endregion AUXILIAR METHODS
+
 }

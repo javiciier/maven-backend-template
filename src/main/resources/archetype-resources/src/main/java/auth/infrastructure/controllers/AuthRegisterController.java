@@ -1,9 +1,8 @@
 package ${package}.auth.infrastructure.controllers;
 
-import ${package}.auth.application.usecases.login.LoginUserUseCase;
-import ${package}.auth.domain.exceptions.IncorrectLoginException;
+import ${package}.auth.application.usecases.register.RegisterUserUseCase;
 import ${package}.auth.infrastructure.dto.conversors.AuthConversor;
-import ${package}.auth.infrastructure.dto.inbound.LoginParamsDTO;
+import ${package}.auth.infrastructure.dto.inbound.RegisterUserParamsDTO;
 import ${package}.auth.infrastructure.dto.outbound.AuthenticatedUserDTO;
 import ${package}.common.config.EndpointSecurityConfigurer;
 import ${package}.common.security.jwt.application.JwtGenerator;
@@ -13,8 +12,9 @@ import ${package}.common.api.ApiResponseHelper;
 import ${package}.users.domain.entities.User;
 import ${package}.users.domain.entities.roles.Role;
 import ${package}.users.domain.entities.roles.RoleNames;
-import ${package}.users.domain.exceptions.UserNotFoundException;
+import ${package}.users.domain.exceptions.UserAlreadyExistsException;
 import jakarta.servlet.ServletContext;
+import java.net.URI;
 import java.util.UUID;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +22,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import static ${package}.common.security.SecurityConstants.USER_ID_ATTRIBUTE_NAME;
 import static ${package}.common.security.SecurityConstants.TOKEN_ATTRIBUTE_NAME;
@@ -37,11 +39,11 @@ import static ${package}.common.security.SecurityConstants.TOKEN_ATTRIBUTE_NAME;
 @RequiredArgsConstructor
 @RestController
 @Lazy
-@RequestMapping("/auth/login")
-public class AuthLoginController implements EndpointSecurityConfigurer {
+@RequestMapping("/auth/register")
+public class AuthRegisterController implements EndpointSecurityConfigurer {
 
   // region DEPENDENCIES
-  private final LoginUserUseCase loginUseCase;
+  private final RegisterUserUseCase registerUserUseCase;
   private final JwtGenerator jwtGenerator;
   private final ServletContext servletContext;
   // endregion DEPENDENCIES
@@ -56,39 +58,40 @@ public class AuthLoginController implements EndpointSecurityConfigurer {
 
   @Override
   public void secureEndpoints(HttpSecurity httpSecurity) throws Exception {
-    final String BASE_ENDPOINT = servletContext.getContextPath() + "/auth/login";
+    final String BASE_ENDPOINT = servletContext.getContextPath() + "/auth/register";
 
     httpSecurity.authorizeHttpRequests(requests -> requests
-        .requestMatchers(HttpMethod.POST, BASE_ENDPOINT+"/password").anonymous()
-        .requestMatchers(HttpMethod.POST, BASE_ENDPOINT+"/token").anonymous()
+        .requestMatchers(HttpMethod.POST, BASE_ENDPOINT+"/").anonymous()
     );
   }
 
   // region ENDPOINTS
-  @PostMapping(path = "/password",
+
+  @PostMapping(path = "/",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public ApiResponse<AuthenticatedUserDTO> loginWithNicknameAndPassword(
-      @Validated @RequestBody LoginParamsDTO params) throws IncorrectLoginException {
-    User user = loginUseCase.loginWithNicknameAndPassword(params.getNickname(), params.getPassword());
+  public ResponseEntity<ApiResponse<AuthenticatedUserDTO>> registerWithNicknameAndPassword(
+      @Validated @RequestBody RegisterUserParamsDTO params) throws UserAlreadyExistsException {
+    // Register user
+    User user = registerUserUseCase.register(params);
+
+    // Generate response content
     String token = generateServiceTokenFromUser(user);
-    AuthenticatedUserDTO authenticatedUser = AuthConversor.toAuthenticatedUserDTO(token, user);
+    AuthenticatedUserDTO authenticatedUserDTO = AuthConversor.toAuthenticatedUserDTO(token, user);
+    ApiResponse<AuthenticatedUserDTO> responseBody = ApiResponseHelper.buildSuccessApiResponse(authenticatedUserDTO);
 
-    return ApiResponseHelper.buildSuccessApiResponse(authenticatedUser);
+    // Build response
+    URI resourceLocation = ServletUriComponentsBuilder.fromCurrentRequest()
+        .path("/{userID}")
+        .buildAndExpand(user.getUserID())
+        .toUri();
+    return ResponseEntity
+        .created(resourceLocation)
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(responseBody);
   }
 
-  @PostMapping(path = "/token",
-      produces = MediaType.APPLICATION_JSON_VALUE
-  )
-  public ApiResponse<AuthenticatedUserDTO> loginUsingToken(
-      @RequestAttribute(USER_ID_ATTRIBUTE_NAME) UUID userID,
-      @RequestAttribute(TOKEN_ATTRIBUTE_NAME) String token) throws UserNotFoundException {
-    User user = loginUseCase.loginWithJsonWebToken(userID);
-    AuthenticatedUserDTO authenticatedUser = AuthConversor.toAuthenticatedUserDTO(token, user);
-
-    return ApiResponseHelper.buildSuccessApiResponse(authenticatedUser);
-  }
 
   // endregion ENDPOINTS
 

@@ -38,6 +38,8 @@ Checklists
 - Pulir scripts para automatizar tareas de creación del proyecto, mover todo a carpeta /scripts (
   actualizar .gitignore)
 - Crear un script que genere un banner que lea el nombre del proyecto
+- Implementar un ValueObject para el UserID y reemplazar sus referencias en otros sitios (relaciones
+  entre entidades, JWT, controladores, validaciones, etc)
 - Implementar los tests básicos de usuario en una clase BasicUserTest. Luego el resto de tests
   cuando se añadan nuevas
   funcionalidades tras instanciar el archetype serán clases hijas de BasicUserTest.
