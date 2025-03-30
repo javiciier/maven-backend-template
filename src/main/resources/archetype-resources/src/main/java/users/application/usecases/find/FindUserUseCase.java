@@ -31,7 +31,7 @@ public class FindUserUseCase {
    * @return User found
    * @throws UserNotFoundException User was not found
    */
-  public User findUserByID(UUID userID) throws UserNotFoundException {
+  public User findByUserId(UUID userID) throws UserNotFoundException {
     return authUtils.fetchUserByUserId(userID);
   }
 
