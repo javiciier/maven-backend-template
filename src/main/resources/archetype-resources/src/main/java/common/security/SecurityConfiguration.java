@@ -3,7 +3,6 @@ package ${package}.common.security;
 import ${package}.common.config.EndpointSecurityConfigurer;
 import ${package}.common.security.jwt.application.JwtGenerator;
 import ${package}.common.security.jwt.infrastructure.JwtAuthenticationFilter;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Configuration
@@ -51,6 +52,7 @@ public class SecurityConfiguration {
         // Apply JWT custom filtering
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
+    // Apply the security rules configured by each REST controller
     secureEndpoints(http);
 
     return http.build();
@@ -61,7 +63,7 @@ public class SecurityConfiguration {
       configurer.secureEndpoints(http);
     }
 
-    // Only allow registered requests by the controllers
+    // Deny requests to endpoints that are not explicitly registered
     http.authorizeHttpRequests(
         requests -> requests.anyRequest().denyAll()
     );

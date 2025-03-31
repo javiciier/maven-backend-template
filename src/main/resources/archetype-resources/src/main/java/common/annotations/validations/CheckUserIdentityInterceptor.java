@@ -1,18 +1,17 @@
 package ${package}.common.annotations.validations;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ${package}.common.Translator;
 import ${package}.common.annotations.validations.CheckUserIdentity;
 import ${package}.common.api.ApiResponse;
 import ${package}.common.api.ApiResponseHelper;
 import ${package}.common.api.error.ErrorApiResponseBody;
-import ${package}.common.exception.PermissionException;
-import ${package}.common.Translator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
@@ -23,10 +22,9 @@ import java.util.Map;
 import java.util.Locale;
 import java.util.UUID;
 
-
-import static ${package}.common.security.SecurityConstants.USER_ID_ATTRIBUTE_NAME;
 import static ${package}.common.CommonControllerAdvice.INVALID_ARGUMENT_KEY;
 import static ${package}.common.CommonControllerAdvice.PERMISSION_EXCEPTION_KEY;
+import static ${package}.common.security.SecurityConstants.USER_ID_ATTRIBUTE_NAME;
 
 /**
  * Implements the logic related to {@link CheckUserIdentity} annotation.

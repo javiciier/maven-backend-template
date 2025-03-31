@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Container class to store a list of elements
+ *
  * @param <T> Type of the elements being stored
  */
 @Data

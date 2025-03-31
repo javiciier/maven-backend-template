@@ -1,27 +1,21 @@
 package ${package}.users.infrastructure.controllers;
 
-import ${package}.common.config.EndpointSecurityConfigurer;
-import ${package}.common.security.jwt.application.JwtGenerator;
-import ${package}.common.security.jwt.domain.JwtData;
 import ${package}.common.api.ApiResponse;
 import ${package}.common.api.ApiResponseHelper;
+import ${package}.common.config.EndpointSecurityConfigurer;
 import ${package}.users.application.usecases.find.FindUserUseCase;
 import ${package}.users.domain.entities.*;
-import ${package}.users.domain.entities.roles.*;
 import ${package}.users.domain.exceptions.UserNotFoundException;
 import ${package}.users.infrastructure.dto.conversors.UserConversor;
 import ${package}.users.infrastructure.dto.outbound.*;
-import jakarta.servlet.ServletContext;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -32,7 +26,6 @@ public class UserFindController implements EndpointSecurityConfigurer {
 
   // region DEPENDENCIES
   private final FindUserUseCase findUserUseCase;
-  private final ServletContext servletContext;
   // endregion DEPENDENCIES
 
   // region I18N KEYS
@@ -45,10 +38,10 @@ public class UserFindController implements EndpointSecurityConfigurer {
 
   @Override
   public void secureEndpoints(HttpSecurity httpSecurity) throws Exception {
-    final String BASE_ENDPOINT = servletContext.getContextPath() + "/users/find";
+    final String BASE_ENDPOINT = "/users/find";
 
     httpSecurity.authorizeHttpRequests(requests -> requests
-        .requestMatchers(HttpMethod.GET, BASE_ENDPOINT+"/").anonymous()
+        .requestMatchers(HttpMethod.GET, BASE_ENDPOINT + "/").permitAll()
     );
   }
 

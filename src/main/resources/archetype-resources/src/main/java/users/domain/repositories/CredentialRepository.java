@@ -3,13 +3,14 @@ package ${package}.users.domain.repositories;
 import ${package}.users.domain.entities.Credential;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.repository.query.Param;
 
 @Lazy
-public interface CredentialRepository extends ListCrudRepository<Credential, Long> {
+public interface CredentialRepository extends CrudRepository<Credential, Long> {
 
   /**
    * Comprueba si existe un usuario por su nombre de usuario, ignorando maýusculas o minúsculas.
@@ -21,7 +22,7 @@ public interface CredentialRepository extends ListCrudRepository<Credential, Lon
 
   Optional<Credential> findByNicknameIgnoreCase(String nickname);
 
-  @Query("SELECT c FROM Credential c WHERE c.user.userID = ?1")
-  Optional<Credential> findCredentialByUserID(UUID userID);
+  @Query("SELECT c FROM Credential c WHERE c.user.userID = :userID")
+  Optional<Credential> findCredentialByUserID(@Param("userID") UUID userID);
 
 }

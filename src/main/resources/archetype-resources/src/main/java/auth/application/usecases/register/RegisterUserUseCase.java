@@ -91,7 +91,7 @@ public class RegisterUserUseCase {
         .build();
 
     credentialRepository.save(credential);
-    user.attachCredential(credential);
+    user.assignCredential(credential);
 
     return user;
   }
@@ -104,7 +104,7 @@ public class RegisterUserUseCase {
         .build();
 
     contactInfoRepository.save(contactInfo);
-    user.attachContactInfo(contactInfo);
+    user.assignContactInfo(contactInfo);
 
     return user;
   }

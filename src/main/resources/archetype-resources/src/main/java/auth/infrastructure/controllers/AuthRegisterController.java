@@ -4,36 +4,30 @@ import ${package}.auth.application.usecases.register.RegisterUserUseCase;
 import ${package}.auth.infrastructure.dto.conversors.AuthConversor;
 import ${package}.auth.infrastructure.dto.inbound.RegisterUserParamsDTO;
 import ${package}.auth.infrastructure.dto.outbound.AuthenticatedUserDTO;
+import ${package}.common.api.ApiResponse;
+import ${package}.common.api.ApiResponseHelper;
 import ${package}.common.config.EndpointSecurityConfigurer;
 import ${package}.common.security.jwt.application.JwtGenerator;
 import ${package}.common.security.jwt.domain.JwtData;
-import ${package}.common.api.ApiResponse;
-import ${package}.common.api.ApiResponseHelper;
 import ${package}.users.domain.entities.User;
 import ${package}.users.domain.entities.roles.Role;
 import ${package}.users.domain.entities.roles.RoleNames;
 import ${package}.users.domain.exceptions.UserAlreadyExistsException;
 import jakarta.servlet.ServletContext;
-import java.net.URI;
-import java.util.UUID;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import static ${package}.common.security.SecurityConstants.USER_ID_ATTRIBUTE_NAME;
 import static ${package}.common.security.SecurityConstants.TOKEN_ATTRIBUTE_NAME;
+import static ${package}.common.security.SecurityConstants.USER_ID_ATTRIBUTE_NAME;
+
+import java.net.URI;
+import java.util.List;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -58,10 +52,10 @@ public class AuthRegisterController implements EndpointSecurityConfigurer {
 
   @Override
   public void secureEndpoints(HttpSecurity httpSecurity) throws Exception {
-    final String BASE_ENDPOINT = servletContext.getContextPath() + "/auth/register";
+    final String BASE_ENDPOINT = "/auth/register";
 
     httpSecurity.authorizeHttpRequests(requests -> requests
-        .requestMatchers(HttpMethod.POST, BASE_ENDPOINT+"/").anonymous()
+        .requestMatchers(HttpMethod.POST, BASE_ENDPOINT + "/").permitAll()
     );
   }
 
@@ -98,7 +92,7 @@ public class AuthRegisterController implements EndpointSecurityConfigurer {
   // region AUXILIAR METHODS
 
   /**
-   * Genera un JWT para el usuario recibido
+   * Generate a new JWT for the given user
    */
   private String generateServiceTokenFromUser(User user) {
     List<RoleNames> userRoleNames = user.getRoles().stream().map(Role::getName).toList();

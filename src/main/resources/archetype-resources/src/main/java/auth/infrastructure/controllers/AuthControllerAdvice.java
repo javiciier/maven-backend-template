@@ -3,17 +3,13 @@ package ${package}.auth.infrastructure.controllers;
 import ${package}.auth.domain.exceptions.*;
 import ${package}.common.Translator;
 import ${package}.common.api.ApiResponse;
-import ${package}.common.api.error.ApiValidationErrorDetails;
 import ${package}.common.api.error.ErrorApiResponseBody;
 import ${package}.common.exception.*;
 import ${package}.users.domain.exceptions.*;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.RequiredArgsConstructor;
-import java.util.List;
 import java.util.Locale;
 
 import static ${package}.common.api.ApiResponseHelper.buildErrorApiResponse;

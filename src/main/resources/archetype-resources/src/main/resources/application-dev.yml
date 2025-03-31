@@ -14,7 +14,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        generate_statistics: true
 logging:
   config: 'classpath:log4j2.@activatedProperties@.xml'
 

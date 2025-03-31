@@ -5,6 +5,8 @@ import ${package}.auth.domain.exceptions.IncorrectLoginException;
 import ${package}.users.domain.entities.Credential;
 import ${package}.users.domain.entities.User;
 import ${package}.users.domain.exceptions.UserNotFoundException;
+import ${package}.users.domain.repositories.CredentialRepository;
+import ${package}.users.domain.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;
@@ -22,6 +24,8 @@ public class LoginUserUseCase {
 
   // region DEPENDENCIES
   private final AuthUtils authUtils;
+  private final UserRepository userRepository;
+  private final CredentialRepository credentialRepository;
   // endregion DEPENDENCIES
 
   // region USE CASES
@@ -29,8 +33,8 @@ public class LoginUserUseCase {
   /**
    * Login with the given {@code nickname} and {@code password}
    *
-   * @param nickname    User nickname
-   * @param rawPassword User plain password
+   * @param nickname      User nickname
+   * @param plainPassword User plain password
    * @return User succesfuly logged in
    * @throws IncorrectLoginException Incorrect login parameters
    */
@@ -41,7 +45,10 @@ public class LoginUserUseCase {
     // Retrieve user
     User user;
     try {
-      user = authUtils.fetchUserByNickname(nickname);
+      user = credentialRepository
+          .findByNicknameIgnoreCase(nickname)
+          .orElseThrow(() -> new UserNotFoundException(nickname))
+          .getUser();
     } catch (UserNotFoundException ex) {
       throw new IncorrectLoginException();
     }
@@ -66,7 +73,8 @@ public class LoginUserUseCase {
   public User loginWithJsonWebToken(UUID userID) throws UserNotFoundException {
     log.info("Trying to do JWT login for user with ID '{}'", userID);
 
-    User user = authUtils.fetchUserByUserId(userID);
+    User user = userRepository.findCompleteUserByUserID(userID)
+        .orElseThrow(() -> new UserNotFoundException(userID));
 
     log.info("User with nickname '{}' logged in succesfuly using JWT", user.getNickname());
     return user;

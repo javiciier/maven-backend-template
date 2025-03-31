@@ -1,20 +1,20 @@
 package ${package}.users.infrastructure.dto.conversors;
 
 import ${package}.users.domain.entities.User;
+import ${package}.users.domain.entities.roles.*;
+import ${package}.users.infrastructure.dto.conversors.ContactInfoConversor;
 import ${package}.users.infrastructure.dto.outbound.*;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
-import static ${package}.users.infrastructure.dto.conversors.ContactInfoConversor.toContactInfoDTO;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UserConversor {
 
   // region to DTO
   public static UserDTO toUserDTO(User entity) {
-    ContactInfoDTO contactInfoDTO = toContactInfoDTO(entity.getContactInfo());
+    ContactInfoDTO contactInfoDTO = ContactInfoConversor.toContactInfoDTO(entity.getContactInfo());
+    List<RoleNames> roles = entity.getRoles().stream().map(Role::getName).toList();
 
     return UserDTO.builder()
+        // User attributes
         .userID(entity.getUserID())
         .name(entity.getName())
         .surname(entity.getSurname())
@@ -22,8 +22,8 @@ public final class UserConversor {
         .nickname(entity.getCredential().getNickname())
         .birthDate(entity.getBirthDate())
         .registeredAt(entity.getRegisteredAt())
-        // Other attributes
-        .roles(entity.getRoles())
+        // Other relations attributes
+        .roles(roles)
         .contactInfo(contactInfoDTO)
         .build();
   }

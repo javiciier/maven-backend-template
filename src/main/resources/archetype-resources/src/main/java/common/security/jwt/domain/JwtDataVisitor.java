@@ -1,7 +1,6 @@
 package ${package}.common.security.jwt.domain;
 
 import ${package}.users.domain.entities.roles.RoleNames;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import java.util.*;

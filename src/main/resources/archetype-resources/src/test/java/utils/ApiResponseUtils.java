@@ -26,7 +26,7 @@ public class ApiResponseUtils {
         jsonPath("$.success", is(false)),
         jsonPath("$.timestamp", lessThan(now)),
         jsonPath("$.data", notNullValue()),
-        // Contenido de la respuesta
+        // Response body content
         jsonPath("$.data.status", is(HttpStatus.FORBIDDEN.name())),
         jsonPath("$.data.statusCode", is(HttpStatus.FORBIDDEN.value())),
         jsonPath("$.data.message", equalTo(errorMessage)),

@@ -18,7 +18,7 @@ import static ${package}.TestConstants .*;
 @Component
 public class AuthTestUtils {
 
-  private Map<String, User> registeredUsersMap = new HashMap<>();
+  private final Map<String, User> registeredUsersMap = new HashMap<>();
 
   // region DEPENDENCIES
   private final UserRepository userRepo;
@@ -92,7 +92,7 @@ public class AuthTestUtils {
     ContactInfo contactInfo = generateValidContactInfoForUser(user);
     user.attachContactInfo(contactInfo);
     userRepo.save(user);
-    user.assignrole(RoleNames.BASIC)
+    user.assignrole(RoleNames.BASIC);
 
     registeredUsersMap.add(nickname, user);
     return userRepo.save(user);

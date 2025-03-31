@@ -1,6 +1,5 @@
 package ${package}.users.domain.entities;
 
-import ${package}.users.domain.entities.*;
 import ${package}.users.domain.entities.roles.*;
 import jakarta.persistence.*;
 import lombok.*;
@@ -72,13 +71,13 @@ public class User {
 
   // region Domain-Model methods
   @Transient
-  public void attachCredential(Credential other) {
+  public void assignCredential(Credential other) {
     other.setUser(this);
     this.credential = other;
   }
 
   @Transient
-  public void attachContactInfo(ContactInfo other) {
+  public void assignContactInfo(ContactInfo other) {
     other.setUser(this);
     this.contactInfo = other;
   }
@@ -93,9 +92,8 @@ public class User {
 
   @Transient
   public void assignRole(Role role) {
-    RoleAssignmentID roleAssignmentID = new RoleAssignmentID(this.userID, role.getRoleID());
     RoleAssignment roleAssignment = RoleAssignment.builder()
-        .id(roleAssignmentID)
+        .id(new RoleAssignmentID(this.userID, role.getRoleID()))
         .user(this)
         .role(role)
         .assignedAt(LocalDateTime.now())

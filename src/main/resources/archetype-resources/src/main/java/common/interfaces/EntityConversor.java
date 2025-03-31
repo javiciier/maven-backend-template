@@ -12,5 +12,5 @@ public interface EntityConversor<T> {
    *
    * @return the entity corresponding to the DTO.
    */
-  public T toEntity();
+  T toEntity();
 }

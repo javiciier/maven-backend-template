@@ -1,10 +1,10 @@
 package ${package}.users.application.usecases.update;
 
-import ${package}.auth.application.utils.AuthUtils;
 import ${package}.users.domain.entities.ContactInfo;
 import ${package}.users.domain.entities.User;
 import ${package}.users.domain.exceptions.UserNotFoundException;
 import ${package}.users.domain.repositories.ContactInfoRepository;
+import ${package}.users.domain.repositories.UserRepository;
 import ${package}.users.infrastructure.dto.inbound.UpdateContactInfoParamsDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,7 +23,8 @@ public class UpdateContactInfoUseCase {
 
   // region DEPENDENCIES
   private final ContactInfoRepository contactInfoRepository;
-  private final AuthUtils authUtils;
+  private final UserRepository userRepository;
+
   // endregion DEPENDENCIES
 
   // region USE CASES
@@ -41,7 +42,8 @@ public class UpdateContactInfoUseCase {
     log.info("Trying to update contact information for user with ID '{}'", userID);
 
     // Get the user contact information
-    User user = authUtils.fetchUserByUserId(userID);
+    User user = userRepository.findCompleteUserByUserID(userID)
+        .orElseThrow(() -> new UserNotFoundException(userID));
     ContactInfo contactInfo = user.getContactInfo();
 
     boolean hasDataToUpdate = shouldUpdateContactInfo(contactInfo, updateParams);

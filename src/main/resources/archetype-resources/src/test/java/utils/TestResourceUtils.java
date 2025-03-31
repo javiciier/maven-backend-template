@@ -37,7 +37,7 @@ public class TestResourceUtils {
 
     String resourceName = Path.of(EXPECTED_FILES_ROOT_DIRECTORY, dir, filename).toString();
 
-    // Abrir recurso
+    // Return file content
     return openResourceAsFile(resourceName);
   }
 

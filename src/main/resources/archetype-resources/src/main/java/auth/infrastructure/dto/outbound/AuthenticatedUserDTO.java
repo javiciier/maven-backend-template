@@ -2,9 +2,7 @@ package ${package}.auth.infrastructure.dto.outbound;
 
 import ${package}.users.infrastructure.dto.outbound.UserDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import static ${package}.common.security.SecurityConstants.TOKEN_ATTRIBUTE_NAME;
 

@@ -2,7 +2,6 @@ package ${package}.common.security.keys;
 
 import ${package}.common.config.EnvironmentVariablesConfiguration;
 import jakarta.annotation.PostConstruct;
-
 import lombok.extern.log4j.Log4j2;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;

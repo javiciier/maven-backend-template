@@ -11,7 +11,6 @@ public final class ContactInfoConversor {
   // region to DTO
   public static ContactInfoDTO toContactInfoDTO(ContactInfo entity) {
     return ContactInfoDTO.builder()
-        .contactInfoID(entity.getContactInfoID())
         .email(entity.getEmail())
         .isEmailVerified(entity.getIsEmailVerified())
         .phoneNumber(entity.getPhoneNumber())

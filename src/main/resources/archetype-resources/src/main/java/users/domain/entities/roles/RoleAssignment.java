@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @Builder
 @Entity
-@Table(name = "roleasiggnment", schema = "users")
+@Table(name = "RoleAssignment", schema = "users")
 public class RoleAssignment {
 
   // region Atributes

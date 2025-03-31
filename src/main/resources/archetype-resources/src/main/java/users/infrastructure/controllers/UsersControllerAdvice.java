@@ -2,17 +2,13 @@ package ${package}.users.infrastructure.controllers;
 
 import ${package}.common.Translator;
 import ${package}.common.api.ApiResponse;
-import ${package}.common.api.error.ApiValidationErrorDetails;
 import ${package}.common.api.error.ErrorApiResponseBody;
 import ${package}.users.domain.exceptions.*;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
-import lombok.NoArgsConstructor;
 
 import static ${package}.common.api.ApiResponseHelper.buildErrorApiResponse;
 

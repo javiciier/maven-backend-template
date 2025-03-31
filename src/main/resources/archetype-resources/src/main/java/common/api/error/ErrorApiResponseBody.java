@@ -17,6 +17,7 @@ public class ErrorApiResponseBody extends ApiResponseBody {
 
   private final String message;
 
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   private final String debugMessage;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
