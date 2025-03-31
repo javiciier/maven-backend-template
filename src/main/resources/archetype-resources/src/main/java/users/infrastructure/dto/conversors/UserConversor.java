@@ -4,6 +4,10 @@ import ${package}.users.domain.entities.User;
 import ${package}.users.domain.entities.roles.*;
 import ${package}.users.infrastructure.dto.conversors.ContactInfoConversor;
 import ${package}.users.infrastructure.dto.outbound.*;
+import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
+
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UserConversor {

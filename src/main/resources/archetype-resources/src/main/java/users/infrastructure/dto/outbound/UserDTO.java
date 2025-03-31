@@ -1,7 +1,7 @@
 package ${package}.users.infrastructure.dto.outbound;
 
-import ${package}.users.domain.entities.Gender;
-import group.users.domain.entities.roles.RoleNames;
+import ${package}.users.domain.entities.*;
+import ${package}.users.domain.entities.roles.RoleNames;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
