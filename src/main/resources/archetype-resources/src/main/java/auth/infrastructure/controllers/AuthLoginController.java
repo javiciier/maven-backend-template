@@ -2,11 +2,14 @@ package ${package}.auth.infrastructure.controllers;
 
 import ${package}.auth.application.usecases.login.LoginUserUseCase;
 import ${package}.auth.domain.exceptions.IncorrectLoginException;
+import ${package}.auth.domain.exceptions.PasswordsMismatchException;
 import ${package}.auth.infrastructure.dto.conversors.AuthConversor;
 import ${package}.auth.infrastructure.dto.inbound.LoginParamsDTO;
 import ${package}.auth.infrastructure.dto.outbound.AuthenticatedUserDTO;
+import ${package}.common.Translator;
 import ${package}.common.api.ApiResponse;
 import ${package}.common.api.ApiResponseHelper;
+import ${package}.common.api.error.ErrorApiResponseBody;
 import ${package}.common.config.EndpointSecurityConfigurer;
 import ${package}.common.security.jwt.application.JwtGenerator;
 import ${package}.common.security.jwt.domain.JwtData;
@@ -23,8 +26,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
+import static ${package}.common.api.ApiResponseHelper.buildErrorApiResponse;
 import static ${package}.common.security.SecurityConstants.TOKEN_ATTRIBUTE_NAME;
 import static ${package}.common.security.SecurityConstants.USER_ID_ATTRIBUTE_NAME;
 
@@ -38,13 +43,22 @@ public class AuthLoginController implements EndpointSecurityConfigurer {
   // region DEPENDENCIES
   private final LoginUserUseCase loginUseCase;
   private final JwtGenerator jwtGenerator;
+  private final Translator appTranslator;
   // endregion DEPENDENCIES
 
   // region I18N KEYS
-
+  public static final String INCORRECT_LOGIN_EXCEPTION_KEY = "IncorrectLoginException";
   // endregion I18N KEYS
 
   // region EXCEPTION HANDLERS
+  @ExceptionHandler(IncorrectLoginException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ApiResponse<ErrorApiResponseBody> handleIncorrectLoginException(
+      PasswordsMismatchException exception, Locale locale) {
+    String errorMessage = appTranslator.generateMessage(INCORRECT_LOGIN_EXCEPTION_KEY, locale);
+
+    return buildErrorApiResponse(HttpStatus.BAD_REQUEST, errorMessage);
+  }
 
   // endregion EXCEPTION HANDLERS
 

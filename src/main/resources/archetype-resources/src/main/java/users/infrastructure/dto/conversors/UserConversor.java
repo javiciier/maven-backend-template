@@ -2,7 +2,6 @@ package ${package}.users.infrastructure.dto.conversors;
 
 import ${package}.users.domain.entities.User;
 import ${package}.users.domain.entities.roles.*;
-import ${package}.users.infrastructure.dto.conversors.ContactInfoConversor;
 import ${package}.users.infrastructure.dto.outbound.*;
 import lombok.NoArgsConstructor;
 import lombok.AccessLevel;
@@ -15,7 +14,7 @@ public final class UserConversor {
   // region to DTO
   public static UserDTO toUserDTO(User entity) {
     ContactInfoDTO contactInfoDTO = ContactInfoConversor.toContactInfoDTO(entity.getContactInfo());
-    List<RoleNames> roles = entity.getRoles().stream().map(Role::getName).toList();
+    List<RoleNames> roles = entity.getRoles().stream().map(Role::getName).sorted().toList();
 
     return UserDTO.builder()
         // User attributes

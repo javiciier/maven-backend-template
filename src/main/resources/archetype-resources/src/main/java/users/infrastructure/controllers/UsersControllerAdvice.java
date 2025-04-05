@@ -4,7 +4,7 @@ import ${package}.common.Translator;
 import ${package}.common.api.ApiResponse;
 import ${package}.common.api.error.ErrorApiResponseBody;
 import ${package}.users.domain.exceptions.*;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +13,12 @@ import java.util.Locale;
 import static ${package}.common.api.ApiResponseHelper.buildErrorApiResponse;
 
 @ControllerAdvice(basePackages = "${package}.users.infrastructure.controllers")
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class UsersControllerAdvice {
+  // region DEPENDENCIES
+  private final Translator appTranslator;
+
+  // endregion DEPENDENCIES
 
   // region EXCEPTION KEYS
   public static final String USER_NOT_FOUND_EXCEPTION_KEY = "UserNotFoundException";
@@ -27,7 +31,7 @@ public class UsersControllerAdvice {
   @ResponseBody
   public ApiResponse<ErrorApiResponseBody> handleUserNotFoundException(
       UserNotFoundException exception, Locale locale) {
-    String errorMessage = Translator.generateMessage(USER_NOT_FOUND_EXCEPTION_KEY, locale);
+    String errorMessage = appTranslator.generateMessage(USER_NOT_FOUND_EXCEPTION_KEY, locale);
 
     return buildErrorApiResponse(HttpStatus.NOT_FOUND, errorMessage);
   }

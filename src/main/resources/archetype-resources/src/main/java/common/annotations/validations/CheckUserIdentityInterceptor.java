@@ -35,6 +35,7 @@ public class CheckUserIdentityInterceptor implements HandlerInterceptor {
   // region DEPENDENCIES
   private ObjectMapper objectMapper;
   private Locale locale;
+  private final Translator appTranslator;
   // endregion DEPENDENCIES
 
   @Override
@@ -47,7 +48,7 @@ public class CheckUserIdentityInterceptor implements HandlerInterceptor {
     // Check request contains user ID (mandatory)
     Optional<UUID> requestID = extractId(request.getAttribute(USER_ID_ATTRIBUTE_NAME));
     if (requestID.isEmpty()) {
-      String errorMessage = Translator.generateMessage(PERMISSION_EXCEPTION_KEY, locale);
+      String errorMessage = appTranslator.generateMessage(PERMISSION_EXCEPTION_KEY, locale);
       failResponseWithError(response, HttpStatus.FORBIDDEN, errorMessage);
       return false;
     }
@@ -55,14 +56,14 @@ public class CheckUserIdentityInterceptor implements HandlerInterceptor {
     // Check request URI contains user ID (optional)
     Optional<UUID> pathID = extractIdFromPath(request);
     if (pathID.isEmpty()) {
-      String errorMessage = Translator.generateMessage(INVALID_ARGUMENT_KEY, locale);
+      String errorMessage = appTranslator.generateMessage(INVALID_ARGUMENT_KEY, locale);
       failResponseWithError(response, HttpStatus.BAD_REQUEST, errorMessage);
       return false;
     }
 
     // Given both ID, check they match
     if (!requestID.equals(pathID)) {
-      String errorMessage = Translator.generateMessage(PERMISSION_EXCEPTION_KEY, locale);
+      String errorMessage = appTranslator.generateMessage(PERMISSION_EXCEPTION_KEY, locale);
       failResponseWithError(response, HttpStatus.FORBIDDEN, errorMessage);
       return false;
     }

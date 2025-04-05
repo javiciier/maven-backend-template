@@ -1,24 +1,25 @@
 package ${package}.common;
 
 import ${package}.common.config.InternationalizationConfiguration;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
 
 @Component
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class Translator {
 
-  private static final MessageSource messageSource = InternationalizationConfiguration.messageSource();
+  @Qualifier("i18nMessageSource")
+  private final MessageSource messageSource;
 
-
-  public static String generateMessage(String exceptionKey, Locale locale) {
+  public String generateMessage(String exceptionKey, Locale locale) {
     return generateMessage(exceptionKey, null, locale);
   }
 
-  public static String generateMessage(String exceptionKey, Object[] args, Locale locale) {
+  public String generateMessage(String exceptionKey, Object[] args, Locale locale) {
     return messageSource.getMessage(
         exceptionKey,
         args,

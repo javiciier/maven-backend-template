@@ -9,7 +9,6 @@ import ${package}.users.domain.entities.roles.RoleNames;
 import ${package}.users.domain.exceptions.UserAlreadyExistsException;
 import ${package}.users.domain.repositories.*;
 import ${package}.users.domain.repositories.roles.RoleRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;
@@ -24,6 +23,7 @@ import java.time.LocalDateTime;
 @Service
 @Lazy
 public class RegisterUserUseCase {
+  private final RoleNames DEFAULT_NEW_USER_ROLE = RoleNames.BASIC;
 
   // region DEPENDENCIES
   private final UserRepository userRepository;
@@ -31,14 +31,9 @@ public class RegisterUserUseCase {
   private final RoleRepository roleRepository;
   private final ContactInfoRepository contactInfoRepository;
   private final AuthUtils authUtils;
-  private Role DEFAULT_NEW_USER_ROLE;
 
   // endregion DEPENDENCIES
 
-  @PostConstruct
-  private final void setConstantValues() {
-    this.DEFAULT_NEW_USER_ROLE = roleRepository.findByName(RoleNames.BASIC).get();
-  }
 
   // region USE CASES
 
@@ -66,12 +61,11 @@ public class RegisterUserUseCase {
     createContactInfoForUser(paramsDTO, user);
 
     // Assign default data for a new user
-    user.assignRole(DEFAULT_NEW_USER_ROLE);
+    user.assignRole(this.getDefaultUserRole());
     user.setRegisteredAt(LocalDateTime.now());
     user = userRepository.save(user);
 
-    log.info("User with nickname '{}' registered successfuly. User ID assigned is '{}'", nickname,
-        user.getUserID());
+    log.info("User with nickname '{}' registered successfuly. User ID assigned is '{}'", nickname, user.getUserID());
     return user;
   }
 
@@ -107,6 +101,10 @@ public class RegisterUserUseCase {
     user.assignContactInfo(contactInfo);
 
     return user;
+  }
+
+  private final Role getDefaultUserRole() {
+    return roleRepository.findByName(DEFAULT_NEW_USER_ROLE).get();
   }
 
   // endregion AUXILIAR METHODS

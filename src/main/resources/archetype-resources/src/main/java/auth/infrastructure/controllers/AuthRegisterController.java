@@ -1,11 +1,14 @@
 package ${package}.auth.infrastructure.controllers;
 
 import ${package}.auth.application.usecases.register.RegisterUserUseCase;
+import ${package}.auth.domain.exceptions.PasswordsMismatchException;
 import ${package}.auth.infrastructure.dto.conversors.AuthConversor;
 import ${package}.auth.infrastructure.dto.inbound.RegisterUserParamsDTO;
 import ${package}.auth.infrastructure.dto.outbound.AuthenticatedUserDTO;
+import ${package}.common.Translator;
 import ${package}.common.api.ApiResponse;
 import ${package}.common.api.ApiResponseHelper;
+import ${package}.common.api.error.ErrorApiResponseBody;
 import ${package}.common.config.EndpointSecurityConfigurer;
 import ${package}.common.security.jwt.application.JwtGenerator;
 import ${package}.common.security.jwt.domain.JwtData;
@@ -13,7 +16,6 @@ import ${package}.users.domain.entities.User;
 import ${package}.users.domain.entities.roles.Role;
 import ${package}.users.domain.entities.roles.RoleNames;
 import ${package}.users.domain.exceptions.UserAlreadyExistsException;
-import jakarta.servlet.ServletContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;
@@ -28,6 +30,9 @@ import static ${package}.common.security.SecurityConstants.USER_ID_ATTRIBUTE_NAM
 
 import java.net.URI;
 import java.util.List;
+import java.util.Locale;
+
+import static ${package}.common.api.ApiResponseHelper.buildErrorApiResponse;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -39,14 +44,23 @@ public class AuthRegisterController implements EndpointSecurityConfigurer {
   // region DEPENDENCIES
   private final RegisterUserUseCase registerUserUseCase;
   private final JwtGenerator jwtGenerator;
-  private final ServletContext servletContext;
+  private final Translator appTranslator;
   // endregion DEPENDENCIES
 
   // region I18N KEYS
+  public static final String USER_ALREADY_EXISTS_EXCEPTION_KEY = "UserAlreadyExistsException";
 
   // endregion I18N KEYS
 
   // region EXCEPTION HANDLERS
+  @ExceptionHandler(UserAlreadyExistsException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ApiResponse<ErrorApiResponseBody> handleUserAlreadyExistsException(
+      PasswordsMismatchException exception, Locale locale) {
+    String errorMessage = appTranslator.generateMessage(USER_ALREADY_EXISTS_EXCEPTION_KEY, locale);
+
+    return buildErrorApiResponse(HttpStatus.BAD_REQUEST, errorMessage);
+  }
 
   // endregion EXCEPTION HANDLERS
 

@@ -1,5 +1,6 @@
 package ${package}.common.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,8 +8,8 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -18,11 +19,12 @@ import java.util.*;
 public class InternationalizationConfiguration {
 
   private static final Locale DEFAULT_LOCALE = new Locale("es");
-  private static final String[] supportedLanguages = {"en", "es"};
+  private static final String[] supportedLanguages = {"es", "en"};
   private static final String[] supportedElements = {"exceptions", "fields", "validations"};
   private static final String CLASSPATH = "classpath:i18n";
 
   @Bean
+  @Qualifier("i18nMessageSource")
   public static MessageSource messageSource() {
     ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
     messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
@@ -52,7 +54,7 @@ public class InternationalizationConfiguration {
 
     for (String lang : supportedLanguages) {
       for (String item : supportedElements) {
-        String path = CLASSPATH + File.separator + lang + File.separator + item;
+        String path = Path.of(CLASSPATH, lang, item).toString();
         baseNamePaths.add(path);
       }
     }
