@@ -1,13 +1,19 @@
 package ${package}.auth.infrastructure.dto.inbound;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import ${package}.common.interfaces.EntityConversor;
 import ${package}.users.domain.entities.Gender;
 import ${package}.users.domain.entities.User;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.*;
-import lombok.*;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -39,7 +45,7 @@ public class RegisterUserParamsDTO implements EntityConversor<User> {
 
   @NotBlank
   @Size(min = 1)
-  private String rawPassword;
+  private String plainPassword;
 
   // ContactInfo
   @NotBlank

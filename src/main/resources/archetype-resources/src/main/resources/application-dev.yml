@@ -2,7 +2,7 @@ spring:
   docker:
     compose:
       enabled: true
-      file: 'compose.@activatedProperties@.yaml'
+      file: 'compose.dev.yaml'
       lifecycle-management: start_and_stop
   datasource:
     url: "jdbc:postgresql://localhost:5432/development"
@@ -15,5 +15,5 @@ spring:
       hibernate:
         format_sql: true
 logging:
-  config: 'classpath:log4j2.@activatedProperties@.xml'
+  config: 'classpath:log4j2.dev.xml'
 

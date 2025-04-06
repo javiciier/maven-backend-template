@@ -223,7 +223,7 @@
         <filtering>true</filtering>
         <includes>
           <include>*.env</include>
-          <include>compose.*.yaml</include>
+          <include>compose.**.yaml</include>
         </includes>
       </resource>
 
