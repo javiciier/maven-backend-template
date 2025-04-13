@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.3.4</version>
+    <version>3.4.4</version>
   </parent>
 
   <groupId>${groupId}</groupId>
@@ -32,16 +32,48 @@
       ${project.basedir}/src/test/docker-compose.test.yml
     </paths.docker-compose.test>
 
-    <!-- Project plugins versions -->
-    <maven-failsafe-plugin.version>3.2.2</maven-failsafe-plugin.version>
+    <!-- Dependencies versioning -->
+    <org.springframework.boot_spring-boot-configuration-processor>3.4.4
+    </org.springframework.boot_spring-boot-configuration-processor>
+    <org.springframework.boot_spring-boot-docker-compose>3.4.4</org.springframework.boot_spring-boot-docker-compose>
+    <org.springframework.boot_spring-boot-starter-data-jpa>3.4.4</org.springframework.boot_spring-boot-starter-data-jpa>
+    <org.springframework.boot_spring-boot-starter-data-rest>3.4.4
+    </org.springframework.boot_spring-boot-starter-data-rest>
+    <org.springframework.boot_spring-boot-starter>3.4.4</org.springframework.boot_spring-boot-starter>
+    <org.springframework.boot_spring-boot-starter-log4j2>3.4.4</org.springframework.boot_spring-boot-starter-log4j2>
+    <org.springframework.boot_spring-boot-starter-security>3.4.4</org.springframework.boot_spring-boot-starter-security>
+    <org.springframework.boot_spring-boot-starter-test>3.4.4</org.springframework.boot_spring-boot-starter-test>
+    <org.springframework.boot_spring-boot-starter-validation>3.4.4
+    </org.springframework.boot_spring-boot-starter-validation>
+    <org.springframework.boot_spring-boot-starter-web>3.4.4</org.springframework.boot_spring-boot-starter-web>
+    <org.springframework.boot_spring-boot-testcontainers>3.4.4</org.springframework.boot_spring-boot-testcontainers>
+    <org.springframework.security_spring-security-test>6.4.4</org.springframework.security_spring-security-test>
+    <io.jsonwebtoken_jjwt-api>0.12.6</io.jsonwebtoken_jjwt-api>
+    <io.jsonwebtoken_jjwt-impl>0.12.6</io.jsonwebtoken_jjwt-impl>
+    <io.jsonwebtoken_jjwt-jackson>0.12.6</io.jsonwebtoken_jjwt-jackson>
+    <org.apache.maven.plugins_maven-failsafe-plugin>3.5.3</org.apache.maven.plugins_maven-failsafe-plugin>
+    <org.bouncycastle_bcprov-jdk18on>1.80</org.bouncycastle_bcprov-jdk18on>
+    <org.bouncycastle_bcpkix-jdk18on>1.80</org.bouncycastle_bcpkix-jdk18on>
+    <org.jacoco_jacoco-maven-plugin>0.8.13</org.jacoco_jacoco-maven-plugin>
+    <org.mockito_mockito-core>5.17.0</org.mockito_mockito-core>
+    <org.postgresql_postgresql>42.7.5</org.postgresql_postgresql>
+    <org.projectlombok_lombok>1.18.38</org.projectlombok_lombok>
 
-    <!-- Project dependencies versions -->
-    <jjwt-jackson.version>0.12.3</jjwt-jackson.version>
-    <mockito-inline.version>5.2.0</mockito-inline.version>
-    <mockito-core.version>5.11.0</mockito-core.version>
-    <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
-    <bcprov-jdk18on.version>1.76</bcprov-jdk18on.version>
-    <postgresql.driver.version>42.7.4</postgresql.driver.version>
+    <!-- Plugins -->
+    <org.springframework.boot_spring-boot-maven-plugin>3.4.4</org.springframework.boot_spring-boot-maven-plugin>
+    <org.apache.maven.plugins_maven-compiler-plugin>3.14.0</org.apache.maven.plugins_maven-compiler-plugin>
+    <org.apache.maven.plugins_maven-jar-plugin>3.4.2</org.apache.maven.plugins_maven-jar-plugin>
+    <org.apache.maven.plugins_maven-help-plugin>3.5.1</org.apache.maven.plugins_maven-help-plugin>
+    <org.codehaus.mojo_properties-maven-plugin>1.2.1</org.codehaus.mojo_properties-maven-plugin>
+
+    <!-- PluginManagement -->
+    <maven-clean-plugin>3.4.1</maven-clean-plugin>
+    <maven-resources-plugin>3.3.1</maven-resources-plugin>
+    <maven-compiler-plugin>3.14.0</maven-compiler-plugin>
+    <maven-surefire-plugin>3.5.3</maven-surefire-plugin>
+    <maven-jar-plugin>3.4.2</maven-jar-plugin>
+    <maven-install-plugin>3.1.4</maven-install-plugin>
+
   </properties>
 
   <dependencies>
@@ -49,33 +81,33 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
-      <version>3.3.4</version>
+      <version>${org.springframework.boot_spring-boot-configuration-processor}</version>
       <optional>true</optional>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-docker-compose</artifactId>
-      <version>3.3.4</version>
+      <version>${org.springframework.boot_spring-boot-docker-compose}</version>
       <optional>true</optional>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
-      <version>3.3.4</version>
+      <version>${org.springframework.boot_spring-boot-starter-data-jpa}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-rest</artifactId>
-      <version>3.1.4</version>
+      <version>${org.springframework.boot_spring-boot-starter-data-rest}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
-      <version>3.3.4</version>
+      <version>${org.springframework.boot_spring-boot-starter}</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>
@@ -87,44 +119,44 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-log4j2</artifactId>
-      <version>3.1.4</version>
+      <version>${org.springframework.boot_spring-boot-starter-log4j2}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
-      <version>3.3.4</version>
+      <version>${org.springframework.boot_spring-boot-starter-security}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <version>3.3.4</version>
+      <version>${org.springframework.boot_spring-boot-starter-test}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>
-      <version>3.3.4</version>
+      <version>${org.springframework.boot_spring-boot-starter-validation}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>3.3.4</version>
+      <version>${org.springframework.boot_spring-boot-starter-web}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-testcontainers</artifactId>
-      <version>3.3.4</version>
+      <version>${org.springframework.boot_spring-boot-testcontainers}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-test</artifactId>
-      <version>6.3.3</version>
+      <version>${org.springframework.security_spring-security-test}</version>
       <scope>test</scope>
     </dependency>
 
@@ -133,19 +165,19 @@
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt-api</artifactId>
-      <version>${jjwt-jackson.version}</version>
+      <version>${io.jsonwebtoken_jjwt-api}</version>
     </dependency>
 
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt-impl</artifactId>
-      <version>${jjwt-jackson.version}</version>
+      <version>${io.jsonwebtoken_jjwt-impl}</version>
     </dependency>
 
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt-jackson</artifactId>
-      <version>${jjwt-jackson.version}</version>
+      <version>${io.jsonwebtoken_jjwt-jackson}</version>
     </dependency>
 
 
@@ -153,7 +185,7 @@
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-failsafe-plugin</artifactId>
-      <version>${maven-failsafe-plugin.version}</version>
+      <version>${org.apache.maven.plugins_maven-failsafe-plugin}</version>
       <scope>test</scope>
     </dependency>
 
@@ -161,13 +193,13 @@
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk18on</artifactId>
-      <version>${bcprov-jdk18on.version}</version>
+      <version>${org.bouncycastle_bcprov-jdk18on}</version>
     </dependency>
 
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcpkix-jdk18on</artifactId>
-      <version>${bcprov-jdk18on.version}</version>
+      <version>${org.bouncycastle_bcpkix-jdk18on}</version>
     </dependency>
 
 
@@ -175,7 +207,7 @@
     <dependency>
       <groupId>org.jacoco</groupId>
       <artifactId>jacoco-maven-plugin</artifactId>
-      <version>${jacoco-maven-plugin.version}</version>
+      <version>${org.jacoco_jacoco-maven-plugin}</version>
       <scope>test</scope>
     </dependency>
 
@@ -184,14 +216,7 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>${mockito-core.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-inline</artifactId>
-      <version>${mockito-inline.version}</version>
+      <version>${org.mockito_mockito-core}</version>
       <scope>test</scope>
     </dependency>
 
@@ -200,7 +225,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>${postgresql.driver.version}</version>
+      <version>${org.postgresql_postgresql}</version>
       <scope>runtime</scope>
     </dependency>
 
@@ -209,6 +234,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+      <version>${org.projectlombok_lombok}</version>
     </dependency>
 
 
@@ -245,6 +271,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${org.springframework.boot_spring-boot-maven-plugin}</version>
         <configuration>
           <excludes>
             <exclude>
@@ -259,11 +286,13 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>${org.apache.maven.plugins_maven-compiler-plugin}</version>
       </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <version>${org.apache.maven.plugins_maven-jar-plugin}</version>
         <configuration>
           <archive>
             <manifestEntries>
@@ -278,6 +307,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-help-plugin</artifactId>
+        <version>${org.apache.maven.plugins_maven-help-plugin}</version>
         <executions>
           <execution>
             <!-- Show active profiles on compile time -->
@@ -291,65 +321,56 @@
       </plugin>
     </plugins>
 
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
       <plugins>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>${maven-clean-plugin}</version>
         </plugin>
         <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.1</version>
+          <version>${maven-resources-plugin}</version>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.13.0</version>
+          <version>${maven-compiler-plugin}</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>${maven-surefire-plugin}</version>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.4.2</version>
+          <version>${maven-jar-plugin}</version>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
-          <version>3.1.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>${maven-install-plugin}</version>
         </plugin>
       </plugins>
     </pluginManagement>
   </build>
 
   <profiles>
-    <!-- Development profile:  -->
+    <!-- Development profile: dev  -->
     <profile>
       <id>development</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <!-- Use application-dev.yml -->
-        <activatedProperties>dev</activatedProperties>
-        <!-- Skip tests -->
-        <maven.test.skip>true</maven.test.skip>
-        <!-- Project dependencies versions for current profile -->
-
+        <activatedProperties>dev</activatedProperties>      <!-- Use application-dev.yml -->
+        <maven.test.skip>true</maven.test.skip>             <!-- Skip tests -->
       </properties>
 
     </profile>
 
-    <!-- Testing profile -->
+    <!-- Testing profile: test -->
     <profile>
       <id>testing</id>
       <properties>
-        <!-- Use application-test.yml -->
-        <activatedProperties>test</activatedProperties>
+        <activatedProperties>test</activatedProperties>     <!-- Use application-test.yml -->
       </properties>
 
       <build>
@@ -358,6 +379,7 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${org.jacoco_jacoco-maven-plugin}</version>
             <executions>
               <!-- Prepare agent to inspect code -->
               <execution>
@@ -381,7 +403,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
-            <version>${maven-failsafe-plugin.version}</version>
+            <version>${org.apache.maven.plugins_maven-failsafe-plugin}</version>
             <executions>
               <execution>
                 <goals>
@@ -395,14 +417,12 @@
       </build>
     </profile>
 
-    <!-- Production profile -->
+    <!-- Production profile: prod -->
     <profile>
       <id>production</id>
       <properties>
-        <!-- Use application-prod.yml -->
-        <activatedProperties>prod</activatedProperties>
-        <!-- Skip tests -->
-        <maven.test.skip>true</maven.test.skip>
+        <activatedProperties>prod</activatedProperties>       <!-- Use application-prod.yml -->
+        <maven.test.skip>true</maven.test.skip>               <!-- Skip tests -->
       </properties>
     </profile>
 

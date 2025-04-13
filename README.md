@@ -28,8 +28,6 @@ Checklists
 - [x] Done
 -->
 
-- Externalizar a un .properties las versiones que tienen las dependencias del proyecto y darles un
-  nombre más estandarizado.
 - Gestionar exception TypeMismatchException en CommonControllerAdvice (y buscar otras posibles
   excepciones propias de Spring bastante comunes que necesiten ser manejadas). Echar un ojo a
   org.springframework.http.web.bind.ServletRequestBindingException y sus subclases.
@@ -56,10 +54,6 @@ Checklists
   propiedades obligatorias: "-D{nombreVariable}={valorVariable}"
 - Crear script que genere las claves rsa públicas y privadas cuando se genere el proyecto
 - Redactar todo este documento, commitear y pushear
-- Crear las Run Configuration básicas para IntelliJ (estilo ejecutar tests de user, arrancar
-  aplicación, arrancar contenedor docker, etc)
-- Poder configurar qué backend se va a usar en función de la property que se base al crear el
-  proyecto: si un repositorio JDBC o si un backend contra Google Firebase, Firestore, etc.
 - Comprobar que hay documentación escrita solo para las clases y métodos (ambos public).
 - Configurar alguna libreria como OpenAPI o similar para automatizar la generación de documentación
   del proyecto.
