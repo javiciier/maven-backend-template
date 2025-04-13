@@ -1,25 +1,24 @@
 package ${package}.auth.application.usecases.register;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import ${package}.auth.application.usecases.AuthBaseTest;
 import ${package}.auth.infrastructure.dto.inbound.RegisterUserParamsDTO;
 import ${package}.users.domain.entities.User;
 import ${package}.users.domain.exceptions.UserAlreadyExistsException;
-import ${package}.users.domain.repositories.UserRepository;
-import jakarta.persistence.EntityManager;
-import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ${package}.users.domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
 @ActiveProfiles("test")
 @DisplayName("auth.login.RegisterUserUseCase")
 class RegisterUserUseCaseTest extends AuthBaseTest {
@@ -68,7 +67,7 @@ class RegisterUserUseCaseTest extends AuthBaseTest {
         // User has credentials to access the system
         () -> assertNotNull(actualUser.getCredential()),
         // Password is hashed
-        () -> assertNotEquals(dto.getPlainPassword(), actualUser.getCredential().getPasswordHash())
+        () -> assertNotEquals(dto.plainPassword(), actualUser.getCredential().getPasswordHash())
     );
   }
 

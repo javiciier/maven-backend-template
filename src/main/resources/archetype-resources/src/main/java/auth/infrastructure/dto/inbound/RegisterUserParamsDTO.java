@@ -4,66 +4,113 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import ${package}.common.interfaces.EntityConversor;
 import ${package}.users.domain.entities.Gender;
 import ${package}.users.domain.entities.User;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class RegisterUserParamsDTO implements EntityConversor<User> {
+public record RegisterUserParamsDTO(
+    // User
+    @NotBlank
+    @Size(min = 1, max = 50)
+    String name,
 
-  // User
-  @NotBlank
-  @Size(min = 1, max = 50)
-  private String name;
+    @NotBlank
+    @Size(min = 1, max = 50)
+    String surname,
 
-  @NotBlank
-  @Size(min = 1, max = 50)
-  private String surname;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    Gender gender,
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING)
-  private Gender gender;
+    @NotNull
+    @PastOrPresent
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    LocalDate birthDate,
 
-  @NotNull
-  @PastOrPresent
-  @JsonFormat(shape = JsonFormat.Shape.STRING)
-  private LocalDate birthDate;
+    // Credentials
+    @NotBlank
+    @Size(min = 1, max = 50)
+    String nickname,
 
-  // Credentials
-  @NotBlank
-  @Size(min = 1, max = 50)
-  private String nickname;
+    @NotBlank
+    @Size(min = 1)
+    String plainPassword,
 
-  @NotBlank
-  @Size(min = 1)
-  private String plainPassword;
+    // ContactInfo
+    @NotBlank
+    @Email
+    @Size(min = 1, max = 100)
+    String email,
 
-  // ContactInfo
-  @NotBlank
-  @Email
-  @Size(min = 1, max = 100)
-  private String email;
+    @NotBlank
+    @Size(min = 1, max = 20)
+    String phoneNumber
+) implements EntityConversor<User> {
+  public static class Builder {
+    private String name;
+    private String surname;
+    private Gender gender;
+    private LocalDate birthDate;
+    private String nickname;
+    private String plainPassword;
+    private String email;
+    private String phoneNumber;
 
-  @NotBlank
-  @Size(min = 1, max = 20)
-  private String phoneNumber;
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public Builder surname(String surname) {
+      this.surname = surname;
+      return this;
+    }
+
+    public Builder gender(Gender gender) {
+      this.gender = gender;
+      return this;
+    }
+
+    public Builder birthDate(LocalDate birthDate) {
+      this.birthDate = birthDate;
+      return this;
+    }
+
+    public Builder nickname(String nickname) {
+      this.nickname = nickname;
+      return this;
+    }
+
+    public Builder plainPassword(String plainPassword) {
+      this.plainPassword = plainPassword;
+      return this;
+    }
+
+    public Builder email(String email) {
+      this.email = email;
+      return this;
+    }
+
+    public Builder phoneNumber(String phoneNumber) {
+      this.phoneNumber = phoneNumber;
+      return this;
+    }
+
+    public RegisterUserParamsDTO build() {
+      return new RegisterUserParamsDTO(name, surname, gender, birthDate, nickname, plainPassword, email, phoneNumber);
+    }
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
 
   @Override
   public User toEntity() {
     return User.builder()
-        .name(this.getName())
-        .surname(this.getSurname())
-        .gender(this.getGender())
-        .birthDate(this.getBirthDate())
+        .name(name)
+        .surname(surname)
+        .gender(gender)
+        .birthDate(birthDate)
         .build();
   }
 }

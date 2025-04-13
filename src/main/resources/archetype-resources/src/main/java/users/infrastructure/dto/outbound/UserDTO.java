@@ -3,44 +3,105 @@ package ${package}.users.infrastructure.dto.outbound;
 import ${package}.users.domain.entities.*;
 import ${package}.users.domain.entities.roles.RoleNames;
 import jakarta.validation.constraints.*;
-import lombok.Builder;
-import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Data
-@Builder
-public class UserDTO {
+public record UserDTO(
+    UUID userID,
 
-  private UUID userID;
+    @NotBlank
+    @Size(min = 1, max = 50)
+    String name,
 
-  @NotBlank()
-  @Size(min = 1, max = 50)
-  private String name;
+    @NotNull
+    @Size(min = 1, max = 50)
+    String surname,
 
-  @NotNull
-  @Size(min = 1, max = 50)
-  private String surname;
+    @NotNull
+    Gender gender,
 
-  @NotNull
-  private Gender gender;
+    @NotBlank
+    @Size(min = 1, max = 30)
+    String nickname,
 
-  @NotBlank
-  @Size(min = 1, max = 30)
-  private String nickname;
+    @PastOrPresent
+    LocalDate birthDate,
 
-  @PastOrPresent
-  private LocalDate birthDate;
+    @PastOrPresent
+    LocalDateTime registeredAt,
 
-  @PastOrPresent
-  private LocalDateTime registeredAt;
+    List<RoleNames> roles,
 
-  private List<RoleNames> roles;
+    ContactInfoDTO contactInfo
+) {
 
-  private ContactInfoDTO contactInfo;
+  // Builder manual
+  public static class Builder {
+    private UUID userID;
+    private String name;
+    private String surname;
+    private Gender gender;
+    private String nickname;
+    private LocalDate birthDate;
+    private LocalDateTime registeredAt;
+    private List<RoleNames> roles;
+    private ContactInfoDTO contactInfo;
 
+    public Builder userID(UUID userID) {
+      this.userID = userID;
+      return this;
+    }
+
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public Builder surname(String surname) {
+      this.surname = surname;
+      return this;
+    }
+
+    public Builder gender(Gender gender) {
+      this.gender = gender;
+      return this;
+    }
+
+    public Builder nickname(String nickname) {
+      this.nickname = nickname;
+      return this;
+    }
+
+    public Builder birthDate(LocalDate birthDate) {
+      this.birthDate = birthDate;
+      return this;
+    }
+
+    public Builder registeredAt(LocalDateTime registeredAt) {
+      this.registeredAt = registeredAt;
+      return this;
+    }
+
+    public Builder roles(List<RoleNames> roles) {
+      this.roles = roles;
+      return this;
+    }
+
+    public Builder contactInfo(ContactInfoDTO contactInfo) {
+      this.contactInfo = contactInfo;
+      return this;
+    }
+
+    public UserDTO build() {
+      return new UserDTO(userID, name, surname, gender, nickname, birthDate, registeredAt, roles, contactInfo);
+    }
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
 }
 

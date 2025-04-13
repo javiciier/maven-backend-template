@@ -1,16 +1,33 @@
 package ${package}.users.infrastructure.dto.inbound;
 
 import jakarta.validation.constraints.Email;
-import lombok.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class UpdateContactInfoParamsDTO {
+public record UpdateContactInfoParamsDTO(
+    @Email
+    String newEmail,
 
-  @Email
-  private String newEmail;
+    String newMobilePhone
+) {
+  public static class Builder {
+    private String newEmail;
+    private String newMobilePhone;
 
-  private String newMobilePhone;
+    public Builder newEmail(String newEmail) {
+      this.newEmail = newEmail;
+      return this;
+    }
+
+    public Builder newMobilePhone(String newMobilePhone) {
+      this.newMobilePhone = newMobilePhone;
+      return this;
+    }
+
+    public UpdateContactInfoParamsDTO build() {
+      return new UpdateContactInfoParamsDTO(newEmail, newMobilePhone);
+    }
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
 }

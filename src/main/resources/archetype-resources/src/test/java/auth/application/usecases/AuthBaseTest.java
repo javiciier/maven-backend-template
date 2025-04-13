@@ -1,14 +1,8 @@
 package ${package}.auth.application.usecases;
 
 import ${package}.auth.infrastructure.dto.inbound.RegisterUserParamsDTO;
-import ${package}.users.domain.entities.ContactInfo;
-import ${package}.users.domain.entities.Credential;
-import ${package}.users.domain.entities.Gender;
-import ${package}.users.domain.entities.User;
+import ${package}.users.domain.entities.*;
 import ${package}.users.domain.repositories.UserRepository;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -18,6 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Base class with common methods for testing the auth module

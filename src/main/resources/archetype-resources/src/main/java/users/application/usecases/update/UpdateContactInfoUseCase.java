@@ -63,15 +63,15 @@ public class UpdateContactInfoUseCase {
   private boolean shouldUpdateContactInfo(ContactInfo currentInfo, UpdateContactInfoParamsDTO dto) {
     boolean shouldUpdate = false;
 
-    if (hasChanged(currentInfo.getEmail(), dto.getNewEmail())) {
+    if (hasChanged(currentInfo.getEmail(), dto.newEmail())) {
       // TODO Validate and confirm email
-      currentInfo.setEmail(dto.getNewEmail());
+      currentInfo.setEmail(dto.newEmail());
       shouldUpdate = true;
     }
 
-    if (hasChanged(currentInfo.getPhoneNumber(), dto.getNewMobilePhone())) {
+    if (hasChanged(currentInfo.getPhoneNumber(), dto.newMobilePhone())) {
       // TODO Validate and confirm phone
-      currentInfo.setPhoneNumber(dto.getNewMobilePhone());
+      currentInfo.setPhoneNumber(dto.newMobilePhone());
       shouldUpdate = true;
     }
 

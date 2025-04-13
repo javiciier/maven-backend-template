@@ -12,13 +12,13 @@ import ${package}.users.domain.exceptions.UserAlreadyExistsException;
 import ${package}.users.domain.repositories.CredentialRepository;
 import ${package}.users.domain.repositories.UserRepository;
 import ${package}.users.domain.repositories.roles.RoleRepository;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -47,7 +47,7 @@ public class RegisterUserUseCase {
    * @throws UserAlreadyExistsException User already exists
    */
   public User register(RegisterUserParamsDTO paramsDTO) throws UserAlreadyExistsException {
-    String nickname = paramsDTO.getNickname();
+    String nickname = paramsDTO.nickname();
     log.info("Starting registration of a new user with nickname '{}'", nickname);
 
     // Check if another user with the same nickname exists
@@ -81,9 +81,9 @@ public class RegisterUserUseCase {
   }
 
   private User createCredentialForUser(RegisterUserParamsDTO dto, User user) {
-    String encryptedPassword = authUtils.encryptPassword(dto.getPlainPassword());
+    String encryptedPassword = authUtils.encryptPassword(dto.plainPassword());
     Credential credential = Credential.builder()
-        .nickname(dto.getNickname())
+        .nickname(dto.nickname())
         .passwordHash(encryptedPassword)
         .user(user)
         .build();
@@ -95,8 +95,8 @@ public class RegisterUserUseCase {
 
   private User createContactInfoForUser(RegisterUserParamsDTO dto, User user) {
     ContactInfo contactInfo = ContactInfo.builder()
-        .email(dto.getEmail().toLowerCase())
-        .phoneNumber(dto.getPhoneNumber())
+        .email(dto.email().toLowerCase())
+        .phoneNumber(dto.phoneNumber())
         .user(user)
         .build();
 

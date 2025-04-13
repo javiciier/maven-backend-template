@@ -80,7 +80,7 @@ public class AuthLoginController implements EndpointSecurityConfigurer {
   @ResponseStatus(HttpStatus.OK)
   public ApiResponse<AuthenticatedUserDTO> loginWithNicknameAndPassword(
       @Validated @RequestBody LoginParamsDTO params) throws IncorrectLoginException {
-    User user = loginUseCase.loginWithNicknameAndPassword(params.getNickname(), params.getPassword());
+    User user = loginUseCase.loginWithNicknameAndPassword(params.nickname(), params.password());
     String token = generateServiceTokenFromUser(user);
     AuthenticatedUserDTO authenticatedUser = AuthConversor.toAuthenticatedUserDTO(token, user);
 

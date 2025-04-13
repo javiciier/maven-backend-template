@@ -7,12 +7,12 @@ import ${package}.common.annotations.validations.CheckUserIdentity;
 import ${package}.common.api.ApiResponse;
 import ${package}.common.api.ApiResponseHelper;
 import ${package}.common.config.EndpointSecurityConfigurer;
-import ${package}.users.domain.entities.User;
 import ${package}.users.domain.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.*;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +57,7 @@ public class AuthUpdateController implements EndpointSecurityConfigurer {
   public ApiResponse<Void> updatePassword(@PathVariable("userID") UUID pathUserID,
       @Validated @RequestBody ChangePasswordParamsDTO params)
       throws UserNotFoundException, PasswordsMismatchException {
-    updateCredentialsUseCase.updatePassword(pathUserID, params.getOldPassword(), params.getNewPassword());
+    updateCredentialsUseCase.updatePassword(pathUserID, params.oldPassword(), params.newPassword());
 
     return ApiResponseHelper.buildEmptySuccessApiResponse();
   }

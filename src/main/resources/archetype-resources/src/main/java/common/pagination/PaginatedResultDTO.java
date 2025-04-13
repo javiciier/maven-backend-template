@@ -3,34 +3,26 @@ package ${package}.common.pagination;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-public class PaginatedResultDTO<T> {
+public record PaginatedResultDTO<T>(
+    @NotNull
+    List<T> items,
 
-  @NotNull
-  private List<T> items;
+    @Accessors(fluent = true)
+    @JsonProperty("hasMoreItems")
+    @NotNull
+    boolean hasMoreItems,
 
-  @Accessors(fluent = true)
-  @JsonProperty("hasMoreItems")
-  @NotNull
-  private boolean hasMoreItems;
+    @NotNull
+    @PositiveOrZero
+    int itemsCount,
 
-  @NotNull
-  @PositiveOrZero
-  private int itemsCount;
-
-  private String nextPageToken;
-
+    String nextPageToken
+) {
   public PaginatedResultDTO(List<T> items, String nextPageToken) {
-    this.items = items;
-    this.nextPageToken = nextPageToken;
-    this.hasMoreItems = nextPageToken != null;
-    this.itemsCount = items.size();
+    this(items, nextPageToken != null, items.size(), nextPageToken);
   }
 }

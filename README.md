@@ -34,7 +34,6 @@ Checklists
 - Configurar un githook para solo aceptar mensajes de commit válidos (Conventional Commits, Husky)
 - Cambiar los log.info() por log.debug(), log.error(), etc según el nivel de severidad necesario
   para su uso actual.
-- Refactorizar los DTO por records de Java (cuidado con anotaciones de Lombok)
 - Actualizar versión Java de 17 a 21
 - Reformatear todas las plantillas para aplicar el CheckStyle de google (cuidado con las variables
   en los imports). Comprobar los tabulados con 2 espacios, linea en blanco entre la descripción y

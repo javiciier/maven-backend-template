@@ -1,17 +1,38 @@
 package ${package}.common.api;
 
-import lombok.Builder;
-import lombok.Data;
-
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-public class ApiResponse<T> {
+public record ApiResponse<T>(
+    boolean success,
+    LocalDateTime timestamp,
+    T data
+) {
+  public static class Builder<T> {
+    private boolean success;
+    private LocalDateTime timestamp;
+    private T data;
 
-  private final boolean success;
+    public Builder<T> success(boolean success) {
+      this.success = success;
+      return this;
+    }
 
-  private final LocalDateTime timestamp;
+    public Builder<T> timestamp(LocalDateTime timestamp) {
+      this.timestamp = timestamp;
+      return this;
+    }
 
-  private final T data;
+    public Builder<T> data(T data) {
+      this.data = data;
+      return this;
+    }
+
+    public ApiResponse<T> build() {
+      return new ApiResponse<>(success, timestamp, data);
+    }
+  }
+
+  public static <T> Builder<T> builder() {
+    return new Builder<>();
+  }
 }

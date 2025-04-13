@@ -1,10 +1,10 @@
 package ${package};
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.
