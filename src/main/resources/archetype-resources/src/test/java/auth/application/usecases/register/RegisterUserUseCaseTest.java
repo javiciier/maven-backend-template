@@ -2,12 +2,14 @@ package ${package}.auth.application.usecases.register;
 
 import ${package}.auth.application.usecases.AuthBaseTest;
 import ${package}.auth.infrastructure.dto.inbound.RegisterUserParamsDTO;
+import ${package}.common.security.PasswordEncoderConfiguration;
 import ${package}.users.domain.entities.User;
 import ${package}.users.domain.exceptions.UserAlreadyExistsException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ${package}.users.domain.repositories.UserRepository;
+import org.springframework.context.annotation.Import;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +21,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Import(PasswordEncoderConfiguration.class)
 @ActiveProfiles("test")
 @DisplayName("auth.login.RegisterUserUseCase")
 class RegisterUserUseCaseTest extends AuthBaseTest {
@@ -33,7 +36,7 @@ class RegisterUserUseCaseTest extends AuthBaseTest {
     this.useCase = useCase;
   }
 
-  User registeredUser;
+  private User registeredUser;
 
   // region TEST LIFECYCLE
   @AfterEach
@@ -57,7 +60,7 @@ class RegisterUserUseCaseTest extends AuthBaseTest {
     registeredUser = useCase.register(dto);
     // Check
     UUID registeredUserID = registeredUser.getUserID();
-    Optional<User> optionalActualUser = userRepository.findCompleteUserByUserID(registeredUserID);
+    Optional<User> optionalActualUser = userRepository.findUserWithCredentialsAndContactInfoAndRoleAssignmentsAndRole(registeredUserID);
 
     assert (optionalActualUser.isPresent());
     User actualUser = optionalActualUser.get();

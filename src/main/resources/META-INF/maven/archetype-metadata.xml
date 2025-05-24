@@ -80,6 +80,13 @@
       </includes>
     </fileSet>
 
+      <fileSet filtered="true">
+          <directory>src/test/sql</directory>
+          <includes>
+              <include>**/*.sql</include>
+          </includes>
+      </fileSet>
+
   </fileSets>
 
 </archetype-descriptor>

@@ -114,16 +114,13 @@ public class AuthBaseTest {
   // region AUXILIAR FUNCTIONS
   private String createEmailForUser(User user) {
     String username;
-    if (user.getNickname() == null) {
-      username = "%s_%s".formatted(user.getName(), user.getSurname());
-    } else {
-      username = user.getNickname();
-    }
+    String surname = (user.getSurname() != null) ? user.getSurname() : Double.toString(Math.random());
+    username = "%s_%s".formatted(user.getName(), surname);
 
     return username.toLowerCase()
-        + "@"
-        + applicationName
-        + ".es";
+            + "@"
+            + applicationName
+            + ".es";
   }
 
   private String getPlainPasswordFromUser(User user) {

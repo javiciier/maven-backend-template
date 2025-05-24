@@ -42,7 +42,7 @@ public class UpdateContactInfoUseCase {
     log.info("Trying to update contact information for user with ID '{}'", userID);
 
     // Get the user contact information
-    User user = userRepository.findCompleteUserByUserID(userID)
+    User user = userRepository.findUserWithCredentialsAndContactInfoAndRoleAssignmentsAndRole(userID)
         .orElseThrow(() -> new UserNotFoundException(userID));
     ContactInfo contactInfo = user.getContactInfo();
 

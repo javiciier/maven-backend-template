@@ -33,6 +33,7 @@
     </paths.docker-compose.test>
 
     <!-- Dependencies versioning -->
+    <com.github.javafaker_javafaker>1.0.2</com.github.javafaker_javafaker>
     <org.springframework.boot_spring-boot-configuration-processor>3.4.4
     </org.springframework.boot_spring-boot-configuration-processor>
     <org.springframework.boot_spring-boot-docker-compose>3.4.4</org.springframework.boot_spring-boot-docker-compose>
@@ -59,6 +60,9 @@
     <org.postgresql_postgresql>42.7.5</org.postgresql_postgresql>
     <org.projectlombok_lombok>1.18.38</org.projectlombok_lombok>
 
+    <!-- Dependency management -->
+    <org.yaml_snakeyaml>2.3</org.yaml_snakeyaml>
+
     <!-- Plugins -->
     <org.springframework.boot_spring-boot-maven-plugin>3.4.4</org.springframework.boot_spring-boot-maven-plugin>
     <org.apache.maven.plugins_maven-compiler-plugin>3.14.0</org.apache.maven.plugins_maven-compiler-plugin>
@@ -77,6 +81,20 @@
   </properties>
 
   <dependencies>
+    <!-- Group "com.github" -->
+    <dependency>
+      <groupId>com.github.javafaker</groupId>
+      <artifactId>javafaker</artifactId>
+      <version>${com.github.javafaker_javafaker}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.yaml</groupId>
+          <artifactId>snakeyaml</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
     <!-- Group "org.springframework" -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -226,7 +244,6 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>${org.postgresql_postgresql}</version>
-      <scope>runtime</scope>
     </dependency>
 
 

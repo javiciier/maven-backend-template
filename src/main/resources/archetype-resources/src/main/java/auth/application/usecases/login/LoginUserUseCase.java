@@ -73,7 +73,7 @@ public class LoginUserUseCase {
   public User loginWithJsonWebToken(UUID userID) throws UserNotFoundException {
     log.info("Trying to do JWT login for user with ID '{}'", userID);
 
-    User user = userRepository.findCompleteUserByUserID(userID)
+    User user = userRepository.findUserWithCredentialsAndContactInfoAndRoleAssignmentsAndRole(userID)
         .orElseThrow(() -> new UserNotFoundException(userID));
 
     log.info("User with nickname '{}' logged in succesfuly using JWT", user.getNickname());

@@ -67,6 +67,12 @@ CREATE TABLE IF NOT EXISTS users.ContactInfo (
     CONSTRAINT UNIQUE_ContactInfo_email UNIQUE (email)
 );
 
+-- Clean data --
+DELETE FROM users.UserTable;
+DELETE FROM users.Credential;
+DELETE FROM users.Role;
+DELETE FROM users.RoleAssignment;
+DELETE FROM users.ContactInfo;
 
 -- Default data --
 INSERT INTO users.Role(name) VALUES ('ADMIN');

@@ -34,7 +34,7 @@ public class FindUserUseCase {
    */
   public User findByUserId(UUID userID) throws UserNotFoundException {
     return userRepository
-        .findCompleteUserByUserID(userID)
+        .findUserWithCredentialsAndContactInfoAndRoleAssignmentsAndRole(userID)
         .orElseThrow(() -> new UserNotFoundException(userID));
   }
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mvn archetype:generate -B \
+mvnd archetype:generate -B \
   -DarchetypeCatalog=local  \
   -DarchetypeGroupId=dev.corusoft \
   -DarchetypeArtifactId=backend-maven-archetype \

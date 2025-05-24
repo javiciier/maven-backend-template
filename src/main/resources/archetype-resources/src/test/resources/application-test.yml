@@ -1,4 +1,8 @@
 spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5431/testing"
+    username: myuser
+    password: mypassword
   docker:
     compose:
       enabled: true
@@ -6,10 +10,6 @@ spring:
       lifecycle-management: start_and_stop
       skip:
         in-tests: false
-  datasource:
-    url: "jdbc:postgresql://localhost:5431/testing"
-    username: myuser
-    password: mypassword
   jpa:
     # Debugging N+1 QUERIES problem
     show-sql: true

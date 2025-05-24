@@ -3,6 +3,8 @@ package ${package}.users.domain.entities;
 import ${package}.users.domain.entities.roles.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.beans.Transient;
 import java.time.LocalDate;
@@ -20,8 +22,9 @@ public class User {
 
   // region Atributes
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(name = "user_id", nullable = false)
+  @GeneratedValue
+  @JdbcTypeCode(SqlTypes.UUID)
+  @Column(name = "user_id", nullable = false, updatable = false)
   private UUID userID;
 
   @Column(name = "name", nullable = false, length = 50)
@@ -103,4 +106,15 @@ public class User {
 
   // endregion Domain-Model methods
 
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("User{");
+    sb.append("name='").append(name).append('\'');
+    sb.append(", surname='").append(surname).append('\'');
+    sb.append(", userID=").append(userID);
+    sb.append('}');
+
+    return sb.toString();
+  }
 }

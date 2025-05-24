@@ -18,5 +18,5 @@ public interface UserRepository extends CrudRepository<User, UUID> {
       attributePaths = {"credential", "contactInfo", "roleAssignments", "roleAssignments.role"}
   )
   @Query("SELECT u FROM User u WHERE u.userID = :userID")
-  Optional<User> findCompleteUserByUserID(@Param("userID") UUID userID);
+  Optional<User> findUserWithCredentialsAndContactInfoAndRoleAssignmentsAndRole(@Param("userID") UUID userID);
 }
