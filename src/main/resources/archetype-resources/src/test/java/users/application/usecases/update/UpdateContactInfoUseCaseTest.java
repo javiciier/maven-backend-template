@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Log4j2
 @SpringBootTest
+@Transactional
 @ActiveProfiles("test")
 @DisplayName("users.update.UpdateContactInfoUseCase")
 class UpdateContactInfoUseCaseTest extends UserBaseTest {

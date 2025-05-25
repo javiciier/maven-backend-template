@@ -336,6 +336,19 @@
           </execution>
         </executions>
       </plugin>
+
+      <!-- Run parallel tests -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin}</version>
+        <configuration>
+          <parallel>classes</parallel>
+          <threadCount>4</threadCount>
+          <perCoreThreadCount>false</perCoreThreadCount>
+        </configuration>
+      </plugin>
+
     </plugins>
 
     <pluginManagement>

@@ -49,7 +49,7 @@ public class UserBaseTest {
     }
 
     // region UTILITY METHODS
-    public User generateUser(String nickname) {
+    public synchronized User generateUser(String nickname) {
         if (generatedUsers.containsKey(nickname)) {
             return generatedUsers.get(nickname);
         }

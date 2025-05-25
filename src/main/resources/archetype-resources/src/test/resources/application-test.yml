@@ -17,5 +17,15 @@ spring:
       hibernate:
         format_sql: true
 
+junit:
+  jupiter:
+    execution:
+      parallel:
+        enabled: true
+        mode:
+          default: concurrent
+        classes:
+          default: concurrent
+
 logging:
   config: 'classpath:log4j2.test.xml'

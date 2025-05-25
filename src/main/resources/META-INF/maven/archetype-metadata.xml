@@ -32,6 +32,13 @@
     </fileSet>
 
     <fileSet filtered="true">
+      <directory>.mvn</directory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+
+    <fileSet filtered="true">
       <directory>src</directory>
       <includes>
         <include>lombok.config</include>
