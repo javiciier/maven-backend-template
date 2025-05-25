@@ -1,12 +1,12 @@
 -- Extensión para crear identificadores UUID
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Esquema del usuario
 DROP SCHEMA IF EXISTS users CASCADE;
 CREATE SCHEMA users;
 
 CREATE TABLE IF NOT EXISTS users.UserTable (
-    user_id         UUID DEFAULT uuid_generate_v4(),
+    user_id         UUID DEFAULT gen_random_uuid(),
     name            VARCHAR(50) NOT NULL,
     surname         VARCHAR(50),
     gender          VARCHAR(10) NOT NULL,
@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS users.Credential (
             ON UPDATE CASCADE,
     CONSTRAINT UNIQUE_Credential_nickname UNIQUE (nickname)
 );
+CREATE INDEX IF NOT EXISTS IDX_Credential_TO_UserTable ON users.Credential(user_id);
+CREATE INDEX IF NOT EXISTS IDX_Credential_nickname_lower ON users.Credential(LOWER(nickname));
 
 CREATE TABLE IF NOT EXISTS users.Role (
     role_id     SERIAL,
@@ -50,6 +52,8 @@ CREATE TABLE IF NOT EXISTS users.RoleAssignment (
         FOREIGN KEY (role_id) REFERENCES users.Role (role_id)
             ON UPDATE CASCADE
 );
+CREATE INDEX IF NOT EXISTS IDX_RoleAssignment_TO_UserTable ON users.RoleAssignment(user_id);
+CREATE INDEX IF NOT EXISTS IDX_RoleAssignment_TO_Role ON users.RoleAssignment(role_id);
 
 CREATE TABLE IF NOT EXISTS users.ContactInfo (
     contactInfo_id          SERIAL,
@@ -66,6 +70,7 @@ CREATE TABLE IF NOT EXISTS users.ContactInfo (
             ON UPDATE CASCADE,
     CONSTRAINT UNIQUE_ContactInfo_email UNIQUE (email)
 );
+CREATE INDEX IF NOT EXISTS IDX_ContactInfo_TO_UserTable ON users.ContactInfo(user_id);
 
 
 -- Default data --

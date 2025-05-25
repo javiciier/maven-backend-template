@@ -20,4 +20,4 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./src/main/sql/user-schema.sql:/docker-entrypoint-initdb.d/1-user-schema.sql
+      - ./src/main/sql/01-user-schema.sql:/docker-entrypoint-initdb.d/01-user-schema.sql
