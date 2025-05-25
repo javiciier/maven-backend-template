@@ -44,7 +44,7 @@ class FindUserUseCaseTest extends UserBaseTest {
     void registerUser(TestInfo testInfo) {
         // These tests do not need to register users before their execution
         List<String> testsToSkip = List.of(
-                "findUserByIdDoesNotExist"
+                "findNonExistentUserByID"
         );
         if (testsToSkip.stream().anyMatch(testInfo.getDisplayName()::contains)) {
             return;
@@ -81,7 +81,7 @@ class FindUserUseCaseTest extends UserBaseTest {
     }
 
     @Test()
-    void findUserByIdDoesNotExist() throws UserNotFoundException {
+    void findNonExistentUserByID() throws UserNotFoundException {
         // Given
         final UUID userID = UUID.randomUUID();
         final String expectedMessage = "User with ID '%s' not found".formatted(userID);
