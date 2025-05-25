@@ -97,7 +97,7 @@ class FindUserUseCaseTest extends UserBaseTest {
         // Check
         final String actualMessage = thrownException.getMessage();
         assertAll(
-                // Is expected thrownException
+                // Throws expected exception
                 () -> assertTrue(thrownException instanceof UserNotFoundException),
                 // Contains expected message
                 () -> assertEquals(expectedMessage, actualMessage)

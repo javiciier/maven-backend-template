@@ -3,6 +3,7 @@ package ${package}.auth.application.usecases;
 import ${package}.auth.infrastructure.dto.inbound.RegisterUserParamsDTO;
 import ${package}.users.domain.entities.*;
 import ${package}.users.domain.repositories.UserRepository;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -13,13 +14,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.ZoneId;
+import java.util.*;
 
 /**
  * Base class with common methods for testing the auth module
  */
+@Log4j2
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
@@ -36,6 +40,7 @@ public class AuthBaseTest {
   // region DEPENDENCIES
   protected final BCryptPasswordEncoder passwordEncoder;
   protected final UserRepository userRepository;
+  protected final Faker faker;
 
   // endregion DEPENDENCIES
 
@@ -43,6 +48,7 @@ public class AuthBaseTest {
   public AuthBaseTest(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository) {
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
+    this.faker = new Faker(Locale.US);
   }
 
   // region UTILITY METHODS
@@ -51,12 +57,21 @@ public class AuthBaseTest {
       return generatedUsers.get(nickname);
     }
 
+    // Generate data for test
+    String name = faker.name().firstName();
+    String surname = faker.name().lastName();
+    Gender gender = faker.bool().bool() ? Gender.MALE : Gender.FEMALE;
+    LocalDate birthDate = faker.date().birthday(18, 65)
+            .toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+
     User user = User.builder()
-        .name("name")
-        .surname("surname")
-        .gender(Gender.MALE)
-        .birthDate(LocalDate.now().minusYears(18))
-        .build();
+            .name(name)
+            .surname(surname)
+            .gender(gender)
+            .birthDate(birthDate)
+            .build();
     Credential userCredentials = generateCredentialForUser(user, nickname);
     user.assignCredential(userCredentials);
     ContactInfo contactInfo = generateContactInfoForUser(user);
@@ -123,12 +138,23 @@ public class AuthBaseTest {
             + ".es";
   }
 
-  private String getPlainPasswordFromUser(User user) {
+  protected String getPlainPasswordFromUser(User user) {
     return "password";
   }
 
   private static String getOrCreatePhoneNumberFromUser(User user) {
     return (user.getContactInfo() == null) ? "123456789" : user.getContactInfo().getPhoneNumber();
+  }
+
+  /**
+   * Creates a new user and stores it in database
+   */
+  public User createAndRegisterUser(String nickname) {
+    User user = generateUser(nickname);
+    user = registerUserInRepository(user);
+    log.debug("Registered new user: {}", user);
+
+    return user;
   }
   // endregion AUXILIAR FUNCTIONS
 

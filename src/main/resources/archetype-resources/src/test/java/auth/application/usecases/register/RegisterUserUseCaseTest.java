@@ -4,6 +4,7 @@ import ${package}.auth.application.usecases.AuthBaseTest;
 import ${package}.auth.infrastructure.dto.inbound.RegisterUserParamsDTO;
 import ${package}.common.security.PasswordEncoderConfiguration;
 import ${package}.users.domain.entities.User;
+import ${package}.users.domain.entities.roles.RoleNames;
 import ${package}.users.domain.exceptions.UserAlreadyExistsException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -53,7 +54,7 @@ class RegisterUserUseCaseTest extends AuthBaseTest {
   @Test
   void register() throws UserAlreadyExistsException {
     // Given
-    String nickname = this.getClass().getSimpleName();
+    String nickname = faker.name().firstName();
     User user = generateUser(nickname);
     generateCredentialForUser(user, nickname);
 
@@ -65,14 +66,45 @@ class RegisterUserUseCaseTest extends AuthBaseTest {
     Optional<User> optionalActualUser = userRepository.findUserWithCredentialsAndContactInfoAndRoleAssignmentsAndRole(registeredUserID);
 
     assert (optionalActualUser.isPresent());
-    User actualUser = optionalActualUser.get();
+    final User actualUser = optionalActualUser.get();
     assertAll(
-        // Contains same data
-        () -> assertEquals(registeredUser, actualUser),
-        // User has credentials to access the system
-        () -> assertNotNull(actualUser.getCredential()),
-        // Password is hashed
-        () -> assertNotEquals(dto.plainPassword(), actualUser.getCredential().getPasswordHash())
+
+            // Contains same data
+            () -> assertEquals(registeredUser, actualUser),
+            // User has credentials to access the system
+            () -> assertNotNull(actualUser.getCredential()),
+            // Password is hashed
+            () -> assertNotEquals(dto.plainPassword(), actualUser.getCredential().getPasswordHash()),
+            // User has default role assigned
+            () -> assertEquals(1, registeredUser.getRoles().size()),
+            () -> assertEquals(RoleNames.BASIC, registeredUser.getRoles().get(0).getName())
+    );
+  }
+
+  @Test
+  void registerDuplicatedUser() throws UserAlreadyExistsException {
+    // Given
+    String nickname = faker.name().firstName();
+    User user = generateUser(nickname);
+    generateCredentialForUser(user, nickname);
+    final String expectedMessage = "A user with nickname '%s' already exists".formatted(nickname);
+
+    // Then
+    RegisterUserParamsDTO dto = toRegisterUserParamsDTO(user);
+    registeredUser = useCase.register(dto);
+    UUID registeredUserID = registeredUser.getUserID();
+    final Exception thrownException = assertThrows(
+            UserAlreadyExistsException.class,
+            () -> useCase.register(dto)
+    );
+    String actualMessage = thrownException.getMessage();
+
+    // Check
+    assertAll(
+            // Throws expected exception
+            () -> assertTrue(thrownException instanceof UserAlreadyExistsException),
+            // Contains expected message
+            () -> assertEquals(expectedMessage, actualMessage)
     );
   }
 
