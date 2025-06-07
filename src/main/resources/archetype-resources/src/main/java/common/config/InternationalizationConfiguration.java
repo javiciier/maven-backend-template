@@ -1,7 +1,5 @@
 package ${package}.common.config;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
  * Configures aspects related with I18N and translations
  */
 @Configuration
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class InternationalizationConfiguration {
 
   private static final Locale DEFAULT_LOCALE = Locale.of("es");
