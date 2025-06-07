@@ -1,5 +1,7 @@
 package ${package}.common.config;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -18,15 +20,15 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
  * Configures aspects related with I18N and translations
  */
 @Configuration
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class InternationalizationConfiguration {
 
-  private static final Locale DEFAULT_LOCALE = new Locale("es");
+  private static final Locale DEFAULT_LOCALE = Locale.of("es");
   private static final String[] supportedLanguages = {"es", "en"};
   private static final String[] supportedElements = {"exceptions", "fields", "validations"};
   private static final String CLASSPATH = "i18n";
 
   @Bean
-  @Qualifier("i18nMessageSource")
   public static MessageSource messageSource() {
     ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
     messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
@@ -66,7 +68,7 @@ public class InternationalizationConfiguration {
 
   private static List<Locale> getSupportedLocales() {
     return Arrays.stream(supportedLanguages)
-        .map(Locale::new)
+        .map(Locale::of)
         .toList();
   }
 }

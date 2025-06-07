@@ -4,7 +4,6 @@ import ${package}.auth.domain.exceptions.*;
 import ${package}.common.Translator;
 import ${package}.common.api.ApiResponse;
 import ${package}.common.api.error.ErrorApiResponseBody;
-import ${package}.common.exception.*;
 import ${package}.users.domain.exceptions.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

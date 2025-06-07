@@ -4,10 +4,8 @@ import ${package}.common.config.EndpointSecurityConfigurer;
 import ${package}.common.security.jwt.application.JwtGenerator;
 import ${package}.common.security.jwt.infrastructure.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,14 +33,12 @@ public class SecurityConfiguration {
   }
 
   @Bean
-  public JwtAuthenticationFilter jwtAuthenticationFilter(
-      AuthenticationManager authenticationManager, JwtGenerator jwtGenerator) throws Exception {
+  public JwtAuthenticationFilter jwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtGenerator jwtGenerator) {
     return new JwtAuthenticationFilter(authenticationManager, jwtGenerator);
   }
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtGenerator jwtGenerator,
-      JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+  public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtGenerator jwtGenerator, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
 
     http
         // Disable CSRF as it not being used (CSRF only affects Sessions and Cookies, not JWT)

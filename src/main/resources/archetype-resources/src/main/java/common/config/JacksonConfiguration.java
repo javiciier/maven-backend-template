@@ -8,10 +8,12 @@ import ${package}.common.config.serialization.serializers.JacksonLocalDateSerial
 import ${package}.common.config.serialization.serializers.JacksonLocalDateTimeSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Configuration
 public class JacksonConfiguration {
 

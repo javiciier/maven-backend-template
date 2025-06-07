@@ -9,7 +9,7 @@ public abstract class ApiErrorDetails extends Exception {
 
   private String reason;
 
-  public ApiErrorDetails(String reason) {
+  protected ApiErrorDetails(String reason) {
     super(reason);
     this.reason = reason;
   }

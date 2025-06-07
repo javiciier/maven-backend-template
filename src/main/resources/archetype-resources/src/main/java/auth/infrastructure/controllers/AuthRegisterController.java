@@ -25,9 +25,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import static ${package}.common.security.SecurityConstants.TOKEN_ATTRIBUTE_NAME;
-import static ${package}.common.security.SecurityConstants.USER_ID_ATTRIBUTE_NAME;
-
 import java.net.URI;
 import java.util.List;
 import java.util.Locale;

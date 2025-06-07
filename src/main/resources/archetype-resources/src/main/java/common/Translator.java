@@ -1,6 +1,5 @@
 package ${package}.common;
 
-import ${package}.common.config.InternationalizationConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
@@ -12,7 +11,6 @@ import java.util.Locale;
 @RequiredArgsConstructor
 public class Translator {
 
-  @Qualifier("i18nMessageSource")
   private final MessageSource messageSource;
 
   public String generateMessage(String exceptionKey, Locale locale) {

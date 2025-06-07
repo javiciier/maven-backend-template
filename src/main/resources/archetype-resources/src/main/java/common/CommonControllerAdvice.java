@@ -61,7 +61,6 @@ public class CommonControllerAdvice {
   @ResponseBody
   public ApiResponse<ErrorApiResponseBody> handleMissingServletRequestParameterException(MissingServletRequestParameterException exception, Locale locale) {
     Object[] args = {exception.getParameterName(), exception.getParameterType()};
-    Locale es_locale = new Locale("es");
     String errorMessage = appTranslator.generateMessage(MISSING_SERVLET_REQUEST_PARAMETER_EXCEPTION_KEY, args, locale);
 
     return buildErrorApiResponse(HttpStatus.BAD_REQUEST, errorMessage);

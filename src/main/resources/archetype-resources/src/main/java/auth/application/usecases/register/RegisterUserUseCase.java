@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 @Lazy
 public class RegisterUserUseCase {
 
-  private final RoleNames DEFAULT_NEW_USER_ROLE = RoleNames.BASIC;
+  private static final RoleNames DEFAULT_NEW_USER_ROLE = RoleNames.BASIC;
 
   // region DEPENDENCIES
   private final UserRepository userRepository;

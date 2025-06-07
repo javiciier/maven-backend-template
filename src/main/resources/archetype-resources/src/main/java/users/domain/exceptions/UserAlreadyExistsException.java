@@ -6,12 +6,10 @@ public class UserAlreadyExistsException extends Exception {
 
   public static final String ERROR_MESSAGE = "A user with nickname '%s' already exists";
 
-  private User user;
   private String nickname;
 
   public UserAlreadyExistsException(User user) {
-    super(ERROR_MESSAGE.formatted(user.getNickname()));
-    this.user = user;
+    this(user.getNickname());
   }
 
   public UserAlreadyExistsException(String nickname) {

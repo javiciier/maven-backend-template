@@ -87,7 +87,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
     String token = authHeader.replace(PREFIX_BEARER_TOKEN, "");
 
-    if (token == null || token == "") {
+    if ((token == null) || (token == "")) {
       log.warn("Could not extract JWT token from request or it is malformed");
       throw new BadCredentialsException("Malformed or non existent JWT token in request");
     }
@@ -110,7 +110,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     log.debug("Registering granted authorities for user with ID '{}'", token.getUserID());
 
     boolean hasRoles = (token.getRoles() != null) && (!token.getRoles().isEmpty());
-    Set<GrantedAuthority> authorities = new HashSet<>(token.getRoles().size());
+    Set<GrantedAuthority> authorities = HashSet.newHashSet(token.getRoles().size());
 
     if (!hasRoles) {
       return authorities;

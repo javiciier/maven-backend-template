@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class ErrorApiResponseBody extends ApiResponseBody {
+public class ErrorApiResponseBody implements ApiResponseBody {
 
   private final int statusCode;
 
