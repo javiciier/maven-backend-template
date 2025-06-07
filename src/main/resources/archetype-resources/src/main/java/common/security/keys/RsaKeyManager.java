@@ -68,7 +68,7 @@ public class RsaKeyManager {
         privateKey = decryptPrivateKey(encryptedKeyInfo, privateKeyPasswordBytes);
       }
     } catch (IOException e) {
-      log.error("Error parsing PEM private key:: {}", e.getMessage());
+      log.error("Error parsing PEM private key: {}", e.getMessage());
     }
 
     return privateKey;
@@ -86,7 +86,7 @@ public class RsaKeyManager {
             .getPublicKey(publicKeyObject);
       }
     } catch (IOException e) {
-      log.error("Error parsing PEM public key:: {}", e.getMessage());
+      log.error("Error parsing PEM public key: {}", e.getMessage());
     }
 
     return publicKey;
@@ -104,7 +104,7 @@ public class RsaKeyManager {
 
       privateKey = pemKeyConverter.getPrivateKey(privateKeyInfo);
     } catch (OperatorCreationException | PKCSException | PEMException e) {
-      log.error("Error decrypting private key:: {}", e.getMessage());
+      log.error("Error decrypting private key: {}", e.getMessage());
     }
 
     return privateKey;

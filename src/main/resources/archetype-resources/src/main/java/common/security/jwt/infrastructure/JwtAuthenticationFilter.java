@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -66,25 +67,43 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     return true;
   }
 
-  private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+  private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) throws BadCredentialsException {
+    // Extract JWT token content
+    String token = extractJwtTokenFromRequest(request);
+    JwtData jwt = parseTokenContent(token);
+
+    // Add user jwt to the security context
+    request.setAttribute(TOKEN_ATTRIBUTE_NAME, token);
+    request.setAttribute(USER_ID_ATTRIBUTE_NAME, jwt.getUserID());
+
+    // Set user roles
+    Set<GrantedAuthority> authorities = createAuthorities(jwt);
+
+    return new UsernamePasswordAuthenticationToken(jwt, null, authorities);
+  }
+
+  private String extractJwtTokenFromRequest(HttpServletRequest request) throws BadCredentialsException {
     // Remove "Bearer " from header
     String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
     String token = authHeader.replace(PREFIX_BEARER_TOKEN, "");
 
+    if (token == null || token == "") {
+      log.warn("Could not extract JWT token from request or it is malformed");
+      throw new BadCredentialsException("Malformed or non existent JWT token in request");
+    }
+
+    return token;
+  }
+
+  private JwtData parseTokenContent(String token) {
     // Parse JWT content
     JwtData data = jwtGenerator.extractData(token);
     if (data == null) {
+      log.warn("Could not extract JWT content from request");
       return null;
     }
 
-    // Add user data to the security context
-    request.setAttribute(TOKEN_ATTRIBUTE_NAME, token);
-    request.setAttribute(USER_ID_ATTRIBUTE_NAME, data.getUserID());
-
-    // Set user roles
-    Set<GrantedAuthority> authorities = createAuthorities(data);
-
-    return new UsernamePasswordAuthenticationToken(data, null, authorities);
+    return data;
   }
 
   private Set<GrantedAuthority> createAuthorities(JwtData token) {
@@ -99,11 +118,11 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
     for (RoleNames role: token.getRoles()) {
       String roleName = role.getName().replace("\"", "");
-      SimpleGrantedAuthority authority = new SimpleGrantedAuthority(ROLE_ATTRIBUTE_NAME + roleName);
+      SimpleGrantedAuthority authority = new SimpleGrantedAuthority(roleName);
       authorities.add(authority);
     }
 
-    log.debug("Registered granted authorities succesfuly for user with ID '{}': {}", token.getUserID(), authorities);
+    log.debug("Granted authorities registered for user with ID '{}'", token.getUserID());
     return authorities;
   }
 

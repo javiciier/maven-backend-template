@@ -38,8 +38,8 @@ class LoginUserUseCaseTest extends AuthBaseTest {
   // endregion DEPENDENCIES
 
   @Autowired
-  public LoginUserUseCaseTest(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, LoginUserUseCase useCase) {
-    super(passwordEncoder, userRepository);
+  public LoginUserUseCaseTest(UserRepository userRepository, LoginUserUseCase useCase) {
+    super(userRepository);
     this.useCase = useCase;
   }
 
@@ -51,7 +51,7 @@ class LoginUserUseCaseTest extends AuthBaseTest {
   void registerUser()  {
     this.nickname = faker.name().firstName();
     log.debug("Registering user with nickname '{}'", this.nickname);
-    this.registeredUser = createAndRegisterUser(this.nickname);
+    this.registeredUser = dataGenerator.createAndRegisterUser(this.nickname);
   }
 
   @AfterEach
@@ -66,7 +66,7 @@ class LoginUserUseCaseTest extends AuthBaseTest {
   @Test
   void loginWithNicknameAndPassword() throws IncorrectLoginException {
     // Given
-    String plainPassword = getPlainPasswordFromUser(registeredUser);
+    String plainPassword = dataGenerator.getPlainPasswordFromUser();
 
     // Then
     final User loggedUser = useCase.loginWithNicknameAndPassword(nickname, plainPassword);
@@ -81,10 +81,10 @@ class LoginUserUseCaseTest extends AuthBaseTest {
   }
 
   @Test
-  void loginWithNicknameAndPasswordNonExistentUser() throws UserAlreadyExistsException {
+  void loginWithNicknameAndPasswordNonExistentUser() {
     // Given
     String nonExistentNickname = faker.name().firstName();
-    final String plainPassword = getPlainPasswordFromUser(registeredUser);
+    final String plainPassword = dataGenerator.getPlainPasswordFromUser();
     String expectedMessage = null;
 
     // Then
@@ -104,9 +104,9 @@ class LoginUserUseCaseTest extends AuthBaseTest {
   }
 
   @Test
-  void loginWithInvalidPassword() throws UserAlreadyExistsException {
+  void loginWithInvalidPassword() {
     // Given
-    final String plainPassword = "invalid" + getPlainPasswordFromUser(registeredUser);
+    final String plainPassword = "abcd";
     String expectedMessage = null;
 
     // Then
@@ -146,7 +146,7 @@ class LoginUserUseCaseTest extends AuthBaseTest {
   }
 
   @Test
-  void loginWithJsonWebTokenNonExistentUser() throws UserAlreadyExistsException {
+  void loginWithJsonWebTokenNonExistentUser() {
     // Given
     UUID nonExistentUserID = UUID.randomUUID();
     final String expectedMessage = "User with ID '%s' not found".formatted(nonExistentUserID);

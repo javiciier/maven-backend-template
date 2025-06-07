@@ -48,16 +48,16 @@ public class RegisterUserUseCase {
    */
   public User register(RegisterUserParamsDTO paramsDTO) throws UserAlreadyExistsException {
     String nickname = paramsDTO.nickname();
-    log.info("Starting registration of a new user with nickname '{}'", nickname);
+    log.debug("Starting registration of a new user with nickname '{}'", nickname);
 
     // Check if another user with the same nickname exists
     if (doesUserWithNicknameExist(nickname)) {
-      log.error("Register new user failed because an user with nickname '{}' already existed");
+      log.debug("Register new user failed because an user with nickname '{}' already existed");
       throw new UserAlreadyExistsException(nickname);
     }
 
     // Create user data
-    log.info("Registering new user with nickname '{}'", nickname);
+    log.debug("Registering new user with nickname '{}'", nickname);
     User user = AuthConversor.fromRegisterUserParamsDTO(paramsDTO);
     createCredentialForUser(paramsDTO, user);
     createContactInfoForUser(paramsDTO, user);
@@ -67,7 +67,7 @@ public class RegisterUserUseCase {
     user.setRegisteredAt(LocalDateTime.now());
     user = userRepository.save(user);
 
-    log.info("User with nickname '{}' registered successfuly. User ID assigned is '{}'",
+    log.debug("User with nickname '{}' registered successfuly. User ID assigned is '{}'",
         nickname, user.getUserID()
     );
     return user;

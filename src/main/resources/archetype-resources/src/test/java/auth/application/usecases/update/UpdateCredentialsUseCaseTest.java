@@ -1,4 +1,4 @@
-package ${package}.auth.application.usecases.register;
+package ${package}.auth.application.usecases.update;
 
 import ${package}.auth.application.usecases.AuthBaseTest;
 import ${package}.auth.application.usecases.login.LoginUserUseCase;
@@ -43,8 +43,8 @@ class UpdateCredentialsUseCaseTest extends AuthBaseTest {
   // endregion DEPENDENCIES
 
   @Autowired
-  public UpdateCredentialsUseCaseTest(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, UpdateCredentialsUseCase updateCredentialsUseCase, LoginUserUseCase loginUseCase) {
-    super(passwordEncoder, userRepository);
+  public UpdateCredentialsUseCaseTest(UserRepository userRepository, UpdateCredentialsUseCase updateCredentialsUseCase, LoginUserUseCase loginUseCase) {
+    super(userRepository);
     this.updateCredentialsUseCase = updateCredentialsUseCase;
     this.loginUseCase = loginUseCase;
   }
@@ -56,7 +56,7 @@ class UpdateCredentialsUseCaseTest extends AuthBaseTest {
   void registerUser()  {
     String nickname = faker.name().firstName();
     log.debug("Registering user with nickname '{}'", nickname);
-    this.registeredUser = createAndRegisterUser(nickname);
+    this.registeredUser = dataGenerator.createAndRegisterUser(nickname);
   }
 
   @AfterEach
@@ -73,7 +73,7 @@ class UpdateCredentialsUseCaseTest extends AuthBaseTest {
     // Given
     UUID registeredUserID = registeredUser.getUserID();
     String userNickname = registeredUser.getNickname();
-    String oldPassword = getPlainPasswordFromUser(registeredUser);
+    String oldPassword = dataGenerator.getPlainPasswordFromUser();
     String newPassword = "new" + oldPassword;
 
     // Then
@@ -91,8 +91,7 @@ class UpdateCredentialsUseCaseTest extends AuthBaseTest {
   void updateInvalidPassword() throws UserNotFoundException, PasswordsMismatchException, IncorrectLoginException {
     // Given
     UUID registeredUserID = registeredUser.getUserID();
-    String userNickname = registeredUser.getNickname();
-    String oldPasswordInvalid = "invalid" + getPlainPasswordFromUser(registeredUser);
+    String oldPasswordInvalid = "invalid" + dataGenerator.getPlainPasswordFromUser();
     String newPassword = "new" + oldPasswordInvalid;
     String expectedMessage = null;
 
@@ -116,8 +115,7 @@ class UpdateCredentialsUseCaseTest extends AuthBaseTest {
   void updatePasswordNonExistentUser() throws UserNotFoundException, PasswordsMismatchException, IncorrectLoginException {
     // Given
     UUID registeredUserID = registeredUser.getUserID();
-    String userNickname = registeredUser.getNickname();
-    String oldPassword = getPlainPasswordFromUser(registeredUser);
+    String oldPassword = dataGenerator.getPlainPasswordFromUser();
     String newPassword = "new" + oldPassword;
     userRepository.delete(registeredUser);
     final String expectedMessage = "User with ID '%s' not found".formatted(registeredUserID);

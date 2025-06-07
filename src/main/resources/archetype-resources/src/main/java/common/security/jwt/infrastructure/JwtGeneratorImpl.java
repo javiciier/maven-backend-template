@@ -40,7 +40,7 @@ public class JwtGeneratorImpl implements JwtGenerator {
     PrivateKey privateKey = RsaKeyManager.loadKeyPair().getPrivate();
 
     Map<String, Object> customClaims = toClaims(data);
-    log.info("Generating JWT for user {}", data.getUserID());
+    log.debug("Generating JWT for user {}", data.getUserID());
 
     return Jwts.builder()
         .signWith(privateKey)

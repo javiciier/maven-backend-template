@@ -35,7 +35,7 @@ class RegisterUserUseCaseTest extends AuthBaseTest {
 
   @Autowired
   public RegisterUserUseCaseTest(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, RegisterUserUseCase useCase) {
-    super(passwordEncoder, userRepository);
+    super(userRepository);
     this.useCase = useCase;
   }
 
@@ -55,8 +55,8 @@ class RegisterUserUseCaseTest extends AuthBaseTest {
   void register() throws UserAlreadyExistsException {
     // Given
     String nickname = faker.name().firstName();
-    User user = generateUser(nickname);
-    generateCredentialForUser(user, nickname);
+    User user = dataGenerator.generateUser(nickname);
+    dataGenerator.generateCredentialForUser(user, nickname);
 
     // Then
     RegisterUserParamsDTO dto = toRegisterUserParamsDTO(user);
@@ -85,14 +85,12 @@ class RegisterUserUseCaseTest extends AuthBaseTest {
   void registerDuplicatedUser() throws UserAlreadyExistsException {
     // Given
     String nickname = faker.name().firstName();
-    User user = generateUser(nickname);
-    generateCredentialForUser(user, nickname);
+    User user = dataGenerator.generateUser(nickname);
     final String expectedMessage = "A user with nickname '%s' already exists".formatted(nickname);
 
     // Then
     RegisterUserParamsDTO dto = toRegisterUserParamsDTO(user);
     registeredUser = useCase.register(dto);
-    UUID registeredUserID = registeredUser.getUserID();
     final Exception thrownException = assertThrows(
             UserAlreadyExistsException.class,
             () -> useCase.register(dto)

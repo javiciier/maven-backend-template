@@ -29,11 +29,17 @@ spring:
       indent-output: true
   messages:
     encoding: UTF-8
+  threads:
+    virtual:
+      enabled: true
 server:
   servlet:
     context-path: '/api'
     encoding:
       charset: UTF-8
+  tomcat:
+    threads:
+      virtual: true
 project:
   security:
     jwt:

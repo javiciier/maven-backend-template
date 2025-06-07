@@ -48,6 +48,6 @@ public class EnvironmentVariablesConfiguration {
       return;
     }
 
-    log.info("Environmental configuration loaded from '{}'.", ENV_FILE_PATH);
+    log.debug("Environmental configuration loaded from '{}'.", ENV_FILE_PATH);
   }
 }

@@ -49,7 +49,7 @@ public class UpdateCredentialsUseCase {
    */
   public void updatePassword(UUID userID, String plainOldPassword, String plainNewPassword)
       throws UserNotFoundException, PasswordsMismatchException {
-    log.info("Trying to update password for user with ID '{}'", userID);
+    log.debug("Trying to update password for user with ID '{}'", userID);
 
     // Get the user credentials
     Credential credential = credentialRepository.findCredentialByUserID(userID)
@@ -65,7 +65,7 @@ public class UpdateCredentialsUseCase {
     String newPasswordHashed = authUtils.encryptPassword(plainNewPassword);
     credential.setPasswordHash(newPasswordHashed);
 
-    log.info("User with ID '{}' password updated sucessfuly", userID);
+    log.debug("User with ID '{}' password updated sucessfuly", userID);
   }
 
   // endregion USE CASES

@@ -35,7 +35,7 @@ class FindUserUseCaseTest extends UserBaseTest {
 
     @Autowired
     public FindUserUseCaseTest(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, FindUserUseCase useCase) {
-        super(passwordEncoder, userRepository);
+        super(userRepository);
         this.useCase = useCase;
     }
 
@@ -54,7 +54,7 @@ class FindUserUseCaseTest extends UserBaseTest {
 
         String nickname = faker.name().firstName();
         log.debug("Registering user with nickname '{}'", nickname);
-        this.registeredUser = createAndRegisterUser(nickname);
+        this.registeredUser = dataGenerator.createAndRegisterUser(nickname);
     }
 
     @AfterEach

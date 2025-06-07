@@ -40,7 +40,7 @@ public class LoginUserUseCase {
    */
   public User loginWithNicknameAndPassword(String nickname, String plainPassword)
       throws IncorrectLoginException {
-    log.info("Trying to do nickname/password login for user with nickname '{}'", nickname);
+    log.debug("Trying to do nickname/password login for user with nickname '{}'", nickname);
 
     // Retrieve user
     User user;
@@ -59,7 +59,7 @@ public class LoginUserUseCase {
       throw new IncorrectLoginException();
     }
 
-    log.info("User with nickname '{}' logged in succesfuly using nickname/password", nickname);
+    log.debug("User with nickname '{}' logged in succesfuly using nickname/password", nickname);
     return user;
   }
 
@@ -71,12 +71,12 @@ public class LoginUserUseCase {
    * @throws UserNotFoundException User with the given ID does not exist
    */
   public User loginWithJsonWebToken(UUID userID) throws UserNotFoundException {
-    log.info("Trying to do JWT login for user with ID '{}'", userID);
+    log.debug("Trying to do JWT login for user with ID '{}'", userID);
 
     User user = userRepository.findUserWithCredentialsAndContactInfoAndRoleAssignmentsAndRole(userID)
         .orElseThrow(() -> new UserNotFoundException(userID));
 
-    log.info("User with nickname '{}' logged in succesfuly using JWT", user.getNickname());
+    log.debug("User with nickname '{}' logged in succesfuly using JWT", user.getNickname());
     return user;
   }
 

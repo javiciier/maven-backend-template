@@ -1,4 +1,4 @@
-package ${package}.users.application.usecases.find;
+package ${package}.users.application.usecases.update;
 
 import ${package}.users.application.usecases.UserBaseTest;
 import ${package}.users.application.usecases.update.UpdateContactInfoUseCase;
@@ -37,7 +37,7 @@ class UpdateContactInfoUseCaseTest extends UserBaseTest {
 
     @Autowired
     public UpdateContactInfoUseCaseTest(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, UpdateContactInfoUseCase useCase) {
-        super(passwordEncoder, userRepository);
+        super(userRepository);
         this.useCase = useCase;
     }
 
@@ -48,7 +48,7 @@ class UpdateContactInfoUseCaseTest extends UserBaseTest {
     void registerUser()  {
         String nickname = faker.name().firstName();
         log.debug("Registering user with nickname '{}'", nickname);
-        this.registeredUser = createAndRegisterUser(nickname);
+        this.registeredUser = dataGenerator.createAndRegisterUser(nickname);
     }
 
     @AfterEach

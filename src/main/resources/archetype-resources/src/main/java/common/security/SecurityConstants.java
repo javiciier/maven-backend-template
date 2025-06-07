@@ -14,7 +14,6 @@ public class SecurityConstants {
   // region AUTHENTICATION
   public static final String TOKEN_ATTRIBUTE_NAME = "service_token";
   public static final String USER_ID_ATTRIBUTE_NAME = "userID";
-  public static final String ROLE_ATTRIBUTE_NAME = "ROLE_";
 
   // endregion AUTHENTICATION
 }

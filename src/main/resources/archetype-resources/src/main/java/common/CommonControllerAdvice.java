@@ -34,6 +34,8 @@ public class CommonControllerAdvice {
   // endregion EXCEPTION KEYS
 
   // region EXCEPTION HANDLERS
+  // region Spring exceptions
+
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ResponseBody
@@ -86,6 +88,8 @@ public class CommonControllerAdvice {
 
     return buildErrorApiResponse(HttpStatus.BAD_REQUEST, errorMessage);
   }
+
+  // endregion Spring exceptions
 
   @ExceptionHandler(PermissionException.class)
   @ResponseStatus(HttpStatus.FORBIDDEN)

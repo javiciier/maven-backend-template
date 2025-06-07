@@ -39,7 +39,7 @@ public class UpdateContactInfoUseCase {
    */
   public User updateContactInfo(UUID userID, UpdateContactInfoParamsDTO updateParams)
       throws UserNotFoundException {
-    log.info("Trying to update contact information for user with ID '{}'", userID);
+    log.debug("Trying to update contact information for user with ID '{}'", userID);
 
     // Get the user contact information
     User user = userRepository.findUserWithCredentialsAndContactInfoAndRoleAssignmentsAndRole(userID)
@@ -52,7 +52,7 @@ public class UpdateContactInfoUseCase {
     }
 
     contactInfoRepository.save(contactInfo);
-    log.info("User with ID '{}' has updated his contact info succesfuly", userID);
+    log.debug("User with ID '{}' has updated his contact info succesfuly", userID);
 
     return user;
   }
